@@ -91,10 +91,10 @@ export const AdminModal: React.FC = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput === 'admin' || passwordInput === 'cineworld' || passwordInput === '1234') {
+    if (passwordInput === '7060') {
       setIsAuthenticated(true);
     } else {
-      alert('Invalid Password. Try "admin" or "cineworld"');
+      alert('Invalid Passcode. Access Denied.');
     }
   };
 
@@ -290,7 +290,7 @@ export const AdminModal: React.FC = () => {
               type="password"
               value={passwordInput}
               onChange={(e) => setPasswordInput(e.target.value)}
-              placeholder="Enter password (e.g. admin)"
+              placeholder="Enter Admin Passcode"
               className="w-full bg-zinc-900 border border-white/10 text-white text-xs p-3 text-center outline-none focus:border-amber-500"
             />
 
