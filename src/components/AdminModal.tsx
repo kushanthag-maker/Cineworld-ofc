@@ -89,29 +89,14 @@ export const AdminModal: React.FC = () => {
     }
   };
 
-  // ==================== FIXED SERVER-SIDE LOGIN ====================
-  const handleLogin = async (e: React.FormEvent) => {
+  // ==================== SIMPLE CLIENT-SIDE LOGIN (7060) ====================
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!passwordInput.trim()) {
-      alert('Please enter the admin password');
-      return;
-    }
-    try {
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: passwordInput })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setIsAuthenticated(true);
-        setPasswordInput('');
-      } else {
-        alert('Invalid Password. Please try again.');
-      }
-    } catch (err) {
-      console.error('Admin login error:', err);
-      alert('Login failed. Check your connection.');
+    if (passwordInput === '7060') {
+      setIsAuthenticated(true);
+      setPasswordInput('');
+    } else {
+      alert('Invalid Password. Please try 7060');
     }
   };
 
@@ -294,7 +279,7 @@ export const AdminModal: React.FC = () => {
           </button>
         </div>
 
-        {/* Auth Barrier - Now uses server-side login */}
+        {/* Auth Barrier */}
         {!isAuthenticated ? (
           <form onSubmit={handleLogin} className="p-8 max-w-md mx-auto space-y-4 text-center">
             <div className="w-12 h-12 bg-amber-500/10 border border-amber-500/30 text-amber-400 mx-auto flex items-center justify-center">
