@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Movie, MovieRequest, Notice, MovieComment } from '../types';
+import { Movie, MovieRequest, Notice, MovieComment, LinkReport, ToastMessage } from '../types';
 import { initialMovies } from '../data/initialMovies';
 
 interface MovieContextType {
@@ -16,40 +16,44 @@ interface MovieContextType {
   addMovieRequest: (request: Omit<MovieRequest, 'id' | 'status' | 'createdAt'>) => void;
   notices: Notice[];
   comments: MovieComment[];
-  isAdminOpen: boolean;
-  setIsAdminOpen: (open: boolean) => void;
+  reports: LinkReport[];
+  submitReport: (movieId: string, movieTitle: string, issueType: LinkReport['issueType'], description: string) => Promise<boolean>;
+  toast: ToastMessage | null;
+  showToast: (message: string, type?: ToastMessage['type']) => void;
   isRequestOpen: boolean;
   setIsRequestOpen: (open: boolean) => void;
-  isApiImportOpen: boolean;
-  setIsApiImportOpen: (open: boolean) => void;
+  isReportOpen: boolean;
+  setIsReportOpen: (open: boolean) => void;
+  reportMovieTarget: Movie | null;
+  setReportMovieTarget: (movie: Movie | null) => void;
   activeTrailerUrl: string | null;
   setActiveTrailerUrl: (url: string | null) => void;
   whatsappModalMovie: Movie | null;
   setWhatsappModalMovie: (movie: Movie | null) => void;
-  addMovie: (movie: Movie) => void;
-  updateMovie: (id: string, updatedMovie: Partial<Movie>) => void;
-  deleteMovie: (id: string) => void;
   incrementMovieViews: (id: string) => void;
   incrementMovieDownloads: (id: string) => void;
-  addNotice: (notice: Omit<Notice, 'id' | 'createdAt'>) => void;
-  deleteNotice: (id: string) => void;
-  resetToDefaultData: () => void;
-  exportJsonCatalog: () => string;
-  importJsonCatalog: (jsonString: string) => boolean;
-  refreshMovies: () => Promise<void>;
   fetchComments: (movieId?: string) => Promise<void>;
   addComment: (movieId: string, userName: string, comment: string, rating: number) => Promise<boolean>;
   likeComment: (commentId: string) => Promise<void>;
-  importCartoonFromApi: (searchItem: any, details?: any) => Promise<Movie | null>;
 }
 
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
 
 export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [movies, setMovies] = useState<Movie[]>(initialMovies);
+  // LocalStorage state initialization
+  const [movies, setMovies] = useState<Movie[]>(() => {
+    try {
+      const saved = localStorage.getItem('cineworld_movies');
+      return saved ? JSON.parse(saved) : initialMovies;
+    } catch {
+      return initialMovies;
+    }
+  });
+
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [activeMovie, setActiveMovie] = useState<Movie | null>(null);
+
   const [watchlist, setWatchlist] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem('cineworld_watchlist');
@@ -59,17 +63,82 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   });
 
-  const [requests, setRequests] = useState<MovieRequest[]>([]);
-  const [notices, setNotices] = useState<Notice[]>([]);
-  const [comments, setComments] = useState<MovieComment[]>([]);
+  const [requests, setRequests] = useState<MovieRequest[]>(() => {
+    try {
+      const saved = localStorage.getItem('cineworld_requests');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
 
-  const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
+  const [notices, setNotices] = useState<Notice[]>([]);
+  
+  const [comments, setComments] = useState<MovieComment[]>(() => {
+    try {
+      const saved = localStorage.getItem('cineworld_comments');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const [reports, setReports] = useState<LinkReport[]>(() => {
+    try {
+      const saved = localStorage.getItem('cineworld_reports');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const [toast, setToast] = useState<ToastMessage | null>(null);
   const [isRequestOpen, setIsRequestOpen] = useState<boolean>(false);
-  const [isApiImportOpen, setIsApiImportOpen] = useState<boolean>(false);
+  const [isReportOpen, setIsReportOpen] = useState<boolean>(false);
+  const [reportMovieTarget, setReportMovieTarget] = useState<Movie | null>(null);
   const [activeTrailerUrl, setActiveTrailerUrl] = useState<string | null>(null);
   const [whatsappModalMovie, setWhatsappModalMovie] = useState<Movie | null>(null);
 
-  // Fetch movies from Express API backend
+  const showToast = (message: string, type: ToastMessage['type'] = 'success') => {
+    const id = Date.now().toString();
+    setToast({ id, message, type });
+    setTimeout(() => {
+      setToast((prev) => (prev?.id === id ? null : prev));
+    }, 3500);
+  };
+
+  // Sync to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('cineworld_movies', JSON.stringify(movies));
+    } catch (e) { console.error('LocalStorage error:', e); }
+  }, [movies]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('cineworld_watchlist', JSON.stringify(watchlist));
+    } catch (e) { console.error('LocalStorage error:', e); }
+  }, [watchlist]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('cineworld_requests', JSON.stringify(requests));
+    } catch (e) { console.error('LocalStorage error:', e); }
+  }, [requests]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('cineworld_comments', JSON.stringify(comments));
+    } catch (e) { console.error('LocalStorage error:', e); }
+  }, [comments]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('cineworld_reports', JSON.stringify(reports));
+    } catch (e) { console.error('LocalStorage error:', e); }
+  }, [reports]);
+
+  // Server API Sync
   const refreshMovies = async () => {
     try {
       const res = await fetch('/api/movies');
@@ -101,11 +170,49 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const res = await fetch('/api/requests');
       if (res.ok) {
         const data = await res.json();
-        if (Array.isArray(data)) setRequests(data);
+        if (Array.isArray(data)) setRequests((prev) => (data.length > 0 ? data : prev));
       }
     } catch (err) {
       console.warn('Requests fetch error:', err);
     }
+  };
+
+  const fetchReports = async () => {
+    try {
+      const res = await fetch('/api/reports');
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) setReports((prev) => (data.length > 0 ? data : prev));
+      }
+    } catch (err) {
+      console.warn('Reports fetch error:', err);
+    }
+  };
+
+  const submitReport = async (movieId: string, movieTitle: string, issueType: LinkReport['issueType'], description: string): Promise<boolean> => {
+    const newReport: LinkReport = {
+      id: 'rep-' + Date.now(),
+      movieId,
+      movieTitle,
+      issueType,
+      description,
+      status: 'Pending',
+      createdAt: new Date().toISOString()
+    };
+
+    setReports((prev) => [newReport, ...prev]);
+    showToast('Broken link report submitted! Thank you.', 'success');
+
+    try {
+      await fetch('/api/reports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ movieId, movieTitle, issueType, description })
+      });
+    } catch (err) {
+      console.warn('Server sync report warning:', err);
+    }
+    return true;
   };
 
   const fetchComments = async (movieId?: string) => {
@@ -114,7 +221,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
-        if (Array.isArray(data)) setComments(data);
+        if (Array.isArray(data) && data.length > 0) setComments(data);
       }
     } catch (err) {
       console.warn('Comments fetch error:', err);
@@ -122,24 +229,30 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const addComment = async (movieId: string, userName: string, comment: string, rating: number): Promise<boolean> => {
+    const newComment: MovieComment = {
+      id: 'comm-' + Date.now(),
+      movieId,
+      userName: userName.trim() || 'Anonymous Fan',
+      comment: comment.trim(),
+      rating: rating || 5,
+      likes: 0,
+      avatarBg: 'bg-amber-500',
+      createdAt: new Date().toISOString()
+    };
+
+    setComments((prev) => [newComment, ...prev]);
+    showToast('Comment posted successfully!', 'success');
+
     try {
-      const res = await fetch('/api/comments', {
+      await fetch('/api/comments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ movieId, userName, comment, rating })
       });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success && data.comment) {
-          setComments((prev) => [data.comment, ...prev]);
-          return true;
-        }
-      }
-      return false;
     } catch (err) {
-      console.error('Add comment error:', err);
-      return false;
+      console.warn('Server comment save warning:', err);
     }
+    return true;
   };
 
   const likeComment = async (commentId: string) => {
@@ -149,28 +262,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     try {
       await fetch(`/api/comments/${commentId}/like`, { method: 'POST' });
     } catch (err) {
-      console.error('Like comment error:', err);
-    }
-  };
-
-  const importCartoonFromApi = async (searchItem: any, details?: any): Promise<Movie | null> => {
-    try {
-      const res = await fetch('/api/cartoons/import', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ item: searchItem, details })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success && data.movie) {
-          await refreshMovies();
-          return data.movie;
-        }
-      }
-      return null;
-    } catch (err) {
-      console.error('Import cartoon error:', err);
-      return null;
+      console.warn('Like comment error:', err);
     }
   };
 
@@ -179,72 +271,32 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     fetchNotices();
     fetchRequests();
     fetchComments();
+    fetchReports();
   }, []);
 
-  useEffect(() => {
-    try {
-      localStorage.setItem('cineworld_watchlist', JSON.stringify(watchlist));
-    } catch (e) {
-      console.error('LocalStorage error:', e);
-    }
-  }, [watchlist]);
-
   const toggleWatchlist = (movieId: string) => {
-    setWatchlist((prev) =>
-      prev.includes(movieId) ? prev.filter((id) => id !== movieId) : [...prev, movieId]
-    );
-  };
-
-  const addMovie = async (newMovie: Movie) => {
-    setMovies((prev) => [newMovie, ...prev]);
-    try {
-      await fetch('/api/movies', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newMovie)
-      });
-      refreshMovies();
-    } catch (err) {
-      console.error('Error adding movie:', err);
-    }
-  };
-
-  const updateMovie = async (id: string, updatedMovie: Partial<Movie>) => {
-    setMovies((prev) => prev.map((m) => (m.id === id ? { ...m, ...updatedMovie } : m)));
-    try {
-      await fetch(`/api/movies/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedMovie)
-      });
-      refreshMovies();
-    } catch (err) {
-      console.error('Error updating movie:', err);
-    }
-  };
-
-  const deleteMovie = async (id: string) => {
-    setMovies((prev) => prev.filter((m) => m.id !== id));
-    try {
-      await fetch(`/api/movies/${id}`, { method: 'DELETE' });
-      refreshMovies();
-    } catch (err) {
-      console.error('Error deleting movie:', err);
-    }
+    setWatchlist((prev) => {
+      const exists = prev.includes(movieId);
+      if (exists) {
+        showToast('Removed from Watchlist', 'info');
+        return prev.filter((id) => id !== movieId);
+      } else {
+        showToast('Added to Watchlist!', 'success');
+        return [...prev, movieId];
+      }
+    });
   };
 
   const incrementMovieViews = (id: string) => {
-    const target = movies.find((m) => m.id === id);
-    if (target) {
-      updateMovie(id, { viewsCount: (target.viewsCount || 0) + 1 });
-    }
+    setMovies((prev) =>
+      prev.map((m) => (m.id === id ? { ...m, viewsCount: (m.viewsCount || 0) + 1 } : m))
+    );
   };
 
   const incrementMovieDownloads = (id: string) => {
-    const target = movies.find((m) => m.id === id);
-    if (target) {
-      updateMovie(id, { downloadsCount: (target.downloadsCount || 0) + 1 });
-    }
+    setMovies((prev) =>
+      prev.map((m) => (m.id === id ? { ...m, downloadsCount: (m.downloadsCount || 0) + 1 } : m))
+    );
   };
 
   const addMovieRequest = async (req: Omit<MovieRequest, 'id' | 'status' | 'createdAt'>) => {
@@ -254,7 +306,10 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       status: 'Pending',
       createdAt: new Date().toISOString()
     };
+
     setRequests((prev) => [newReq, ...prev]);
+    showToast('Movie request received! We will add it soon.', 'success');
+
     try {
       await fetch('/api/requests', {
         method: 'POST',
@@ -262,50 +317,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         body: JSON.stringify(newReq)
       });
     } catch (err) {
-      console.error('Error adding request:', err);
-    }
-  };
-
-  const addNotice = async (notice: Omit<Notice, 'id' | 'createdAt'>) => {
-    const newNotice: Notice = {
-      ...notice,
-      id: 'n-' + Date.now(),
-      createdAt: new Date().toISOString()
-    };
-    setNotices((prev) => [newNotice, ...prev]);
-    try {
-      await fetch('/api/notices', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newNotice)
-      });
-    } catch (err) {
-      console.error('Error adding notice:', err);
-    }
-  };
-
-  const deleteNotice = (id: string) => {
-    setNotices((prev) => prev.filter((n) => n.id !== id));
-  };
-
-  const resetToDefaultData = () => {
-    setMovies(initialMovies);
-  };
-
-  const exportJsonCatalog = () => {
-    return JSON.stringify(movies, null, 2);
-  };
-
-  const importJsonCatalog = (jsonString: string): boolean => {
-    try {
-      const parsed = JSON.parse(jsonString);
-      if (Array.isArray(parsed)) {
-        setMovies(parsed);
-        return true;
-      }
-      return false;
-    } catch {
-      return false;
+      console.warn('Request server sync error:', err);
     }
   };
 
@@ -325,31 +337,25 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         addMovieRequest,
         notices,
         comments,
-        isAdminOpen,
-        setIsAdminOpen,
+        reports,
+        submitReport,
+        toast,
+        showToast,
         isRequestOpen,
         setIsRequestOpen,
-        isApiImportOpen,
-        setIsApiImportOpen,
+        isReportOpen,
+        setIsReportOpen,
+        reportMovieTarget,
+        setReportMovieTarget,
         activeTrailerUrl,
         setActiveTrailerUrl,
         whatsappModalMovie,
         setWhatsappModalMovie,
-        addMovie,
-        updateMovie,
-        deleteMovie,
         incrementMovieViews,
         incrementMovieDownloads,
-        addNotice,
-        deleteNotice,
-        resetToDefaultData,
-        exportJsonCatalog,
-        importJsonCatalog,
-        refreshMovies,
         fetchComments,
         addComment,
-        likeComment,
-        importCartoonFromApi
+        likeComment
       }}
     >
       {children}
@@ -359,6 +365,8 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
 export const useMovie = () => {
   const context = useContext(MovieContext);
-  if (!context) throw new Error('useMovie must be used within a MovieProvider');
+  if (!context) {
+    throw new Error('useMovie must be used within a MovieProvider');
+  }
   return context;
 };

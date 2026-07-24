@@ -3,10 +3,20 @@ import { useMovie } from '../context/MovieContext';
 import { VideoPlayer } from './VideoPlayer';
 import { DownloadSection } from './DownloadSection';
 import { CommentSection } from './CommentSection';
-import { ArrowLeft, Star, Clock, Eye, Download, Bookmark, Check, Share2, Film, Heart } from 'lucide-react';
+import { ArrowLeft, Star, Clock, Eye, Download, Bookmark, Check, Share2, AlertTriangle } from 'lucide-react';
 
 export const MovieDetailsView: React.FC = () => {
-  const { activeMovie, setActiveMovie, watchlist, toggleWatchlist, incrementMovieViews, setWhatsappModalMovie } = useMovie();
+  const {
+    activeMovie,
+    setActiveMovie,
+    watchlist,
+    toggleWatchlist,
+    incrementMovieViews,
+    setWhatsappModalMovie,
+    setIsReportOpen,
+    setReportMovieTarget,
+    showToast
+  } = useMovie();
 
   useEffect(() => {
     if (activeMovie) {
@@ -18,6 +28,16 @@ export const MovieDetailsView: React.FC = () => {
   if (!activeMovie) return null;
 
   const isBookmarked = watchlist.includes(activeMovie.id);
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    showToast('Direct CINEWORLD link copied to clipboard!', 'success');
+  };
+
+  const handleOpenReport = () => {
+    setReportMovieTarget(activeMovie);
+    setIsReportOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-black text-white pb-16">
@@ -33,7 +53,25 @@ export const MovieDetailsView: React.FC = () => {
             <span>Back to All Movies & Cartoons</span>
           </button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={handleCopyLink}
+              className="px-3 py-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 border border-white/10 rounded-lg transition-colors cursor-pointer"
+              title="Copy Direct Link"
+            >
+              <Share2 className="w-3.5 h-3.5 text-amber-500" />
+              <span className="hidden sm:inline">Share Link</span>
+            </button>
+
+            <button
+              onClick={handleOpenReport}
+              className="px-3 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 border border-rose-500/30 rounded-lg transition-colors cursor-pointer"
+              title="Report Broken Player or Link"
+            >
+              <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
+              <span className="hidden sm:inline">Report Link</span>
+            </button>
+
             <button
               onClick={() => toggleWatchlist(activeMovie.id)}
               className={`px-3 py-2 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 border rounded-lg transition-colors cursor-pointer ${
@@ -46,10 +84,10 @@ export const MovieDetailsView: React.FC = () => {
 
             <button
               onClick={() => setWhatsappModalMovie(activeMovie)}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 rounded-lg transition-colors cursor-pointer"
+              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 rounded-lg transition-colors cursor-pointer shadow-md shadow-emerald-950"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Download Options</span>
+              <span>Download</span>
             </button>
           </div>
         </div>

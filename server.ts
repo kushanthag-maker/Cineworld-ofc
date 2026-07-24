@@ -13,138 +13,194 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ==================== SECRETS FROM .env (NEVER HARDCODE) ====================
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '7060';
-const ZANTA_API_KEY = 'zan_FLUs8y9T_fcz7cgi12p';
+app.use(cors());
+app.use(express.json());
 
-// ==================== MONGO DB CONNECTION (Improved) ====================
-let dbClient: MongoClient | null = null;
-let db: any = null;
+// Security Headers & Content-Type for API
+app.use('/api', (req, res, next) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  next();
+});
 
-async function connectToMongo() {
-  const mongoUri = process.env.MONGODB_URI;
+// Anti-Spam & Rate Limiter
+const ipRequestLogs = new Map<string, number[]>();
+const rateLimitShield = (limitCount = 15, windowMs = 60000) => {
+  return (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const ip = (req.headers['x-forwarded-for'] as string) || req.ip || '127.0.0.1';
+    const key = `${ip}:${req.path}`;
+    const now = Date.now();
+    const timestamps = (ipRequestLogs.get(key) || []).filter(t => now - t < windowMs);
 
-  if (!mongoUri) {
-    console.warn('⚠️ MONGODB_URI not found in .env file');
-    return null;
-  }
-
-  try {
-    if (!dbClient) {
-      dbClient = new MongoClient(mongoUri);
-      await dbClient.connect();
-      db = dbClient.db('cineworld');
-      console.log('✅ Successfully connected to MongoDB Atlas!');
+    if (timestamps.length >= limitCount) {
+      return res.status(429).json({ success: false, error: 'Too many requests. Anti-spam shield active. Please try again in 1 minute.' });
     }
-    return db;
-  } catch (err: any) {
-    console.error('❌ MongoDB connection error:', err.message);
-    return null;
-  }
-}
 
-async function initMongo() {
-  if (!db) {
-    await connectToMongo();
-  }
-  return db;
-}
+    timestamps.push(now);
+    ipRequestLogs.set(key, timestamps);
+    next();
+  };
+};
 
-// ==================== IN-MEMORY CACHES ====================
-let moviesCache: any[] = [];
-let requestsCache: any[] = [];
-let noticesCache: any[] = [];
-let commentsCache: any[] = [];
+// Input Sanitizer for anti-XSS security
+const sanitizeText = (input: any): string => {
+  if (typeof input !== 'string') return '';
+  return input
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .trim();
+};
 
-// ==================== INITIAL SEED DATA ====================
+// Initial Seed Movies
 const initialSeedMovies = [
   {
     id: 'ben-10-af-s3',
     title: 'Ben 10: Alien Force Season 03',
-    originalTitle: 'Ben 10: Alien Force',
-    category: 'Sinhala Dubbed',
-    posterUrl: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&q=80',
-    backdropUrl: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80',
-    streamUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    rating: 8.5,
+    originalTitle: 'Ben 10: Alien Force Season 03 – සිංහල හඩකැවූ',
     releaseYear: 2024,
-    duration: 'Complete Season',
-    quality: '1080p HD',
-    genres: ['Animation', 'Action', 'Adventure'],
-    director: 'Sinhala Cartoons LK',
-    cast: ['Sinhala Dubbing Team'],
-    description: 'Ben 10: Alien Force Season 3 - Sinhala Dubbed Full Season with high quality streaming and downloads.',
+    duration: '17 Episodes',
+    rating: 8.8,
+    genres: ['Animation', 'Sinhala Cartoon', 'Action', 'Sci-Fi'],
+    director: 'Cartoon Network / Sinhala Cartoons',
+    cast: ['Ben Tennyson', 'Gwen Tennyson', 'Kevin Levin'],
+    description: 'Ben Tennyson is back with upgraded alien powers in full Sinhala Dubbed HD audio. Watch all 17 episodes online or download with high-speed direct server links.',
+    posterUrl: 'https://sinhalacartoons.com/wp-content/uploads/2026/04/SEASON-01-3.png',
+    backdropUrl: 'https://sinhalacartoons.com/wp-content/uploads/2026/04/SEASON-01-3.png',
+    streamUrl: 'https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E1.mp4',
+    category: 'Sinhala Dubbed',
     language: 'Sinhala Dubbed (සිංහල)',
-    hasSinhalaSub: false,
-    viewsCount: 1250,
+    hasSinhalaSub: true,
+    quality: '1080p Full HD',
+    viewsCount: 1420,
     downloadsCount: 890,
+    episodes: [
+      { episode: '01', title: 'Episode 01 - Vengeance of Vilgax Part 1', stream_url: 'https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E1.mp4' },
+      { episode: '02', title: 'Episode 02 - Vengeance of Vilgax Part 2', stream_url: 'https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E2.mp4' },
+      { episode: '03', title: 'Episode 03 - Inferno', stream_url: 'https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E3.mp4' },
+      { episode: '04', title: 'Episode 04 - Simple', stream_url: 'https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E4.mp4' },
+      { episode: '05', title: 'Episode 05 - Vreedle Vreedle', stream_url: 'https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E5.mp4' }
+    ],
+    downloadOptions: [
+      {
+        id: 'opt-b10-1',
+        quality: '1080p Episode 01 Direct',
+        resolution: '1920x1080',
+        size: '180 MB',
+        format: 'MP4 Direct',
+        downloadUrl: 'https://dl.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E1.mp4',
+        server2Url: 'https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E1.mp4',
+        server1Name: 'Server 1 High-Speed R2',
+        server2Name: 'Server 2 Direct CDN'
+      },
+      {
+        id: 'opt-b10-2',
+        quality: '1080p Episode 02 Direct',
+        resolution: '1920x1080',
+        size: '185 MB',
+        format: 'MP4 Direct',
+        downloadUrl: 'https://dl.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E2.mp4',
+        server2Url: 'https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E2.mp4',
+        server1Name: 'Server 1 High-Speed R2',
+        server2Name: 'Server 2 Direct CDN'
+      }
+    ],
     createdAt: new Date().toISOString()
   }
 ];
 
-// ==================== MIDDLEWARE ====================
-app.use(cors());
-app.use(express.json());
-
-app.use('/api', (req, res, next) => {
-  res.setHeader('Content-Type', 'application/json');
-  next();
-});
-
-// ==================== ADMIN LOGIN (Server Side - Secure) ====================
-app.post('/api/admin/login', (req, res) => {
-  const { password } = req.body || {};
-  if (password && password === ADMIN_PASSWORD) {
-    return res.json({ success: true, message: 'Admin access granted' });
+let moviesCache: any[] = [...initialSeedMovies];
+let requestsCache: any[] = [];
+let noticesCache: any[] = [
+  {
+    id: 'n1',
+    title: 'WELCOME TO CINEWORLD LK - SINHALA MOVIES & CARTOONS CINEMA',
+    content: 'Enjoy high-speed direct downloads & streaming for Ben 10, Cartoons, and Sinhala Dubbed Movies in 1080p HD!',
+    type: 'success',
+    isActive: true,
+    createdAt: new Date().toISOString()
   }
-  return res.status(401).json({ success: false, error: 'Invalid admin password' });
-});
+];
 
-// ==================== INIT DATABASE ====================
-async function initDb() {
-  const database = await connectToMongo();
-  if (!database) {
-    console.warn('⚠️ Running without MongoDB (using in-memory cache)');
-    moviesCache = [...initialSeedMovies];
-    return;
+let commentsCache: any[] = [
+  {
+    id: 'c1',
+    movieId: 'ben-10-af-s3',
+    userName: 'Kasun Perera',
+    comment: 'Supiri!! Ben 10 Alien Force Season 3 full hd audio ekka thiyenawa. Episode 1 to 17 okkoma down karagaththa. TFS admin!',
+    rating: 5,
+    likes: 24,
+    avatarBg: 'bg-amber-600',
+    createdAt: new Date(Date.now() - 3600000 * 5).toISOString()
+  },
+  {
+    id: 'c2',
+    movieId: 'ben-10-af-s3',
+    userName: 'Nalaka Bandara',
+    comment: 'Sinhala hoda quality ekata dubbed karala thiyenne. Direct links fast download wenawa server 1 eken.',
+    rating: 5,
+    likes: 18,
+    avatarBg: 'bg-emerald-600',
+    createdAt: new Date(Date.now() - 3600000 * 12).toISOString()
   }
+];
 
+let reportsCache: any[] = [];
+
+// MongoDB Client Connection (if MONGODB_URI is provided)
+let dbClient: MongoClient | null = null;
+async function connectToMongo() {
+  const mongoUri = process.env.MONGODB_URI;
+  if (!mongoUri) return null;
   try {
-    const moviesCol = database.collection('movies');
-    const count = await moviesCol.countDocuments();
-
-    if (count === 0) {
-      await moviesCol.insertMany(initialSeedMovies);
-      moviesCache = [...initialSeedMovies];
-      console.log('✅ Seeded initial movies');
-    } else {
-      moviesCache = await moviesCol.find({}).toArray();
+    if (!dbClient) {
+      dbClient = new MongoClient(mongoUri);
+      await dbClient.connect();
+      console.log('Connected to MongoDB Atlas');
     }
+    return dbClient.db('cineworld');
+  } catch (err) {
+    console.warn('MongoDB connection note:', err);
+    return null;
+  }
+}
 
-    const requestsCol = database.collection('requests');
-    requestsCache = await requestsCol.find({}).toArray();
-
-    const noticesCol = database.collection('notices');
-    const noticeCount = await noticesCol.countDocuments();
-    if (noticeCount > 0) {
-      noticesCache = await noticesCol.find({}).toArray();
+async function initDb() {
+  const db = await connectToMongo();
+  if (db) {
+    try {
+      const moviesCol = db.collection('movies');
+      const count = await moviesCol.countDocuments();
+      if (count === 0) {
+        await moviesCol.insertMany(initialSeedMovies);
+      } else {
+        const storedMovies = await moviesCol.find({}).toArray();
+        moviesCache = storedMovies;
+      }
+    } catch (e) {
+      console.error('Mongo DB init error:', e);
     }
-
-    console.log('✅ MongoDB initialized successfully');
-  } catch (e: any) {
-    console.error('Error initializing MongoDB:', e.message);
   }
 }
 
 initDb();
 
-// ==================== MOVIES API ====================
+// ==================== API ROUTES ====================
+
+// GET /api/movies
 app.get('/api/movies', async (req, res) => {
   try {
-    const database = await connectToMongo();
-    if (database) {
-      const dbMovies = await database.collection('movies').find({}).toArray();
-      if (dbMovies.length > 0) moviesCache = dbMovies;
+    const db = await connectToMongo();
+    if (db) {
+      const dbMovies = await db.collection('movies').find({}).toArray();
+      if (dbMovies && dbMovies.length > 0) {
+        moviesCache = dbMovies;
+      }
     }
     return res.json(moviesCache);
   } catch (err: any) {
@@ -152,257 +208,89 @@ app.get('/api/movies', async (req, res) => {
   }
 });
 
-app.post('/api/movies', async (req, res) => {
-  try {
-    const newMovie = {
-      ...req.body,
-      id: req.body.id || 'm-' + Date.now(),
-      createdAt: new Date().toISOString()
-    };
-    moviesCache = [newMovie, ...moviesCache.filter((m) => m.id !== newMovie.id)];
-
-    const database = await connectToMongo();
-    if (database) {
-      await database.collection('movies').replaceOne({ id: newMovie.id }, newMovie, { upsert: true });
-    }
-    return res.json({ success: true, movie: newMovie });
-  } catch (err: any) {
-    return res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-app.put('/api/movies/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updated = req.body;
-    moviesCache = moviesCache.map((m) => (m.id === id ? { ...m, ...updated } : m));
-
-    const database = await connectToMongo();
-    if (database) {
-      await database.collection('movies').updateOne({ id }, { $set: updated });
-    }
-    return res.json({ success: true });
-  } catch (err: any) {
-    return res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-app.delete('/api/movies/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    moviesCache = moviesCache.filter((m) => m.id !== id);
-
-    const database = await connectToMongo();
-    if (database) {
-      await database.collection('movies').deleteOne({ id });
-    }
-    return res.json({ success: true });
-  } catch (err: any) {
-    return res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-// ==================== ZANTA SINHALA CARTOONS API ====================
-async function importCartoonToDb(searchItem: any, dlDetails: any) {
-  const rawUrl = searchItem.url || searchItem.link || '';
-  if (!rawUrl) return null;
-
-  const movieId = 'zanta-' + Buffer.from(rawUrl).toString('hex').slice(-20);
-
-  const episodes = dlDetails?.episodes || [];
-  const downloadLinks = dlDetails?.download_links || [];
-  const streamUrl = episodes[0]?.stream_url || downloadLinks[0]?.final_link || searchItem.thumbnail || '';
-
-  let downloadOptions: any[] = [];
-
-  if (episodes.length > 0) {
-    downloadOptions = episodes.map((ep: any, idx: number) => ({
-      id: `opt-ep-${idx + 1}`,
-      quality: `Episode ${ep.episode || idx + 1} HD`,
-      resolution: '1080p HD',
-      size: '150 - 280 MB',
-      format: 'MP4 Direct',
-      downloadUrl: ep.stream_url,
-      server2Url: ep.stream_url,
-      server1Name: 'Server 1 CDN Direct',
-      server2Name: 'Server 2 Cloudflare R2'
-    }));
-  } else if (downloadLinks.length > 0) {
-    downloadOptions = downloadLinks.map((dl: any, idx: number) => ({
-      id: `opt-dl-${idx + 1}`,
-      quality: dl.type || `Direct Server ${idx + 1}`,
-      resolution: '1080p HD',
-      size: '350 MB',
-      format: 'MP4 Direct',
-      downloadUrl: dl.final_link,
-      server2Url: dl.final_link,
-      server1Name: 'Server 1 High Speed',
-      server2Name: 'Server 2 Direct'
-    }));
-  }
-
-  const cleanTitle = (dlDetails?.title || searchItem.title || 'Sinhala Cartoon Series')
-    .replace(/–\s*සිංහල\s*හඩකැවූ.*/i, '')
-    .replace(/-\s*Sinhala Cartoons.*/i, '')
-    .trim();
-
-  const movieObj = {
-    id: movieId,
-    title: cleanTitle,
-    originalTitle: searchItem.title,
-    releaseYear: 2024,
-    duration: dlDetails?.total_episodes ? `${dlDetails.total_episodes} Episodes` : 'Complete Cartoon Series',
-    rating: parseFloat(searchItem.rating) || 8.5,
-    genres: ['Animation', 'Sinhala Cartoon', 'Action', 'Family'],
-    director: 'Sinhala Cartoons LK',
-    cast: ['Sinhala Dubbing Team'],
-    description: `${cleanTitle} - Sinhala Dubbed with HD streaming & downloads.`,
-    posterUrl: searchItem.thumbnail,
-    backdropUrl: searchItem.thumbnail,
-    streamUrl: streamUrl,
-    category: 'Sinhala Dubbed',
-    language: 'Sinhala Dubbed (සිංහල)',
-    hasSinhalaSub: false,
-    quality: searchItem.quality || '1080p HD',
-    viewsCount: Math.floor(Math.random() * 800) + 400,
-    downloadsCount: Math.floor(Math.random() * 500) + 300,
-    downloadOptions,
-    episodes: episodes.map((ep: any, idx: number) => ({
-      episode: ep.episode || String(idx + 1).padStart(2, '0'),
-      title: ep.title || `Episode ${idx + 1}`,
-      stream_url: ep.stream_url
-    })),
+// Requests API
+app.get('/api/requests', (req, res) => res.json(requestsCache));
+app.post('/api/requests', rateLimitShield(5, 60000), async (req, res) => {
+  const newReq = {
+    ...req.body,
+    movieTitle: sanitizeText(req.body.movieTitle),
+    requestedBy: sanitizeText(req.body.requestedBy) || 'Anonymous',
+    id: 'req-' + Date.now(),
     createdAt: new Date().toISOString()
   };
-
-  moviesCache = [movieObj, ...moviesCache.filter((m) => m.id !== movieId)];
-
-  const database = await connectToMongo();
-  if (database) {
-    await database.collection('movies').replaceOne({ id: movieId }, movieObj, { upsert: true });
-  }
-
-  return movieObj;
-}
-
-// Cartoons Search
-app.get('/api/cartoons/search', async (req, res) => {
-  try {
-    const query = (req.query.text as string) || 'ben 10';
-    const apiUrl = `https://api.zanta-mini.store/api/slcartoons/search?apiKey=\( {ZANTA_API_KEY}&text= \){encodeURIComponent(query)}`;
-    const response = await fetch(apiUrl);
-    const text = await response.text();
-    try {
-      const data = JSON.parse(text);
-      return res.json(data);
-    } catch {
-      return res.status(502).json({ success: false, message: 'External API error' });
-    }
-  } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-// Cartoons Import
-app.post('/api/cartoons/import', async (req, res) => {
-  try {
-    const { item, details } = req.body;
-    if (!item) return res.status(400).json({ error: 'Item is required' });
-
-    let dlData = details;
-    if (!dlData && item.url) {
-      try {
-        const dlRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/dl?apiKey=\( {ZANTA_API_KEY}&text= \){encodeURIComponent(item.url)}`);
-        const dlJson = await dlRes.json();
-        if (dlJson.success) dlData = dlJson.results;
-      } catch (e) {}
-    }
-
-    const imported = await importCartoonToDb(item, dlData);
-    return res.json({ success: true, movie: imported });
-  } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-// Auto Sync
-app.post('/api/cartoons/auto-sync', async (req, res) => {
-  try {
-    const keywords = req.body.keywords || ['ben 10', 'tom and jerry', 'scooby'];
-    let totalImported = 0;
-
-    for (const kw of keywords) {
-      try {
-        const searchRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/search?apiKey=\( {ZANTA_API_KEY}&text= \){encodeURIComponent(kw)}`);
-        const searchJson = await searchRes.json();
-
-        if (searchJson.success && Array.isArray(searchJson.results)) {
-          for (const item of searchJson.results.slice(0, 5)) {
-            try {
-              const dlRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/dl?apiKey=\( {ZANTA_API_KEY}&text= \){encodeURIComponent(item.url)}`);
-              const dlJson = await dlRes.json();
-              if (dlJson.success) {
-                await importCartoonToDb(item, dlJson.results);
-                totalImported++;
-              }
-            } catch (e) {}
-          }
-        }
-      } catch (e) {}
-    }
-
-    return res.json({ success: true, importedCount: totalImported, totalCached: moviesCache.length });
-  } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-// ==================== REQUESTS, NOTICES, COMMENTS ====================
-app.get('/api/requests', (req, res) => res.json(requestsCache));
-
-app.post('/api/requests', async (req, res) => {
-  const newReq = { ...req.body, id: 'req-' + Date.now(), createdAt: new Date().toISOString() };
   requestsCache = [newReq, ...requestsCache];
-  const database = await connectToMongo();
-  if (database) await database.collection('requests').insertOne(newReq);
+  const db = await connectToMongo();
+  if (db) await db.collection('requests').insertOne(newReq);
   return res.json({ success: true, request: newReq });
 });
 
+// Notices API
 app.get('/api/notices', (req, res) => res.json(noticesCache));
 
-app.post('/api/notices', async (req, res) => {
-  const newNotice = { ...req.body, id: 'n-' + Date.now(), createdAt: new Date().toISOString() };
-  noticesCache = [newNotice, ...noticesCache];
-  const database = await connectToMongo();
-  if (database) await database.collection('notices').insertOne(newNotice);
-  return res.json({ success: true, notice: newNotice });
+// Broken Link Reports API
+app.get('/api/reports', (req, res) => res.json(reportsCache));
+app.post('/api/reports', rateLimitShield(5, 60000), async (req, res) => {
+  try {
+    const { movieId, movieTitle, issueType, description } = req.body;
+    if (!movieId) return res.status(400).json({ error: 'movieId parameter is required' });
+
+    const newReport = {
+      id: 'rep-' + Date.now(),
+      movieId: sanitizeText(movieId),
+      movieTitle: sanitizeText(movieTitle) || 'Unknown Content',
+      issueType: sanitizeText(issueType) || 'Stream Not Working',
+      description: sanitizeText(description),
+      status: 'Pending',
+      createdAt: new Date().toISOString()
+    };
+
+    reportsCache = [newReport, ...reportsCache];
+    const db = await connectToMongo();
+    if (db) await db.collection('reports').insertOne(newReport);
+
+    return res.json({ success: true, report: newReport });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
 });
 
+// Comments API
 app.get('/api/comments', (req, res) => {
   const { movieId } = req.query;
-  if (movieId) return res.json(commentsCache.filter((c) => c.movieId === movieId));
+  if (movieId) {
+    const filtered = commentsCache.filter((c) => c.movieId === movieId);
+    return res.json(filtered);
+  }
   return res.json(commentsCache);
 });
 
-app.post('/api/comments', async (req, res) => {
+app.post('/api/comments', rateLimitShield(8, 60000), async (req, res) => {
   try {
     const { movieId, userName, comment, rating } = req.body;
-    if (!movieId || !comment) return res.status(400).json({ error: 'movieId and comment required' });
+    if (!movieId || !comment) {
+      return res.status(400).json({ error: 'movieId and comment are required' });
+    }
+
+    const bgColors = ['bg-amber-600', 'bg-emerald-600', 'bg-blue-600', 'bg-purple-600', 'bg-rose-600'];
+    const randomBg = bgColors[Math.floor(Math.random() * bgColors.length)];
 
     const newComment = {
       id: 'comm-' + Date.now(),
-      movieId,
-      userName: userName || 'Anonymous Fan',
-      comment,
+      movieId: sanitizeText(movieId),
+      userName: sanitizeText(userName) || 'Anonymous Fan',
+      comment: sanitizeText(comment),
       rating: Number(rating) || 5,
       likes: 0,
-      avatarBg: 'bg-amber-600',
+      avatarBg: randomBg,
       createdAt: new Date().toISOString()
     };
 
     commentsCache = [newComment, ...commentsCache];
-    const database = await connectToMongo();
-    if (database) await database.collection('comments').insertOne(newComment);
+
+    const db = await connectToMongo();
+    if (db) {
+      await db.collection('comments').insertOne(newComment);
+    }
 
     return res.json({ success: true, comment: newComment });
   } catch (err: any) {
@@ -414,7 +302,6 @@ app.post('/api/comments/:id/like', async (req, res) => {
   try {
     const { id } = req.params;
     let foundComment: any = null;
-
     commentsCache = commentsCache.map((c) => {
       if (c.id === id) {
         foundComment = { ...c, likes: (c.likes || 0) + 1 };
@@ -423,9 +310,9 @@ app.post('/api/comments/:id/like', async (req, res) => {
       return c;
     });
 
-    const database = await connectToMongo();
-    if (database && foundComment) {
-      await database.collection('comments').updateOne({ id }, { $inc: { likes: 1 } });
+    const db = await connectToMongo();
+    if (db && foundComment) {
+      await db.collection('comments').updateOne({ id }, { $inc: { likes: 1 } });
     }
 
     return res.json({ success: true, comment: foundComment });
@@ -434,7 +321,7 @@ app.post('/api/comments/:id/like', async (req, res) => {
   }
 });
 
-// ==================== CATCH-ALL ====================
+// Catch-all route to serve SPA or fallback
 app.use((req, res, next) => {
   if (req.path.startsWith('/api')) {
     return res.status(404).json({ success: false, error: 'Endpoint not found' });
@@ -442,7 +329,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// ==================== START SERVER ====================
 export { app };
 
 if (process.env.START_SERVER === 'true') {
@@ -450,3 +336,7 @@ if (process.env.START_SERVER === 'true') {
     console.log(`CINEWORLD Express Server running on port ${PORT}`);
   });
 }
+
+
+
+

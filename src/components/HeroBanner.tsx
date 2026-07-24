@@ -1,12 +1,13 @@
 import React from 'react';
 import { useMovie } from '../context/MovieContext';
-import { Play, Download, Star, Sparkles, DownloadCloud, Film } from 'lucide-react';
+import { Play, Download, Star } from 'lucide-react';
 
 export const HeroBanner: React.FC = () => {
-  const { movies, setActiveMovie, setWhatsappModalMovie, setIsApiImportOpen } = useMovie();
+  const { movies, setActiveMovie, setWhatsappModalMovie } = useMovie();
 
   const featured = movies[0];
   if (!featured) return null;
+
 
   return (
     <div className="relative w-full min-h-[420px] lg:min-h-[480px] bg-black flex items-center overflow-hidden border-b border-amber-500/20">
@@ -75,14 +76,6 @@ export const HeroBanner: React.FC = () => {
             >
               <Download className="w-4 h-4 text-amber-500" />
               <span>Direct Download</span>
-            </button>
-
-            <button
-              onClick={() => setIsApiImportOpen(true)}
-              className="px-5 py-3 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 hover:border-amber-500/50 text-xs font-bold uppercase tracking-wider flex items-center gap-2 rounded-xl transition-all cursor-pointer"
-            >
-              <DownloadCloud className="w-4 h-4 text-amber-500" />
-              <span>Search & Import More</span>
             </button>
           </div>
         </div>

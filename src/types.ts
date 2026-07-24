@@ -73,3 +73,20 @@ export interface MovieComment {
   likes: number;
   createdAt: string;
 }
+
+export interface LinkReport {
+  id: string;
+  movieId: string;
+  movieTitle: string;
+  issueType: 'Stream Not Working' | 'Download Link Broken' | 'Wrong Episode / Audio' | 'Other Issue';
+  description: string;
+  status: 'Pending' | 'Fixed';
+  createdAt: string;
+}
+
+export interface ToastMessage {
+  id: string;
+  message: string;
+  type: 'success' | 'info' | 'error';
+}
+
