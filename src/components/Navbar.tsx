@@ -16,6 +16,8 @@ import {
   Flame
 } from 'lucide-react';
 
+import logoImg from '../assets/images/cineworld_logo_1784874799347.jpg';
+
 interface NavbarProps {
   onNavigateTab: (tab: 'home' | 'watchlist' | 'sinhala-sub' | 'sinhala-dub' | 'tv-series') => void;
   activeTab: string;
@@ -71,6 +73,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateTab, activeTab }) => {
             onClick={() => handleTabClick('home')}
             className="flex items-center gap-3 cursor-pointer group select-none shrink-0"
           >
+            <div className="w-9 h-9 rounded-full overflow-hidden border border-amber-500/50 shadow-md group-hover:border-amber-400 transition-colors">
+              <img src={logoImg} alt="Cineworld Logo" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+            </div>
             <div className="flex flex-col">
               <span className="text-2xl font-black tracking-tighter text-white uppercase font-brand">
                 CINE<span className="text-amber-500">WORLD</span>

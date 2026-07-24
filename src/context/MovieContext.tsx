@@ -127,6 +127,44 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
 
+  // Load initial data from MongoDB API on mount
+  useEffect(() => {
+    const fetchApiData = async () => {
+      try {
+        const [moviesRes, requestsRes, reviewsRes] = await Promise.all([
+          fetch('/api/movies'),
+          fetch('/api/requests'),
+          fetch('/api/reviews')
+        ]);
+
+        if (moviesRes.ok) {
+          const moviesData = await moviesRes.json();
+          if (Array.isArray(moviesData) && moviesData.length > 0) {
+            setMovies(moviesData);
+          }
+        }
+
+        if (requestsRes.ok) {
+          const requestsData = await requestsRes.json();
+          if (Array.isArray(requestsData)) {
+            setMovieRequests(requestsData);
+          }
+        }
+
+        if (reviewsRes.ok) {
+          const reviewsData = await reviewsRes.json();
+          if (reviewsData && typeof reviewsData === 'object') {
+            setReviews(reviewsData);
+          }
+        }
+      } catch (err) {
+        console.warn('API fetch warning, fallback to local storage:', err);
+      }
+    };
+
+    fetchApiData();
+  }, []);
+
   // Persistence Effects
   useEffect(() => {
     try {
@@ -167,7 +205,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     );
   };
 
-  const addMovie = (movieData: Omit<Movie, 'id' | 'viewsCount' | 'downloadsCount' | 'createdAt'>) => {
+  const addMovie = async (movieData: Omit<Movie, 'id' | 'viewsCount' | 'downloadsCount' | 'createdAt'>) => {
     const newId = 'm-' + Date.now();
     const newMovie: Movie = {
       ...movieData,
@@ -177,38 +215,76 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       createdAt: new Date().toISOString()
     };
     setMovies((prev) => [newMovie, ...prev]);
+
+    try {
+      await fetch('/api/movies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newMovie)
+      });
+    } catch (err) {
+      console.error('Failed to save movie to API:', err);
+    }
   };
 
-  const updateMovie = (id: string, updatedMovie: Partial<Movie>) => {
+  const updateMovie = async (id: string, updatedMovie: Partial<Movie>) => {
     setMovies((prev) =>
       prev.map((m) => (m.id === id ? { ...m, ...updatedMovie } : m))
     );
     if (activeMovie && activeMovie.id === id) {
       setActiveMovie((prev) => (prev ? { ...prev, ...updatedMovie } : null));
     }
+
+    try {
+      await fetch(`/api/movies/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedMovie)
+      });
+    } catch (err) {
+      console.error('Failed to update movie on API:', err);
+    }
   };
 
-  const deleteMovie = (id: string) => {
+  const deleteMovie = async (id: string) => {
     setMovies((prev) => prev.filter((m) => m.id !== id));
     setWatchlist((prev) => prev.filter((wId) => wId !== id));
     if (activeMovie && activeMovie.id === id) {
       setActiveMovie(null);
     }
+
+    try {
+      await fetch(`/api/movies/${id}`, { method: 'DELETE' });
+    } catch (err) {
+      console.error('Failed to delete movie on API:', err);
+    }
   };
 
-  const incrementMovieViews = (id: string) => {
+  const incrementMovieViews = async (id: string) => {
     setMovies((prev) =>
       prev.map((m) => (m.id === id ? { ...m, viewsCount: m.viewsCount + 1 } : m))
     );
+
+    try {
+      await fetch(`/api/movies/${id}/view`, { method: 'POST' });
+    } catch (err) {
+      console.error('Failed to increment views on API:', err);
+    }
   };
 
-  const incrementMovieDownloads = (id: string) => {
+  const incrementMovieDownloads = async (id: string) => {
     setMovies((prev) =>
       prev.map((m) => (m.id === id ? { ...m, downloadsCount: m.downloadsCount + 1 } : m))
     );
+
+    try {
+      await fetch(`/api/movies/${id}/download`, { method: 'POST' });
+    } catch (err) {
+      console.error('Failed to increment downloads on API:', err);
+    }
   };
 
-  const addReview = (movieId: string, userName: string, rating: number, comment: string) => {
+  const addReview = async (movieId: string, userName: string, rating: number, comment: string) => {
     const newReview: Review = {
       id: 'rev-' + Date.now(),
       movieId,
@@ -221,9 +297,19 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       ...prev,
       [movieId]: [newReview, ...(prev[movieId] || [])]
     }));
+
+    try {
+      await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newReview)
+      });
+    } catch (err) {
+      console.error('Failed to add review on API:', err);
+    }
   };
 
-  const submitMovieRequest = (movieName: string, language: string, notes?: string, email?: string) => {
+  const submitMovieRequest = async (movieName: string, language: string, notes?: string, email?: string) => {
     const newReq: MovieRequest = {
       id: 'req-' + Date.now(),
       movieName,
@@ -234,12 +320,32 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       createdAt: new Date().toISOString()
     };
     setMovieRequests((prev) => [newReq, ...prev]);
+
+    try {
+      await fetch('/api/requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newReq)
+      });
+    } catch (err) {
+      console.error('Failed to submit request on API:', err);
+    }
   };
 
-  const updateRequestStatus = (id: string, status: 'Pending' | 'Added' | 'Rejected') => {
+  const updateRequestStatus = async (id: string, status: 'Pending' | 'Added' | 'Rejected') => {
     setMovieRequests((prev) =>
       prev.map((r) => (r.id === id ? { ...r, status } : r))
     );
+
+    try {
+      await fetch(`/api/requests/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      });
+    } catch (err) {
+      console.error('Failed to update request status on API:', err);
+    }
   };
 
   // Admin login check with password "7060"

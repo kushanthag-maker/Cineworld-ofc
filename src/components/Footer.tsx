@@ -1,6 +1,7 @@
 import React from 'react';
 import { Film, Lock, ShieldCheck, Github, ExternalLink, Heart, Subtitles, Flame } from 'lucide-react';
 import { useMovie } from '../context/MovieContext';
+import logoImg from '../assets/images/cineworld_logo_1784874799347.jpg';
 
 export const Footer: React.FC = () => {
   const { setIsAdminModalOpen, movies } = useMovie();
@@ -14,6 +15,9 @@ export const Footer: React.FC = () => {
           {/* Brand Info */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full overflow-hidden border border-amber-500/50 shadow-md">
+                <img src={logoImg} alt="Cineworld Logo" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+              </div>
               <span className="text-2xl font-black text-white font-brand tracking-tighter uppercase">
                 CINE<span className="text-amber-500">WORLD</span>
               </span>
