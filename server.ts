@@ -111,6 +111,220 @@ async function startServer() {
     }
   });
 
+  // ==================== SINHALA CARTOON API INTEGRATION ====================
+  const ZANTA_API_KEY = 'zan_FLUs8y9T_fcz7cgi12p';
+
+  // Helper to import a cartoon item into CINEWORLD database
+  async function importCartoonToDb(searchItem: any, dlDetails: any) {
+    const rawUrl = searchItem.url || searchItem.link || '';
+    if (!rawUrl) return null;
+
+    const movieId = 'zanta-' + Buffer.from(rawUrl).toString('hex').slice(-24);
+
+    const episodes = dlDetails?.episodes || [];
+    const downloadLinks = dlDetails?.download_links || [];
+
+    const streamUrl = episodes[0]?.stream_url || downloadLinks[0]?.final_link || searchItem.thumbnail || '';
+
+    // Create Download Options for each episode or full series
+    let downloadOptions: any[] = [];
+
+    if (episodes.length > 0) {
+      downloadOptions = episodes.map((ep: any, idx: number) => {
+        const epNum = ep.episode || String(idx + 1).padStart(2, '0');
+        const s1Url = ep.stream_url;
+        const s2Url = downloadLinks[0]?.final_link || s1Url;
+
+        return {
+          id: `opt-ep-${idx + 1}`,
+          quality: `Episode ${epNum}`,
+          resolution: '1080p HD',
+          size: '150 - 300 MB',
+          format: 'MP4 Direct',
+          downloadUrl: s1Url,
+          server2Url: s2Url,
+          server1Name: 'Server 1 CDN Direct',
+          server2Name: 'Server 2 Cloudflare R2'
+        };
+      });
+    } else if (downloadLinks.length > 0) {
+      downloadOptions = downloadLinks.map((dl: any, idx: number) => ({
+        id: `opt-dl-${idx + 1}`,
+        quality: dl.type || `Direct Server ${idx + 1}`,
+        resolution: '1080p HD',
+        size: '350 MB',
+        format: 'MP4 Direct',
+        downloadUrl: dl.final_link,
+        server2Url: dl.final_link,
+        server1Name: 'Server 1 High Speed',
+        server2Name: 'Server 2 Direct'
+      }));
+    } else {
+      downloadOptions = [
+        {
+          id: 'opt-default',
+          quality: '1080p Full HD',
+          resolution: '1920x1080',
+          size: '350 MB',
+          format: 'MP4 Direct',
+          downloadUrl: streamUrl,
+          server2Url: streamUrl,
+          server1Name: 'Server 1 Direct',
+          server2Name: 'Server 2 Mirror'
+        }
+      ];
+    }
+
+    const cleanTitle = (dlDetails?.title || searchItem.title || 'Sinhala Cartoon Series')
+      .replace(/–\s*සිංහල\s*හඩකැවූ.*/i, '')
+      .replace(/-\s*Sinhala Cartoons.*/i, '')
+      .trim();
+
+    const movieObj = {
+      id: movieId,
+      title: cleanTitle,
+      originalTitle: searchItem.title,
+      releaseYear: 2024,
+      duration: dlDetails?.total_episodes ? `${dlDetails.total_episodes} Episodes` : 'Complete Series',
+      rating: parseFloat(searchItem.rating) || 8.5,
+      genres: ['Animation', 'Sinhala Cartoon', 'Action', 'Family'],
+      director: 'Sinhala Cartoons LK',
+      cast: ['Sinhala Dubbing Team'],
+      description: `${cleanTitle} - Sinhala Dubbed Series available for online streaming and direct high-speed download. Total Episodes: ${dlDetails?.total_episodes || episodes.length || 1}.`,
+      posterUrl: searchItem.thumbnail,
+      backdropUrl: searchItem.thumbnail,
+      streamUrl: streamUrl,
+      category: 'Sinhala Dubbed',
+      language: 'Sinhala Dubbed (සිංහල)',
+      hasSinhalaSub: false,
+      quality: searchItem.quality || '1080p HD',
+      viewsCount: Math.floor(Math.random() * 800) + 300,
+      downloadsCount: Math.floor(Math.random() * 500) + 200,
+      downloadOptions: downloadOptions,
+      createdAt: new Date().toISOString()
+    };
+
+    // Update in-memory cache
+    moviesCache = [movieObj, ...moviesCache.filter((m) => m.id !== movieId)];
+
+    // Persist to MongoDB Atlas
+    const database = await connectToMongo();
+    if (database) {
+      await database.collection('movies').replaceOne({ id: movieId }, movieObj, { upsert: true });
+    }
+
+    return movieObj;
+  }
+
+  // GET /api/cartoons/search
+  app.get('/api/cartoons/search', async (req, res) => {
+    try {
+      const query = (req.query.text as string) || 'ben 10';
+      const apiUrl = `https://api.zanta-mini.store/api/slcartoons/search?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(query)}`;
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      res.json(data);
+    } catch (error: any) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // GET /api/cartoons/dl
+  app.get('/api/cartoons/dl', async (req, res) => {
+    try {
+      const url = req.query.url as string;
+      if (!url) return res.status(400).json({ error: 'URL parameter is required' });
+
+      const apiUrl = `https://api.zanta-mini.store/api/slcartoons/dl?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(url)}`;
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      res.json(data);
+    } catch (error: any) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // POST /api/cartoons/import
+  app.post('/api/cartoons/import', async (req, res) => {
+    try {
+      const { item, details } = req.body;
+      if (!item) return res.status(400).json({ error: 'Item parameter is required' });
+
+      let dlData = details;
+      if (!dlData && item.url) {
+        const dlRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/dl?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(item.url)}`);
+        const json = await dlRes.json();
+        if (json.success) {
+          dlData = json.results;
+        }
+      }
+
+      const imported = await importCartoonToDb(item, dlData);
+      res.json({ success: true, movie: imported });
+    } catch (error: any) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // POST /api/cartoons/auto-sync
+  app.post('/api/cartoons/auto-sync', async (req, res) => {
+    try {
+      const keywords = (req.body.keywords as string[]) || ['ben 10', 'tom and jerry', 'scooby', 'avatar', 'cartoon', 'sinhala'];
+      let totalImported = 0;
+
+      for (const kw of keywords) {
+        try {
+          const searchRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/search?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(kw)}`);
+          const searchJson = await searchRes.json();
+
+          if (searchJson.success && Array.isArray(searchJson.results)) {
+            for (const item of searchJson.results.slice(0, 5)) { // process top 5 of each keyword
+              try {
+                const dlRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/dl?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(item.url)}`);
+                const dlJson = await dlRes.json();
+                if (dlJson.success) {
+                  await importCartoonToDb(item, dlJson.results);
+                  totalImported++;
+                }
+              } catch (e) {
+                console.warn(`Failed to import item ${item.title}:`, e);
+              }
+            }
+          }
+        } catch (kwErr) {
+          console.warn(`Failed search for keyword ${kw}:`, kwErr);
+        }
+      }
+
+      res.json({ success: true, importedCount: totalImported, totalCached: moviesCache.length });
+    } catch (error: any) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // Background Auto-Sync Worker (Runs every 10 minutes)
+  setInterval(() => {
+    console.log('[Auto-Sync] Running background Sinhala Cartoon sync worker...');
+    const defaultKw = ['ben 10', 'tom and jerry', 'scooby', 'avatar', 'cartoon'];
+    const kw = defaultKw[Math.floor(Math.random() * defaultKw.length)];
+
+    fetch(`https://api.zanta-mini.store/api/slcartoons/search?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(kw)}`)
+      .then((r) => r.json())
+      .then(async (data) => {
+        if (data.success && Array.isArray(data.results)) {
+          for (const item of data.results.slice(0, 3)) {
+            const dlRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/dl?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(item.url)}`);
+            const dlJson = await dlRes.json();
+            if (dlJson.success) {
+              await importCartoonToDb(item, dlJson.results);
+            }
+          }
+          console.log(`[Auto-Sync] Successfully synced background cartoons for query "${kw}"`);
+        }
+      })
+      .catch((e) => console.error('[Auto-Sync Error]:', e));
+  }, 10 * 60 * 1000);
+
   // POST Create Movie
   app.post('/api/movies', async (req, res) => {
     try {

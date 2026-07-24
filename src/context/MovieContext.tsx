@@ -49,6 +49,7 @@ interface MovieContextType {
   resetToDefaultData: () => void;
   importJsonCatalog: (jsonString: string) => boolean;
   exportJsonCatalog: () => string;
+  refreshMovies: () => Promise<void>;
 }
 
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
@@ -506,7 +507,20 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         adminLogout,
         resetToDefaultData,
         importJsonCatalog,
-        exportJsonCatalog
+        exportJsonCatalog,
+        refreshMovies: async () => {
+          try {
+            const res = await fetch('/api/movies');
+            if (res.ok) {
+              const data = await res.json();
+              if (Array.isArray(data)) {
+                setMovies(data);
+              }
+            }
+          } catch (err) {
+            console.warn('Error refreshing movies:', err);
+          }
+        }
       }}
     >
       {children}

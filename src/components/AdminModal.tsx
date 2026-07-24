@@ -19,7 +19,11 @@ import {
   FileJson,
   UserCheck,
   Subtitles,
-  KeyRound
+  KeyRound,
+  RefreshCw,
+  Search,
+  Bot,
+  Zap
 } from 'lucide-react';
 
 export const AdminModal: React.FC = () => {
@@ -40,13 +44,91 @@ export const AdminModal: React.FC = () => {
     deleteNotice,
     resetToDefaultData,
     exportJsonCatalog,
-    importJsonCatalog
+    importJsonCatalog,
+    refreshMovies
   } = useMovie();
 
   const [passwordInput, setPasswordInput] = useState('');
   const [loginError, setLoginError] = useState(false);
 
-  const [activeAdminTab, setActiveAdminTab] = useState<'add' | 'manage' | 'requests' | 'notices' | 'export'>('add');
+  const [activeAdminTab, setActiveAdminTab] = useState<'add' | 'manage' | 'requests' | 'notices' | 'export' | 'sync'>('add');
+
+  // API Auto Sync State
+  const [apiQuery, setApiQuery] = useState('ben 10');
+  const [apiSearchResults, setApiSearchResults] = useState<any[]>([]);
+  const [isSearchingApi, setIsSearchingApi] = useState(false);
+  const [isAutoSyncing, setIsAutoSyncing] = useState(false);
+  const [importingUrls, setImportingUrls] = useState<Set<string>>(new Set());
+  const [syncStatus, setSyncStatus] = useState<string | null>(null);
+
+  const handleSearchApi = async () => {
+    if (!apiQuery.trim()) return;
+    setIsSearchingApi(true);
+    setSyncStatus(null);
+    try {
+      const res = await fetch(`/api/cartoons/search?text=${encodeURIComponent(apiQuery)}`);
+      const data = await res.json();
+      if (data.success && Array.isArray(data.results)) {
+        setApiSearchResults(data.results);
+      } else {
+        setApiSearchResults([]);
+        setSyncStatus('No results found from Sinhala Cartoons API.');
+      }
+    } catch (err: any) {
+      setSyncStatus('API Error: ' + err.message);
+    } finally {
+      setIsSearchingApi(false);
+    }
+  };
+
+  const handleImportSingleItem = async (item: any) => {
+    setImportingUrls((prev) => new Set(prev).add(item.url));
+    try {
+      const res = await fetch('/api/cartoons/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item })
+      });
+      const data = await res.json();
+      if (data.success) {
+        await refreshMovies();
+        setSyncStatus(`Successfully imported "${data.movie.title}" into CINEWORLD database!`);
+      } else {
+        setSyncStatus('Failed to import: ' + (data.error || 'Unknown error'));
+      }
+    } catch (err: any) {
+      setSyncStatus('Import error: ' + err.message);
+    } finally {
+      setImportingUrls((prev) => {
+        const next = new Set(prev);
+        next.delete(item.url);
+        return next;
+      });
+    }
+  };
+
+  const handleRunFullAutoSync = async () => {
+    setIsAutoSyncing(true);
+    setSyncStatus('Running full automatic search & sync across cartoon keywords...');
+    try {
+      const res = await fetch('/api/cartoons/auto-sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ keywords: ['ben 10', 'tom and jerry', 'scooby', 'avatar', 'cartoon', 'sinhala'] })
+      });
+      const data = await res.json();
+      if (data.success) {
+        await refreshMovies();
+        setSyncStatus(`Auto Sync Complete! Imported ${data.importedCount} new items. Total catalog: ${data.totalCached} movies/cartoons.`);
+      } else {
+        setSyncStatus('Sync error: ' + (data.error || 'Failed'));
+      }
+    } catch (err: any) {
+      setSyncStatus('Sync execution failed: ' + err.message);
+    } finally {
+      setIsAutoSyncing(false);
+    }
+  };
 
   // Notice Form State
   const [noticeTitle, setNoticeTitle] = useState('');
@@ -425,7 +507,176 @@ export const AdminModal: React.FC = () => {
                 <FileJson className="w-4 h-4" />
                 <span>Vercel Backup / JSON</span>
               </button>
+
+              <button
+                onClick={() => setActiveAdminTab('sync')}
+                className={`px-4 py-2.5 font-bold text-xs rounded-xl flex items-center gap-2 border ${
+                  activeAdminTab === 'sync'
+                    ? 'bg-amber-500 text-black border-amber-400 font-black'
+                    : 'bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20'
+                }`}
+              >
+                <Zap className="w-4 h-4 text-amber-500" />
+                <span>API Auto Sync & Search</span>
+              </button>
             </div>
+
+            {/* TAB: API Auto Sync & Import */}
+            {activeAdminTab === 'sync' && (
+              <div className="space-y-6 bg-zinc-900/60 p-6 rounded-2xl border border-zinc-800">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-zinc-800">
+                  <div>
+                    <h3 className="text-lg font-bold text-white font-serif flex items-center gap-2">
+                      <Zap className="w-5 h-5 text-amber-500" />
+                      <span>Sinhala Cartoons & Movies API Auto-Sync Engine</span>
+                    </h3>
+                    <p className="text-xs text-zinc-400 font-mono mt-0.5">
+                      Connected to Zanta Mini API • Automatically fetches streams, episodes & direct download links.
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={handleRunFullAutoSync}
+                    disabled={isAutoSyncing}
+                    className="px-5 py-2.5 bg-amber-500 hover:bg-white text-black font-black text-xs uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50 shrink-0"
+                  >
+                    {isAutoSyncing ? (
+                      <>
+                        <RefreshCw className="w-4 h-4 animate-spin" />
+                        <span>Syncing Catalog...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Bot className="w-4 h-4" />
+                        <span>Run Full Catalog Auto-Sync</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {syncStatus && (
+                  <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs font-mono text-amber-300 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 shrink-0 text-amber-400" />
+                    <span>{syncStatus}</span>
+                  </div>
+                )}
+
+                {/* API Search Form */}
+                <div className="space-y-3">
+                  <label className="block text-xs font-semibold text-zinc-300">
+                    Live Search External API Catalog
+                  </label>
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <Search className="w-4 h-4 absolute left-3 top-3 text-zinc-500" />
+                      <input
+                        type="text"
+                        value={apiQuery}
+                        onChange={(e) => setApiQuery(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleSearchApi())}
+                        placeholder="Search e.g. Ben 10, Tom and Jerry, Scooby, Avatar, Dora..."
+                        className="w-full bg-zinc-900 border border-zinc-800 text-white text-xs pl-9 pr-4 py-2.5 rounded-xl focus:border-amber-500 outline-none"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleSearchApi}
+                      disabled={isSearchingApi}
+                      className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs rounded-xl flex items-center gap-2 border border-zinc-700 transition-colors cursor-pointer"
+                    >
+                      {isSearchingApi ? (
+                        <RefreshCw className="w-4 h-4 animate-spin text-amber-500" />
+                      ) : (
+                        <Search className="w-4 h-4 text-amber-500" />
+                      )}
+                      <span>Search API</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Search Results */}
+                {apiSearchResults.length > 0 ? (
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-xs text-zinc-400 font-mono">
+                      <span>Found {apiSearchResults.length} items from API</span>
+                      <span>Click 'Import to CINEWORLD' to publish instantly</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[450px] overflow-y-auto pr-1">
+                      {apiSearchResults.map((resItem, idx) => {
+                        const isImporting = importingUrls.has(resItem.url);
+                        const isAlreadyInCatalog = movies.some((m) => m.originalTitle === resItem.title || m.title === resItem.title);
+
+                        return (
+                          <div
+                            key={idx}
+                            className="p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center gap-3 hover:border-amber-500/50 transition-all"
+                          >
+                            <img
+                              src={resItem.thumbnail}
+                              alt={resItem.title}
+                              className="w-16 h-20 object-cover rounded-lg shrink-0 border border-zinc-800 bg-black"
+                              onError={(e) => {
+                                (e.target as HTMLElement).style.display = 'none';
+                              }}
+                            />
+
+                            <div className="flex-1 min-w-0 space-y-1">
+                              <h5 className="text-xs font-bold text-white truncate" title={resItem.title}>
+                                {resItem.title}
+                              </h5>
+                              <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-400">
+                                <span className="text-amber-400">★ {resItem.rating || '8.2'}</span>
+                                <span>•</span>
+                                <span className="px-1.5 py-0.5 bg-amber-500/10 text-amber-400 rounded border border-amber-500/30">
+                                  {resItem.quality || 'HD'}
+                                </span>
+                                <span>•</span>
+                                <span className="truncate">{resItem.type || 'Cartoon'}</span>
+                              </div>
+                            </div>
+
+                            <button
+                              onClick={() => handleImportSingleItem(resItem)}
+                              disabled={isImporting || isAlreadyInCatalog}
+                              className={`px-3 py-2 text-[10px] font-black uppercase tracking-wider rounded-lg flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer disabled:opacity-60 ${
+                                isAlreadyInCatalog
+                                  ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'
+                                  : 'bg-amber-500 hover:bg-white text-black'
+                              }`}
+                            >
+                              {isImporting ? (
+                                <>
+                                  <RefreshCw className="w-3 h-3 animate-spin" />
+                                  <span>Importing...</span>
+                                </>
+                              ) : isAlreadyInCatalog ? (
+                                <>
+                                  <CheckCircle className="w-3 h-3" />
+                                  <span>In Catalog</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Plus className="w-3 h-3" />
+                                  <span>Import</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-10 border border-dashed border-zinc-800 rounded-xl space-y-2">
+                    <Bot className="w-8 h-8 text-zinc-600 mx-auto" />
+                    <p className="text-xs text-zinc-500 font-mono">
+                      Enter a keyword above and click Search, or click "Run Full Catalog Auto-Sync" to automatically pull new Sinhala Dubbed cartoons!
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* TAB 1: Add or Edit Movie */}
             {activeAdminTab === 'add' && (
