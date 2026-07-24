@@ -9,6 +9,7 @@ import { MovieRequestModal } from './components/MovieRequestModal';
 import { TrailerModal } from './components/TrailerModal';
 import { WhatsappGateModal } from './components/WhatsappGateModal';
 import { ReportModal } from './components/ReportModal';
+import { ReportsListModal } from './components/ReportsListModal';
 import { ToastContainer } from './components/ToastContainer';
 import { NoticeBanner } from './components/NoticeBanner';
 import { Footer } from './components/Footer';
@@ -52,6 +53,7 @@ const AppContent: React.FC = () => {
       {/* Global Modals & Toasts */}
       <MovieRequestModal />
       <ReportModal />
+      <ReportsListModal />
       <TrailerModal />
       <WhatsappGateModal />
       <ToastContainer />

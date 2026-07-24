@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMovie } from '../context/MovieContext';
-import { Search, Film, Bookmark, PlusCircle, Menu, X, Sparkles } from 'lucide-react';
+import { Search, Film, Bookmark, PlusCircle, Menu, X, Sparkles, Flag } from 'lucide-react';
 
 export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (tab: 'home' | 'watchlist') => void }> = ({
   activeTab,
@@ -12,10 +12,13 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
     selectedCategory,
     setSelectedCategory,
     setIsRequestOpen,
+    setIsReportsListOpen,
+    reports,
     watchlist
   } = useMovie();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pendingReportsCount = reports.filter((r) => r.status === 'Pending').length;
 
   const categories = [
     'All',
@@ -88,6 +91,18 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
           {/* Nav Actions */}
           <div className="hidden md:flex items-center gap-3">
             <button
+              onClick={() => setIsReportsListOpen(true)}
+              className="px-3.5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-amber-400 font-bold text-xs uppercase tracking-wider flex items-center gap-2 border border-amber-500/30 rounded-xl transition-all cursor-pointer relative"
+              title="View User Link & Stream Reports"
+            >
+              <Flag className="w-4 h-4 text-amber-500" />
+              <span>Reports</span>
+              <span className={`text-[10px] font-black px-1.5 py-0.2 rounded-md ${pendingReportsCount > 0 ? 'bg-red-600 text-white animate-pulse' : 'bg-zinc-800 text-zinc-400'}`}>
+                {reports.length}
+              </span>
+            </button>
+
+            <button
               onClick={() => setActiveTab(activeTab === 'home' ? 'watchlist' : 'home')}
               className={`px-4 py-2.5 font-bold text-xs uppercase tracking-wider flex items-center gap-2 border rounded-xl transition-all cursor-pointer ${
                 activeTab === 'watchlist'
@@ -153,6 +168,17 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
           </div>
 
           <div className="grid grid-cols-2 gap-2 pt-2">
+            <button
+              onClick={() => {
+                setIsReportsListOpen(true);
+                setIsMobileMenuOpen(false);
+              }}
+              className="col-span-2 px-3 py-2.5 bg-zinc-900 text-amber-400 font-bold text-xs uppercase tracking-wider border border-amber-500/30 rounded-xl flex items-center justify-center gap-2"
+            >
+              <Flag className="w-4 h-4 text-amber-500" />
+              <span>User Link Reports ({reports.length})</span>
+            </button>
+
             <button
               onClick={() => {
                 setActiveTab(activeTab === 'home' ? 'watchlist' : 'home');

@@ -80,7 +80,7 @@ export interface LinkReport {
   movieTitle: string;
   issueType: 'Stream Not Working' | 'Download Link Broken' | 'Wrong Episode / Audio' | 'Other Issue';
   description: string;
-  status: 'Pending' | 'Fixed';
+  status: 'Pending' | 'Fixed' | 'Resolved';
   createdAt: string;
 }
 

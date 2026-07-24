@@ -18,6 +18,10 @@ interface MovieContextType {
   comments: MovieComment[];
   reports: LinkReport[];
   submitReport: (movieId: string, movieTitle: string, issueType: LinkReport['issueType'], description: string) => Promise<boolean>;
+  deleteReport: (id: string) => void;
+  resolveReport: (id: string) => void;
+  isReportsListOpen: boolean;
+  setIsReportsListOpen: (open: boolean) => void;
   toast: ToastMessage | null;
   showToast: (message: string, type?: ToastMessage['type']) => void;
   isRequestOpen: boolean;
@@ -42,11 +46,23 @@ const MovieContext = createContext<MovieContextType | undefined>(undefined);
 export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // LocalStorage state initialization
   const [movies, setMovies] = useState<Movie[]>(() => {
+    const removedIds = ['the-croods-a-new-age-2020', 'avatar-tla-s1'];
     try {
       const saved = localStorage.getItem('cineworld_movies');
-      return saved ? JSON.parse(saved) : initialMovies;
+      if (saved) {
+        const parsed: Movie[] = JSON.parse(saved);
+        const mergedMap = new Map<string, Movie>();
+        parsed.forEach((m) => {
+          if (!removedIds.includes(m.id)) mergedMap.set(m.id, m);
+        });
+        initialMovies.forEach((initM) => {
+          if (!removedIds.includes(initM.id)) mergedMap.set(initM.id, initM);
+        });
+        return Array.from(mergedMap.values());
+      }
+      return initialMovies.filter((m) => !removedIds.includes(m.id));
     } catch {
-      return initialMovies;
+      return initialMovies.filter((m) => !removedIds.includes(m.id));
     }
   });
 
@@ -93,6 +109,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   });
 
   const [toast, setToast] = useState<ToastMessage | null>(null);
+  const [isReportsListOpen, setIsReportsListOpen] = useState<boolean>(false);
   const [isRequestOpen, setIsRequestOpen] = useState<boolean>(false);
   const [isReportOpen, setIsReportOpen] = useState<boolean>(false);
   const [reportMovieTarget, setReportMovieTarget] = useState<Movie | null>(null);
@@ -105,6 +122,16 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setTimeout(() => {
       setToast((prev) => (prev?.id === id ? null : prev));
     }, 3500);
+  };
+
+  const deleteReport = (id: string) => {
+    setReports((prev) => prev.filter((r) => r.id !== id));
+    showToast('Report removed', 'info');
+  };
+
+  const resolveReport = (id: string) => {
+    setReports((prev) => prev.map((r) => (r.id === id ? { ...r, status: 'Resolved' as const } : r)));
+    showToast('Report marked as Resolved', 'success');
   };
 
   // Sync to localStorage
@@ -339,6 +366,10 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         comments,
         reports,
         submitReport,
+        deleteReport,
+        resolveReport,
+        isReportsListOpen,
+        setIsReportsListOpen,
         toast,
         showToast,
         isRequestOpen,

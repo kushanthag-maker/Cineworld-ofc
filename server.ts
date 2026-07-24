@@ -141,17 +141,20 @@ initDb();
 
 // GET /api/movies
 app.get('/api/movies', async (req, res) => {
+  const removedIds = ['the-croods-a-new-age-2020', 'avatar-tla-s1'];
   try {
     const db = await connectToMongo();
     if (db) {
       const dbMovies = await db.collection('movies').find({}).toArray();
       if (dbMovies && dbMovies.length > 0) {
-        moviesCache = dbMovies;
+        moviesCache = dbMovies.filter((m: any) => !removedIds.includes(m.id));
       }
     }
-    return res.json(moviesCache);
+    const cleanMovies = moviesCache.filter((m: any) => !removedIds.includes(m.id));
+    return res.json(cleanMovies);
   } catch (err: any) {
-    return res.json(moviesCache);
+    const cleanMovies = moviesCache.filter((m: any) => !removedIds.includes(m.id));
+    return res.json(cleanMovies);
   }
 });
 
@@ -196,6 +199,30 @@ app.post('/api/reports', rateLimitShield(5, 60000), async (req, res) => {
     if (db) await db.collection('reports').insertOne(newReport);
 
     return res.json({ success: true, report: newReport });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.post('/api/reports/:id/resolve', async (req, res) => {
+  try {
+    const { id } = req.params;
+    reportsCache = reportsCache.map((r) => (r.id === id ? { ...r, status: 'Resolved' } : r));
+    const db = await connectToMongo();
+    if (db) await db.collection('reports').updateOne({ id }, { $set: { status: 'Resolved' } });
+    return res.json({ success: true });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.delete('/api/reports/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    reportsCache = reportsCache.filter((r) => r.id !== id);
+    const db = await connectToMongo();
+    if (db) await db.collection('reports').deleteOne({ id });
+    return res.json({ success: true });
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message });
   }

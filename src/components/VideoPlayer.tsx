@@ -9,24 +9,56 @@ interface VideoPlayerProps {
 
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
   const [hasError, setHasError] = useState(false);
-  const [activeServer, setActiveServer] = useState<'server1' | 'server2'>('server1');
   const [selectedEpisode, setSelectedEpisode] = useState<Episode | null>(
     movie.episodes && movie.episodes.length > 0 ? movie.episodes[0] : null
   );
 
-  const activeStreamUrl = selectedEpisode ? selectedEpisode.stream_url : movie.streamUrl;
+  // Extract all available stream servers from movie data & download options
+  const streamSources = React.useMemo(() => {
+    const list: { name: string; url: string }[] = [];
+    
+    if (selectedEpisode) {
+      list.push({ name: 'Primary Episode Stream', url: selectedEpisode.stream_url });
+    } else {
+      if (movie.streamUrl) {
+        let primaryName = 'DLServer-01 (Primary)';
+        if (movie.streamUrl.includes('pixeldrain.com')) primaryName = 'Pixeldrain Stream';
+        list.push({ name: primaryName, url: movie.streamUrl });
+      }
+
+      if (movie.downloadOptions) {
+        movie.downloadOptions.forEach((opt) => {
+          if (opt.server2Url && !list.some((s) => s.url === opt.server2Url)) {
+            list.push({ name: opt.server2Name || 'DLServer Mirror', url: opt.server2Url });
+          }
+          if (opt.downloadUrl && !list.some((s) => s.url === opt.downloadUrl)) {
+            list.push({ name: opt.server1Name || 'Alternate Mirror', url: opt.downloadUrl });
+          }
+        });
+      }
+    }
+
+    return list;
+  }, [movie, selectedEpisode]);
+
+  const [activeSourceIndex, setActiveSourceIndex] = useState(0);
+
+  const activeStreamUrl = selectedEpisode
+    ? selectedEpisode.stream_url
+    : streamSources[activeSourceIndex]?.url || movie.streamUrl;
+
   const streamInfo = formatStreamUrl(activeStreamUrl);
 
   const handleRetry = () => {
     setHasError(false);
   };
 
-  const handleSelectServer = (server: 'server1' | 'server2') => {
+  const handleSelectSource = (index: number) => {
     setHasError(false);
-    setActiveServer(server);
+    setActiveSourceIndex(index);
   };
 
-  const isIframe = activeServer === 'server2' || (activeServer === 'server1' && streamInfo.isIframe);
+  const isIframe = streamInfo.isIframe;
 
   return (
     <div className="w-full bg-[#050505] border border-white/10 shadow-2xl space-y-0">
@@ -46,32 +78,22 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
         </div>
 
         {/* Server Selection Buttons */}
-        <div className="flex items-center gap-1 sm:gap-2">
-          <button
-            onClick={() => handleSelectServer('server1')}
-            className={`text-[10px] font-bold px-2.5 py-1 border transition-all cursor-pointer flex items-center gap-1 ${
-              activeServer === 'server1'
-                ? 'bg-amber-500 text-black border-amber-500 font-black'
-                : 'bg-white/5 hover:bg-white/10 border-white/10 text-white/80'
-            }`}
-            title="Primary Direct Player"
-          >
-            <Server className="w-3 h-3" />
-            <span>Server 1 (Direct)</span>
-          </button>
-
-          <button
-            onClick={() => handleSelectServer('server2')}
-            className={`text-[10px] font-bold px-2.5 py-1 border transition-all cursor-pointer flex items-center gap-1 ${
-              activeServer === 'server2'
-                ? 'bg-amber-500 text-black border-amber-500 font-black'
-                : 'bg-white/5 hover:bg-white/10 border-white/10 text-white/80'
-            }`}
-            title="Embedded Mirror Player"
-          >
-            <Monitor className="w-3 h-3" />
-            <span>Server 2 (Embed)</span>
-          </button>
+        <div className="flex flex-wrap items-center gap-1 sm:gap-1.5">
+          {streamSources.map((source, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleSelectSource(idx)}
+              className={`text-[10px] font-bold px-2.5 py-1 border transition-all cursor-pointer flex items-center gap-1 ${
+                activeSourceIndex === idx
+                  ? 'bg-amber-500 text-black border-amber-500 font-black shadow-md shadow-amber-500/20'
+                  : 'bg-white/5 hover:bg-white/10 border-white/10 text-white/80'
+              }`}
+              title={`Switch to ${source.name}`}
+            >
+              <Server className="w-3 h-3" />
+              <span>{source.name}</span>
+            </button>
+          ))}
 
           <a
             href={activeStreamUrl}
@@ -108,13 +130,15 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
                 <span>Retry Stream</span>
               </button>
 
-              <button
-                onClick={() => handleSelectServer('server2')}
-                className="px-4 py-2 bg-amber-500 hover:bg-white text-black font-black uppercase text-[11px] tracking-wider flex items-center gap-1.5 transition-colors cursor-pointer"
-              >
-                <Monitor className="w-3.5 h-3.5" />
-                <span>Switch to Server 2 (Embed)</span>
-              </button>
+              {streamSources.length > 1 && (
+                <button
+                  onClick={() => handleSelectSource((activeSourceIndex + 1) % streamSources.length)}
+                  className="px-4 py-2 bg-amber-500 hover:bg-white text-black font-black uppercase text-[11px] tracking-wider flex items-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <Monitor className="w-3.5 h-3.5" />
+                  <span>Switch Stream Server</span>
+                </button>
+              )}
 
               <a
                 href={activeStreamUrl}
@@ -139,7 +163,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
         ) : (
           <video
             key={activeStreamUrl}
-            src={streamInfo.embedUrl}
+            src={streamInfo.directUrl || streamInfo.embedUrl}
             controls
             autoPlay
             playsInline
