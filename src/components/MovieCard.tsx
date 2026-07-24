@@ -1,154 +1,113 @@
 import React from 'react';
 import { Movie } from '../types';
 import { useMovie } from '../context/MovieContext';
-import { Play, Download, Star, Subtitles, Bookmark, Eye, Film } from 'lucide-react';
+import { Play, Download, Star, Bookmark, Check, Eye } from 'lucide-react';
 
 interface MovieCardProps {
   movie: Movie;
-  onWatchMovie: (movie: Movie) => void;
-  onDownloadClick: (movie: Movie) => void;
 }
 
-export const MovieCard: React.FC<MovieCardProps> = ({ movie, onWatchMovie, onDownloadClick }) => {
-  const { watchlist, toggleWatchlist } = useMovie();
+export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+  const { setActiveMovie, setWhatsappModalMovie, watchlist, toggleWatchlist } = useMovie();
+
   const isBookmarked = watchlist.includes(movie.id);
 
   return (
-    <div className="group relative bg-[#080808] border border-white/10 hover:border-amber-500/50 transition-all duration-300 flex flex-col shadow-md hover:shadow-2xl">
+    <div className="group relative bg-[#080808] border border-white/10 hover:border-amber-500/60 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-lg">
       
-      {/* Poster Image Container */}
-      <div className="relative aspect-[2/3] w-full overflow-hidden bg-[#050505] cursor-pointer" onClick={() => onWatchMovie(movie)}>
+      {/* Top Poster Image Container */}
+      <div className="relative aspect-[2/3] w-full overflow-hidden bg-black cursor-pointer" onClick={() => setActiveMovie(movie)}>
         <img
           src={movie.posterUrl}
           alt={movie.title}
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&q=80';
+          }}
         />
 
-        {/* Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-black/50 opacity-80 group-hover:opacity-60 transition-opacity" />
-
-        {/* Top Badges */}
-        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-start justify-between gap-1 z-10 pointer-events-none">
-          <div className="flex flex-col gap-1 items-start">
-            {/* Quality Tag */}
-            <span className="px-2 py-0.5 bg-black/80 text-white text-[9px] font-bold uppercase tracking-widest border border-white/20">
-              {movie.quality}
-            </span>
-
-            {/* Sinhala Sub Badge */}
-            {movie.hasSinhalaSub && (
-              <span className="px-2 py-0.5 bg-amber-500/90 text-black text-[9px] font-black uppercase tracking-wider flex items-center gap-1">
-                <Subtitles className="w-3 h-3" />
-                <span>සිංහල Sub</span>
-              </span>
-            )}
-
-            {/* Sinhala Dubbed Badge */}
-            {movie.isSinhalaDubbed && (
-              <span className="px-2 py-0.5 bg-orange-500/90 text-black text-[9px] font-black uppercase tracking-wider">
-                සිංහල Dub
-              </span>
-            )}
-          </div>
-
-          {/* Watchlist Toggle */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleWatchlist(movie.id);
-            }}
-            className={`p-1.5 transition-all pointer-events-auto border ${
-              isBookmarked
-                ? 'bg-amber-500 border-amber-500 text-black'
-                : 'bg-black/70 border-white/20 text-white/70 hover:text-white hover:border-white/50'
-            }`}
-            title={isBookmarked ? 'Remove from Watchlist' : 'Add to Watchlist'}
-          >
-            <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-black' : ''}`} />
-          </button>
-        </div>
-
-        {/* Hover Action Overlay */}
-        <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 gap-3 text-center z-10">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onWatchMovie(movie);
-            }}
-            className="w-12 h-12 bg-amber-500 text-black flex items-center justify-center hover:scale-105 transition-transform"
-          >
-            <Play className="w-5 h-5 fill-black ml-0.5" />
-          </button>
-          <span className="text-[10px] font-black text-white tracking-widest uppercase">
-            Watch / Details
+        {/* Quality & Category Badges */}
+        <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
+          <span className="px-2 py-0.5 bg-amber-500 text-black text-[10px] font-black uppercase tracking-wider">
+            {movie.quality || '1080p HD'}
           </span>
-
-          <div className="flex items-center gap-2 pt-1">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onDownloadClick(movie);
-              }}
-              className="px-3 py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-[10px] font-bold uppercase tracking-wider flex items-center gap-1"
-            >
-              <Download className="w-3 h-3 text-amber-500" />
-              <span>Download</span>
-            </button>
-          </div>
+          {movie.category === 'Sinhala Dubbed' && (
+            <span className="px-2 py-0.5 bg-emerald-600 text-white text-[9px] font-bold uppercase tracking-wider">
+              Sinhala Dubbed
+            </span>
+          )}
         </div>
 
-        {/* Rating Badge Bottom Right */}
-        <div className="absolute bottom-2.5 right-2.5 z-10 bg-black/90 border border-white/10 px-2 py-0.5 flex items-center gap-1 text-[10px] text-amber-500 font-bold uppercase tracking-wider">
-          <Star className="w-3 h-3 fill-amber-500" />
-          <span>{movie.rating.toFixed(1)}</span>
+        {/* Bookmark Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleWatchlist(movie.id);
+          }}
+          className={`absolute top-2 right-2 p-2 z-10 backdrop-blur-md transition-colors ${
+            isBookmarked ? 'bg-amber-500 text-black' : 'bg-black/60 text-white hover:bg-amber-500 hover:text-black'
+          }`}
+          title={isBookmarked ? 'Remove from Watchlist' : 'Add to Watchlist'}
+        >
+          {isBookmarked ? <Check className="w-3.5 h-3.5 stroke-[3]" /> : <Bookmark className="w-3.5 h-3.5" />}
+        </button>
+
+        {/* Hover Overlay */}
+        <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 p-4">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveMovie(movie);
+            }}
+            className="p-3 bg-amber-500 hover:bg-white text-black font-bold rounded-full transition-all transform hover:scale-110"
+            title="Watch Online"
+          >
+            <Play className="w-5 h-5 fill-black" />
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setWhatsappModalMovie(movie);
+            }}
+            className="p-3 bg-zinc-800 hover:bg-amber-500 text-white hover:text-black font-bold rounded-full transition-all transform hover:scale-110 border border-white/20"
+            title="Direct Download"
+          >
+            <Download className="w-5 h-5" />
+          </button>
         </div>
       </div>
 
-      {/* Card Info Section */}
-      <div className="p-3 flex-1 flex flex-col justify-between space-y-2">
-        <div>
+      {/* Info Section */}
+      <div className="p-3 space-y-2 bg-[#050505] border-t border-white/5 flex-1 flex flex-col justify-between">
+        <div className="space-y-1">
+          <div className="flex items-center justify-between text-[11px] font-mono text-white/50 uppercase tracking-wider">
+            <span>{movie.releaseYear || '2024'}</span>
+            <span className="flex items-center gap-1 text-amber-400 font-bold">
+              <Star className="w-3 h-3 fill-amber-400" />
+              {movie.rating || '8.5'}
+            </span>
+          </div>
+
           <h3
-            onClick={() => onWatchMovie(movie)}
-            className="text-sm font-bold uppercase tracking-tight text-white group-hover:text-amber-500 transition-colors line-clamp-1 cursor-pointer font-sans"
+            onClick={() => setActiveMovie(movie)}
+            className="text-sm font-bold text-white uppercase tracking-tight line-clamp-1 hover:text-amber-400 cursor-pointer transition-colors"
             title={movie.title}
           >
             {movie.title}
           </h3>
-
-          {movie.originalTitle && (
-            <p className="text-[10px] text-amber-500/80 uppercase font-semibold line-clamp-1 mt-0.5">
-              {movie.originalTitle}
-            </p>
-          )}
-
-          <div className="flex items-center justify-between text-[10px] text-white/50 uppercase tracking-wider font-mono mt-1.5">
-            <span>{movie.releaseYear}</span>
-            <span>{movie.duration}</span>
-            <div className="flex items-center gap-1 text-white/40">
-              <Eye className="w-3 h-3" />
-              <span>{movie.viewsCount > 1000 ? `${(movie.viewsCount / 1000).toFixed(1)}k` : movie.viewsCount}</span>
-            </div>
-          </div>
         </div>
 
-        {/* Action Buttons Row */}
-        <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
-          <button
-            onClick={() => onWatchMovie(movie)}
-            className="flex-1 py-1.5 bg-white/5 hover:bg-amber-500 hover:text-black border border-white/10 text-white/90 text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-1"
-          >
-            <Play className="w-3 h-3 fill-current" />
-            <span>Watch</span>
-          </button>
+        <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[10px] text-white/40 uppercase font-mono">
+          <span className="flex items-center gap-1">
+            <Eye className="w-3 h-3 text-amber-500" />
+            {movie.viewsCount || 350} Views
+          </span>
 
-          <button
-            onClick={() => onDownloadClick(movie)}
-            className="p-1.5 bg-white/5 hover:bg-white/15 border border-white/10 text-white/70 hover:text-amber-500 transition-colors"
-            title="Direct Download Links"
-          >
-            <Download className="w-3.5 h-3.5" />
-          </button>
+          <span className="text-emerald-400 font-bold">
+            Direct Server
+          </span>
         </div>
       </div>
     </div>

@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
-import { Play, AlertCircle, ExternalLink, RefreshCw, Monitor, Film, Server } from 'lucide-react';
-import { Movie } from '../types';
+import { AlertCircle, ExternalLink, RefreshCw, Monitor, Film, Server, Play, ListVideo } from 'lucide-react';
+import { Movie, Episode } from '../types';
 import { formatStreamUrl } from '../utils/streamUtils';
 
 interface VideoPlayerProps {
   movie: Movie;
-  onClose?: () => void;
 }
 
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
   const [hasError, setHasError] = useState(false);
-  const [activeServer, setActiveServer] = useState<'server1' | 'server2' | 'external'>('server1');
+  const [activeServer, setActiveServer] = useState<'server1' | 'server2'>('server1');
+  const [selectedEpisode, setSelectedEpisode] = useState<Episode | null>(
+    movie.episodes && movie.episodes.length > 0 ? movie.episodes[0] : null
+  );
 
-  const streamInfo = formatStreamUrl(movie.streamUrl);
+  const activeStreamUrl = selectedEpisode ? selectedEpisode.stream_url : movie.streamUrl;
+  const streamInfo = formatStreamUrl(activeStreamUrl);
 
   const handleRetry = () => {
     setHasError(false);
   };
 
-  const handleSelectServer = (server: 'server1' | 'server2' | 'external') => {
+  const handleSelectServer = (server: 'server1' | 'server2') => {
     setHasError(false);
     setActiveServer(server);
   };
@@ -35,9 +38,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
           <span className="font-bold text-white uppercase font-brand text-[11px] sm:text-xs">
             CINEWORLD STREAMING SERVER
           </span>
-          {movie.hasSinhalaSub && (
-            <span className="hidden sm:inline-block px-2 py-0.5 border border-amber-500/50 text-amber-400 text-[10px] font-bold">
-              Sinhala Subtitles
+          {selectedEpisode && (
+            <span className="px-2 py-0.5 border border-amber-500/50 text-amber-400 text-[10px] font-bold">
+              Episode {selectedEpisode.episode}
             </span>
           )}
         </div>
@@ -71,13 +74,13 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
           </button>
 
           <a
-            href={movie.streamUrl}
+            href={activeStreamUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[10px] font-bold text-amber-400 hover:text-white flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 transition-colors"
           >
             <ExternalLink className="w-3 h-3" />
-            <span className="hidden sm:inline">External Stream</span>
+            <span className="hidden sm:inline">External Mirror</span>
           </a>
         </div>
       </div>
@@ -89,10 +92,10 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
             <AlertCircle className="w-10 h-10 sm:w-12 sm:h-12 text-amber-500 animate-bounce" />
             <div className="space-y-1">
               <h4 className="text-base sm:text-xl font-bold text-white uppercase font-editorial italic">
-                Direct Stream Blocked / CORS Error
+                Playback Error / CORS Stream Block
               </h4>
               <p className="text-[11px] sm:text-xs text-white/60 max-w-md uppercase tracking-wider">
-                This direct link requires iframe embed mode or external mirror player. Click Server 2 or open direct mirror below.
+                Direct stream playback restricted by browser policy. Switch to Server 2 or open external mirror link below.
               </p>
             </div>
 
@@ -114,7 +117,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
               </button>
 
               <a
-                href={movie.streamUrl}
+                href={activeStreamUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase text-[11px] tracking-wider flex items-center gap-1.5 transition-colors"
@@ -135,6 +138,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
           />
         ) : (
           <video
+            key={activeStreamUrl}
             src={streamInfo.embedUrl}
             controls
             autoPlay
@@ -142,25 +146,53 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
             poster={movie.backdropUrl || movie.posterUrl}
             onError={() => setHasError(true)}
             className="w-full h-full object-contain"
-          >
-            Your browser does not support HTML5 video playback.
-          </video>
+          />
         )}
       </div>
+
+      {/* Episode Selector for Cartoon / TV Series */}
+      {movie.episodes && movie.episodes.length > 0 && (
+        <div className="p-4 bg-zinc-950 border-t border-white/10 space-y-2">
+          <div className="flex items-center gap-2 text-xs font-bold text-amber-500 uppercase tracking-widest font-mono">
+            <ListVideo className="w-4 h-4" />
+            <span>Select Episode ({movie.episodes.length} Episodes Available)</span>
+          </div>
+
+          <div className="flex items-center gap-2 overflow-x-auto py-2 no-scrollbar">
+            {movie.episodes.map((ep, idx) => {
+              const isSelected = selectedEpisode?.episode === ep.episode;
+              return (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setHasError(false);
+                    setSelectedEpisode(ep);
+                  }}
+                  className={`px-3 py-2 text-xs font-bold uppercase tracking-wider shrink-0 transition-all cursor-pointer border flex items-center gap-1.5 ${
+                    isSelected
+                      ? 'bg-amber-500 text-black border-amber-500 font-black'
+                      : 'bg-zinc-900 hover:bg-zinc-800 text-white border-white/10'
+                  }`}
+                >
+                  <Play className={`w-3 h-3 ${isSelected ? 'fill-black' : 'fill-white'}`} />
+                  <span>Ep {ep.episode}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Video Footer info */}
       <div className="p-3 sm:p-4 bg-black flex flex-wrap items-center justify-between gap-2 text-xs uppercase tracking-wider text-white/60 border-t border-white/10">
         <div className="flex items-center gap-2">
           <Film className="w-4 h-4 text-amber-500" />
           <span className="text-white font-bold">{movie.title}</span>
-          <span>({movie.releaseYear})</span>
-          <span className="text-amber-500 font-mono text-[10px] bg-amber-500/10 px-2 py-0.5 border border-amber-500/30">
-            {movie.quality}
-          </span>
+          {selectedEpisode && <span className="text-amber-400">({selectedEpisode.title})</span>}
         </div>
 
         <div className="flex items-center gap-3 font-mono text-[10px] text-amber-500">
-          <span>Sinhala Subtitles Attached</span>
+          <span>Sinhala Audio / Subtitles</span>
         </div>
       </div>
     </div>

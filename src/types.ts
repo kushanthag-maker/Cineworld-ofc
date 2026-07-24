@@ -1,72 +1,64 @@
-export type Quality = '4K Ultra HD' | '1080p Full HD' | '720p HD' | '480p SD' | 'CAM / HD-CAM';
-
-export type LanguageOption = 'Sinhala Subtitles' | 'Sinhala Dubbed' | 'English' | 'Tamil' | 'Hindi' | 'Malayalam' | 'Korean';
-
 export interface DownloadOption {
   id: string;
-  quality: Quality;
-  size: string;
+  quality: string;
   resolution: string;
+  size: string;
   format: string;
-  downloadUrl: string; // Primary Server 1 URL
-  server2Url?: string; // Backup Server 2 URL
+  downloadUrl: string; // Server 1 Direct Link
+  server2Url?: string; // Server 2 Backup Mirror Link
   directServerName?: string;
   server1Name?: string;
   server2Name?: string;
 }
 
+export interface Episode {
+  episode: string;
+  title: string;
+  stream_url: string;
+}
+
 export interface Movie {
   id: string;
   title: string;
-  originalTitle?: string; // Sinhala or native name (e.g., සිංහල උපසිරැසි සමඟ)
-  slug: string;
-  posterUrl: string;
-  backdropUrl: string;
-  synopsis: string;
+  originalTitle?: string;
   releaseYear: number;
   duration: string;
-  rating: number; // e.g. 8.4
+  rating: number;
   genres: string[];
-  type: 'Movie' | 'TV Series' | 'Teledrama' | 'Short Film';
-  hasSinhalaSub: boolean;
-  isSinhalaDubbed: boolean;
-  featured: boolean;
-  trending: boolean;
-  quality: Quality;
   director: string;
   cast: string[];
-  trailerUrl: string; // YouTube embed or video URL
-  streamUrl: string; // Direct MP4 or iframe embed URL for streaming
-  downloadOptions: DownloadOption[];
+  description: string;
+  posterUrl: string;
+  backdropUrl?: string;
+  streamUrl: string;
+  category: 'Sinhala Subbed' | 'Sinhala Dubbed' | 'Hollywood' | 'Bollywood' | 'Tamil / South' | 'Animation';
+  language: string;
+  hasSinhalaSub: boolean;
+  quality: string;
   viewsCount: number;
   downloadsCount: number;
+  downloadOptions?: DownloadOption[];
+  episodes?: Episode[];
+  trailerUrl?: string;
+  imdbId?: string;
   createdAt: string;
-}
-
-export interface Review {
-  id: string;
-  movieId: string;
-  userName: string;
-  rating: number;
-  comment: string;
-  date: string;
 }
 
 export interface MovieRequest {
   id: string;
-  movieName: string;
-  language: string;
-  userEmail?: string;
-  notes?: string;
-  status: 'Pending' | 'Added' | 'Rejected';
+  movieTitle: string;
+  category: string;
+  requestedBy: string;
+  whatsappNumber?: string;
+  status: 'Pending' | 'Approved' | 'Completed' | 'Rejected';
   createdAt: string;
 }
 
-export interface SiteNotice {
+export interface Notice {
   id: string;
   title: string;
-  message: string;
-  type: 'info' | 'update' | 'alert';
+  content: string;
+  type: 'info' | 'warning' | 'success' | 'alert';
+  isActive: boolean;
   createdAt: string;
-  active: boolean;
 }

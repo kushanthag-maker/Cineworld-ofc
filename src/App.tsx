@@ -11,78 +11,36 @@ import { TrailerModal } from './components/TrailerModal';
 import { WhatsappGateModal } from './components/WhatsappGateModal';
 import { NoticeBanner } from './components/NoticeBanner';
 import { Footer } from './components/Footer';
-import { Movie } from './types';
 
-const MainAppContent: React.FC = () => {
-  const { activeMovie, setActiveMovie } = useMovie();
-  const [activeTab, setActiveTab] = useState<'home' | 'watchlist' | 'sinhala-sub' | 'sinhala-dub' | 'tv-series'>('home');
-
-  const handleWatchMovie = (movie: Movie) => {
-    setActiveMovie(movie);
-  };
-
-  const handleDownloadClick = (movie: Movie) => {
-    setActiveMovie(movie);
-  };
+const AppContent: React.FC = () => {
+  const { activeMovie } = useMovie();
+  const [activeTab, setActiveTab] = useState<'home' | 'watchlist'>('home');
 
   return (
-    <div className="min-h-screen bg-[#050505] text-zinc-100 flex flex-col font-sans selection:bg-amber-500 selection:text-black">
-      
-      {/* Top Navbar */}
-      <Navbar
-        activeTab={activeTab}
-        onNavigateTab={(tab) => {
-          setActiveTab(tab);
-          if (tab !== 'home') {
-            setActiveMovie(null);
-          }
-        }}
-      />
-
-      {/* Main Page Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        
-        {/* Broadcast Notices & Announcements */}
+    <div className="min-h-screen bg-black text-white flex flex-col justify-between selection:bg-amber-500 selection:text-black">
+      <div>
         <NoticeBanner />
+        <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* If Movie Selected -> Show Details View */}
         {activeMovie ? (
-          <MovieDetailsView
-            movie={activeMovie}
-            onClose={() => setActiveMovie(null)}
-            onSelectMovie={(m) => setActiveMovie(m)}
-          />
+          <MovieDetailsView />
         ) : activeTab === 'watchlist' ? (
-          <WatchlistView
-            onWatchMovie={handleWatchMovie}
-            onDownloadClick={handleDownloadClick}
-            onBackToHome={() => setActiveTab('home')}
-          />
+          <WatchlistView />
         ) : (
-          <>
-            {/* Top Hero Banner Carousel */}
-            <HeroBanner
-              onWatchMovie={handleWatchMovie}
-              onDownloadClick={handleDownloadClick}
-            />
-
-            {/* Movie Catalog Grid */}
-            <MovieGrid
-              onWatchMovie={handleWatchMovie}
-              onDownloadClick={handleDownloadClick}
-            />
-          </>
+          <main>
+            <HeroBanner />
+            <MovieGrid />
+          </main>
         )}
-      </main>
+      </div>
 
-      {/* Footer */}
       <Footer />
 
-      {/* Modals & Overlays */}
-      <WhatsappGateModal />
+      {/* Global Modals */}
       <AdminModal />
       <MovieRequestModal />
       <TrailerModal />
+      <WhatsappGateModal />
     </div>
   );
 };
@@ -90,7 +48,7 @@ const MainAppContent: React.FC = () => {
 export default function App() {
   return (
     <MovieProvider>
-      <MainAppContent />
+      <AppContent />
     </MovieProvider>
   );
 }
