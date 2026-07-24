@@ -218,56 +218,75 @@ async function startServer() {
 
   // GET /api/cartoons/search
   app.get('/api/cartoons/search', async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
     try {
       const query = (req.query.text as string) || 'ben 10';
       const apiUrl = `https://api.zanta-mini.store/api/slcartoons/search?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(query)}`;
       const response = await fetch(apiUrl);
-      const data = await response.json();
-      res.json(data);
+      const text = await response.text();
+      try {
+        const data = JSON.parse(text);
+        return res.json(data);
+      } catch (jsonErr) {
+        return res.status(502).json({ success: false, message: 'External API returned non-JSON response.', raw: text.slice(0, 100) });
+      }
     } catch (error: any) {
-      res.status(500).json({ success: false, error: error.message });
+      return res.status(500).json({ success: false, error: error.message });
     }
   });
 
   // GET /api/cartoons/dl
   app.get('/api/cartoons/dl', async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
     try {
       const url = req.query.url as string;
       if (!url) return res.status(400).json({ error: 'URL parameter is required' });
 
       const apiUrl = `https://api.zanta-mini.store/api/slcartoons/dl?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(url)}`;
       const response = await fetch(apiUrl);
-      const data = await response.json();
-      res.json(data);
+      const text = await response.text();
+      try {
+        const data = JSON.parse(text);
+        return res.json(data);
+      } catch (jsonErr) {
+        return res.status(502).json({ success: false, message: 'External API returned non-JSON response.' });
+      }
     } catch (error: any) {
-      res.status(500).json({ success: false, error: error.message });
+      return res.status(500).json({ success: false, error: error.message });
     }
   });
 
   // POST /api/cartoons/import
   app.post('/api/cartoons/import', async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
     try {
       const { item, details } = req.body;
       if (!item) return res.status(400).json({ error: 'Item parameter is required' });
 
       let dlData = details;
       if (!dlData && item.url) {
-        const dlRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/dl?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(item.url)}`);
-        const json = await dlRes.json();
-        if (json.success) {
-          dlData = json.results;
+        try {
+          const dlRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/dl?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(item.url)}`);
+          const dlText = await dlRes.text();
+          const json = JSON.parse(dlText);
+          if (json.success) {
+            dlData = json.results;
+          }
+        } catch (e) {
+          console.warn('Could not fetch dl details for item:', item.title);
         }
       }
 
       const imported = await importCartoonToDb(item, dlData);
-      res.json({ success: true, movie: imported });
+      return res.json({ success: true, movie: imported });
     } catch (error: any) {
-      res.status(500).json({ success: false, error: error.message });
+      return res.status(500).json({ success: false, error: error.message });
     }
   });
 
   // POST /api/cartoons/auto-sync
   app.post('/api/cartoons/auto-sync', async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
     try {
       const keywords = (req.body.keywords as string[]) || ['ben 10', 'tom and jerry', 'scooby', 'avatar', 'cartoon', 'sinhala'];
       let totalImported = 0;
@@ -275,13 +294,15 @@ async function startServer() {
       for (const kw of keywords) {
         try {
           const searchRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/search?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(kw)}`);
-          const searchJson = await searchRes.json();
+          const searchText = await searchRes.text();
+          const searchJson = JSON.parse(searchText);
 
           if (searchJson.success && Array.isArray(searchJson.results)) {
-            for (const item of searchJson.results.slice(0, 5)) { // process top 5 of each keyword
+            for (const item of searchJson.results.slice(0, 5)) {
               try {
                 const dlRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/dl?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(item.url)}`);
-                const dlJson = await dlRes.json();
+                const dlText = await dlRes.text();
+                const dlJson = JSON.parse(dlText);
                 if (dlJson.success) {
                   await importCartoonToDb(item, dlJson.results);
                   totalImported++;
@@ -296,9 +317,9 @@ async function startServer() {
         }
       }
 
-      res.json({ success: true, importedCount: totalImported, totalCached: moviesCache.length });
+      return res.json({ success: true, importedCount: totalImported, totalCached: moviesCache.length });
     } catch (error: any) {
-      res.status(500).json({ success: false, error: error.message });
+      return res.status(500).json({ success: false, error: error.message });
     }
   });
 

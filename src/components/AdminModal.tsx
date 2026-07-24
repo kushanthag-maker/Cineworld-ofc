@@ -61,18 +61,30 @@ export const AdminModal: React.FC = () => {
   const [importingUrls, setImportingUrls] = useState<Set<string>>(new Set());
   const [syncStatus, setSyncStatus] = useState<string | null>(null);
 
+  const safeFetchJson = async (url: string, options?: RequestInit) => {
+    const res = await fetch(url, options);
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch (err) {
+      if (text.trim().startsWith('<')) {
+        throw new Error('Server returned HTML fallback. The server may be restarting or endpoint is unavailable.');
+      }
+      throw new Error('Invalid JSON response from server.');
+    }
+  };
+
   const handleSearchApi = async () => {
     if (!apiQuery.trim()) return;
     setIsSearchingApi(true);
     setSyncStatus(null);
     try {
-      const res = await fetch(`/api/cartoons/search?text=${encodeURIComponent(apiQuery)}`);
-      const data = await res.json();
+      const data = await safeFetchJson(`/api/cartoons/search?text=${encodeURIComponent(apiQuery)}`);
       if (data.success && Array.isArray(data.results)) {
         setApiSearchResults(data.results);
       } else {
         setApiSearchResults([]);
-        setSyncStatus('No results found from Sinhala Cartoons API.');
+        setSyncStatus(data.message || 'No results found from Sinhala Cartoons API.');
       }
     } catch (err: any) {
       setSyncStatus('API Error: ' + err.message);
@@ -84,17 +96,16 @@ export const AdminModal: React.FC = () => {
   const handleImportSingleItem = async (item: any) => {
     setImportingUrls((prev) => new Set(prev).add(item.url));
     try {
-      const res = await fetch('/api/cartoons/import', {
+      const data = await safeFetchJson('/api/cartoons/import', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ item })
       });
-      const data = await res.json();
-      if (data.success) {
+      if (data.success && data.movie) {
         await refreshMovies();
         setSyncStatus(`Successfully imported "${data.movie.title}" into CINEWORLD database!`);
       } else {
-        setSyncStatus('Failed to import: ' + (data.error || 'Unknown error'));
+        setSyncStatus('Failed to import: ' + (data.error || data.message || 'Unknown error'));
       }
     } catch (err: any) {
       setSyncStatus('Import error: ' + err.message);
@@ -111,17 +122,16 @@ export const AdminModal: React.FC = () => {
     setIsAutoSyncing(true);
     setSyncStatus('Running full automatic search & sync across cartoon keywords...');
     try {
-      const res = await fetch('/api/cartoons/auto-sync', {
+      const data = await safeFetchJson('/api/cartoons/auto-sync', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ keywords: ['ben 10', 'tom and jerry', 'scooby', 'avatar', 'cartoon', 'sinhala'] })
       });
-      const data = await res.json();
       if (data.success) {
         await refreshMovies();
         setSyncStatus(`Auto Sync Complete! Imported ${data.importedCount} new items. Total catalog: ${data.totalCached} movies/cartoons.`);
       } else {
-        setSyncStatus('Sync error: ' + (data.error || 'Failed'));
+        setSyncStatus('Sync error: ' + (data.error || data.message || 'Failed'));
       }
     } catch (err: any) {
       setSyncStatus('Sync execution failed: ' + err.message);
