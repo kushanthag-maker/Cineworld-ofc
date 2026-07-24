@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Movie, Review, MovieRequest, Quality } from '../types';
+import { Movie, Review, MovieRequest, Quality, SiteNotice } from '../types';
 import { INITIAL_MOVIES, INITIAL_REVIEWS } from '../data/initialMovies';
 
 interface MovieContextType {
@@ -7,6 +7,8 @@ interface MovieContextType {
   watchlist: string[];
   reviews: Record<string, Review[]>;
   movieRequests: MovieRequest[];
+  notices: SiteNotice[];
+  hasFollowedWhatsapp: boolean;
   isAdminLoggedIn: boolean;
   searchQuery: string;
   selectedGenre: string;
@@ -26,6 +28,7 @@ interface MovieContextType {
   setActiveTrailerUrl: (url: string | null) => void;
   setIsRequestModalOpen: (open: boolean) => void;
   setIsAdminModalOpen: (open: boolean) => void;
+  setHasFollowedWhatsapp: (followed: boolean) => void;
 
   toggleWatchlist: (movieId: string) => void;
   addMovie: (movie: Omit<Movie, 'id' | 'viewsCount' | 'downloadsCount' | 'createdAt'>) => void;
@@ -37,6 +40,9 @@ interface MovieContextType {
   addReview: (movieId: string, userName: string, rating: number, comment: string) => void;
   submitMovieRequest: (movieName: string, language: string, notes?: string, email?: string) => void;
   updateRequestStatus: (id: string, status: 'Pending' | 'Added' | 'Rejected') => void;
+
+  addNotice: (title: string, message: string, type?: 'info' | 'update' | 'alert') => void;
+  deleteNotice: (id: string) => void;
 
   adminLogin: (password: string) => boolean;
   adminLogout: () => void;
@@ -51,7 +57,9 @@ const MOVIES_STORAGE_KEY = 'cineworld_movies_v1';
 const WATCHLIST_STORAGE_KEY = 'cineworld_watchlist_v1';
 const REVIEWS_STORAGE_KEY = 'cineworld_reviews_v1';
 const REQUESTS_STORAGE_KEY = 'cineworld_requests_v1';
+const NOTICES_STORAGE_KEY = 'cineworld_notices_v1';
 const ADMIN_SESSION_KEY = 'cineworld_admin_auth_v1';
+const WHATSAPP_FOLLOWED_KEY = 'cineworld_whatsapp_followed_v1';
 
 export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Movies
@@ -60,13 +68,38 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const saved = localStorage.getItem(MOVIES_STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed)) return parsed;
       }
     } catch (e) {
       console.error('Failed to load movies from storage:', e);
     }
     return INITIAL_MOVIES;
   });
+
+  // Notices
+  const [notices, setNotices] = useState<SiteNotice[]>(() => {
+    try {
+      const saved = localStorage.getItem(NOTICES_STORAGE_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    return [];
+  });
+
+  // WhatsApp Follow State
+  const [hasFollowedWhatsapp, setHasFollowedWhatsappState] = useState<boolean>(() => {
+    return localStorage.getItem(WHATSAPP_FOLLOWED_KEY) === 'true';
+  });
+
+  const setHasFollowedWhatsapp = (followed: boolean) => {
+    setHasFollowedWhatsappState(followed);
+    if (followed) {
+      localStorage.setItem(WHATSAPP_FOLLOWED_KEY, 'true');
+    } else {
+      localStorage.removeItem(WHATSAPP_FOLLOWED_KEY);
+    }
+  };
 
   // Watchlist
   const [watchlist, setWatchlist] = useState<string[]>(() => {
@@ -98,16 +131,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     } catch (e) {
       console.error(e);
     }
-    return [
-      {
-        id: 'req-1',
-        movieName: 'Dune: Part Two',
-        language: 'Sinhala Subtitles',
-        status: 'Pending',
-        notes: 'Please add 1080p high quality with Sinhala sub!',
-        createdAt: new Date().toISOString()
-      }
-    ];
+    return [];
   });
 
   // Admin Auth
@@ -131,15 +155,16 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     const fetchApiData = async () => {
       try {
-        const [moviesRes, requestsRes, reviewsRes] = await Promise.all([
+        const [moviesRes, requestsRes, reviewsRes, noticesRes] = await Promise.all([
           fetch('/api/movies'),
           fetch('/api/requests'),
-          fetch('/api/reviews')
+          fetch('/api/reviews'),
+          fetch('/api/notices')
         ]);
 
         if (moviesRes.ok) {
           const moviesData = await moviesRes.json();
-          if (Array.isArray(moviesData) && moviesData.length > 0) {
+          if (Array.isArray(moviesData)) {
             setMovies(moviesData);
           }
         }
@@ -155,6 +180,13 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           const reviewsData = await reviewsRes.json();
           if (reviewsData && typeof reviewsData === 'object') {
             setReviews(reviewsData);
+          }
+        }
+
+        if (noticesRes.ok) {
+          const noticesData = await noticesRes.json();
+          if (Array.isArray(noticesData)) {
+            setNotices(noticesData);
           }
         }
       } catch (err) {
@@ -173,6 +205,14 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       console.error('Failed to save movies:', e);
     }
   }, [movies]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(NOTICES_STORAGE_KEY, JSON.stringify(notices));
+    } catch (e) {
+      console.error('Failed to save notices:', e);
+    }
+  }, [notices]);
 
   useEffect(() => {
     try {
@@ -348,6 +388,38 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const addNotice = async (title: string, message: string, type: 'info' | 'update' | 'alert' = 'info') => {
+    const newNotice: SiteNotice = {
+      id: 'notice-' + Date.now(),
+      title: title || 'Site Announcement',
+      message,
+      type,
+      createdAt: new Date().toISOString(),
+      active: true
+    };
+    setNotices((prev) => [newNotice, ...prev]);
+
+    try {
+      await fetch('/api/notices', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newNotice)
+      });
+    } catch (err) {
+      console.error('Failed to add notice on API:', err);
+    }
+  };
+
+  const deleteNotice = async (id: string) => {
+    setNotices((prev) => prev.filter((n) => n.id !== id));
+
+    try {
+      await fetch(`/api/notices/${id}`, { method: 'DELETE' });
+    } catch (err) {
+      console.error('Failed to delete notice on API:', err);
+    }
+  };
+
   // Admin login check with password "7060"
   const adminLogin = (password: string) => {
     if (password.trim() === '7060') {
@@ -394,6 +466,8 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         watchlist,
         reviews,
         movieRequests,
+        notices,
+        hasFollowedWhatsapp,
         isAdminLoggedIn,
         searchQuery,
         selectedGenre,
@@ -412,10 +486,11 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setActiveTrailerUrl,
         setIsRequestModalOpen,
         setIsAdminModalOpen,
+        setHasFollowedWhatsapp,
 
         toggleWatchlist,
         addMovie,
-        updateMovie,
+ updateMovie,
         deleteMovie,
         incrementMovieViews,
         incrementMovieDownloads,
@@ -423,6 +498,9 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         addReview,
         submitMovieRequest,
         updateRequestStatus,
+
+        addNotice,
+        deleteNotice,
 
         adminLogin,
         adminLogout,

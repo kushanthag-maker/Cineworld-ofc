@@ -35,6 +35,9 @@ export const AdminModal: React.FC = () => {
     deleteMovie,
     movieRequests,
     updateRequestStatus,
+    notices,
+    addNotice,
+    deleteNotice,
     resetToDefaultData,
     exportJsonCatalog,
     importJsonCatalog
@@ -43,7 +46,12 @@ export const AdminModal: React.FC = () => {
   const [passwordInput, setPasswordInput] = useState('');
   const [loginError, setLoginError] = useState(false);
 
-  const [activeAdminTab, setActiveAdminTab] = useState<'add' | 'manage' | 'requests' | 'export'>('add');
+  const [activeAdminTab, setActiveAdminTab] = useState<'add' | 'manage' | 'requests' | 'notices' | 'export'>('add');
+
+  // Notice Form State
+  const [noticeTitle, setNoticeTitle] = useState('');
+  const [noticeMessage, setNoticeMessage] = useState('');
+  const [noticeType, setNoticeType] = useState<'info' | 'update' | 'alert'>('update');
 
   // Add / Edit Movie Form State
   const [editingMovieId, setEditingMovieId] = useState<string | null>(null);
@@ -94,6 +102,14 @@ export const AdminModal: React.FC = () => {
     } else {
       setLoginError(true);
     }
+  };
+
+  const handleCreateNotice = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!noticeTitle.trim() || !noticeMessage.trim()) return;
+    addNotice(noticeTitle, noticeMessage, noticeType);
+    setNoticeTitle('');
+    setNoticeMessage('');
   };
 
   const handleAddDownloadOption = () => {
@@ -378,12 +394,24 @@ export const AdminModal: React.FC = () => {
                 onClick={() => setActiveAdminTab('requests')}
                 className={`px-4 py-2.5 font-bold text-xs rounded-xl flex items-center gap-2 ${
                   activeAdminTab === 'requests'
-                    ? 'bg-red-600 text-white'
+                    ? 'bg-amber-500 text-black'
                     : 'bg-zinc-900 text-zinc-400 hover:text-white'
                 }`}
               >
                 <AlertCircle className="w-4 h-4" />
                 <span>User Requests ({movieRequests.length})</span>
+              </button>
+
+              <button
+                onClick={() => setActiveAdminTab('notices')}
+                className={`px-4 py-2.5 font-bold text-xs rounded-xl flex items-center gap-2 ${
+                  activeAdminTab === 'notices'
+                    ? 'bg-amber-500 text-black'
+                    : 'bg-zinc-900 text-zinc-400 hover:text-white'
+                }`}
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Site Notices ({notices.length})</span>
               </button>
 
               <button
@@ -789,6 +817,96 @@ export const AdminModal: React.FC = () => {
                 ) : (
                   <p className="text-xs text-zinc-500">No user requests pending.</p>
                 )}
+              </div>
+            )}
+
+            {/* TAB: Broadcast Notices & Announcements */}
+            {activeAdminTab === 'notices' && (
+              <div className="space-y-6">
+                <form onSubmit={handleCreateNotice} className="bg-zinc-900/60 p-6 rounded-2xl border border-zinc-800 space-y-4">
+                  <h3 className="text-lg font-bold text-white font-serif flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-amber-500" />
+                    <span>Broadcast New Notice / Update</span>
+                  </h3>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="md:col-span-2 space-y-1">
+                      <label className="text-xs text-zinc-400 font-mono">Notice Title</label>
+                      <input
+                        type="text"
+                        placeholder="e.g., New Sinhala Subbed Movies Added!"
+                        value={noticeTitle}
+                        onChange={(e) => setNoticeTitle(e.target.value)}
+                        className="w-full bg-black text-white text-xs p-3 rounded-xl border border-zinc-800 focus:border-amber-500"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs text-zinc-400 font-mono">Notice Type</label>
+                      <select
+                        value={noticeType}
+                        onChange={(e) => setNoticeType(e.target.value as any)}
+                        className="w-full bg-black text-white text-xs p-3 rounded-xl border border-zinc-800 focus:border-amber-500"
+                      >
+                        <option value="update">Update Announcement</option>
+                        <option value="info">General Info</option>
+                        <option value="alert">Alert / Urgent</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs text-zinc-400 font-mono">Message Content</label>
+                    <textarea
+                      rows={3}
+                      placeholder="Enter the update message for visitors..."
+                      value={noticeMessage}
+                      onChange={(e) => setNoticeMessage(e.target.value)}
+                      className="w-full bg-black text-white text-xs p-3 rounded-xl border border-zinc-800 focus:border-amber-500"
+                      required
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 bg-amber-500 hover:bg-white text-black font-black text-xs uppercase tracking-widest rounded-xl transition-colors"
+                  >
+                    Publish Notice to Site Users
+                  </button>
+                </form>
+
+                <div className="space-y-3">
+                  <h4 className="text-sm font-bold text-white uppercase font-mono">Active Broadcasts ({notices.length})</h4>
+                  {notices.length > 0 ? (
+                    notices.map((n) => (
+                      <div key={n.id} className="p-4 bg-zinc-900 rounded-xl border border-zinc-800 flex items-start justify-between gap-4">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-bold text-white text-sm">{n.title}</span>
+                            <span className="text-[10px] font-mono px-2 py-0.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 uppercase rounded">
+                              {n.type}
+                            </span>
+                          </div>
+                          <p className="text-xs text-zinc-300">{n.message}</p>
+                          <span className="text-[10px] text-zinc-500 font-mono block pt-1">
+                            Published: {new Date(n.createdAt).toLocaleString()}
+                          </span>
+                        </div>
+
+                        <button
+                          onClick={() => deleteNotice(n.id)}
+                          className="p-2 bg-red-950/60 border border-red-500/30 text-red-400 hover:bg-red-900 rounded-lg text-xs"
+                          title="Delete Notice"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-xs text-zinc-500 font-mono">No active broadcasts created yet.</p>
+                  )}
+                </div>
               </div>
             )}
 

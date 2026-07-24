@@ -131,11 +131,62 @@ async function startServer() {
       const { id } = req.params;
       const database = await connectToMongo();
       if (database) {
-        await database.collection('movies').deleteOne({ id });
+        const result = await database.collection('movies').deleteOne({ id });
+        console.log(`Deleted movie ${id} from MongoDB, deletedCount: ${result.deletedCount}`);
       }
       res.json({ success: true });
     } catch (error: any) {
       console.error('Error deleting movie:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // GET Notices
+  app.get('/api/notices', async (req, res) => {
+    try {
+      const database = await connectToMongo();
+      if (database) {
+        const notices = await database.collection('notices').find({}).sort({ createdAt: -1 }).toArray();
+        const formatted = notices.map(({ _id, ...rest }: any) => rest);
+        return res.json(formatted);
+      }
+      return res.json([]);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // POST Notice
+  app.post('/api/notices', async (req, res) => {
+    try {
+      const database = await connectToMongo();
+      const newNotice = {
+        id: 'notice-' + Date.now(),
+        title: req.body.title || 'Site Update',
+        message: req.body.message || '',
+        type: req.body.type || 'info',
+        createdAt: new Date().toISOString(),
+        active: true
+      };
+      if (database) {
+        await database.collection('notices').insertOne(newNotice);
+      }
+      res.json({ success: true, notice: newNotice });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // DELETE Notice
+  app.delete('/api/notices/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const database = await connectToMongo();
+      if (database) {
+        await database.collection('notices').deleteOne({ id });
+      }
+      res.json({ success: true });
+    } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
   });

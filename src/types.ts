@@ -58,3 +58,12 @@ export interface MovieRequest {
   status: 'Pending' | 'Added' | 'Rejected';
   createdAt: string;
 }
+
+export interface SiteNotice {
+  id: string;
+  title: string;
+  message: string;
+  type: 'info' | 'update' | 'alert';
+  createdAt: string;
+  active: boolean;
+}

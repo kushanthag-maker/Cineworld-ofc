@@ -8,11 +8,13 @@ import { WatchlistView } from './components/WatchlistView';
 import { AdminModal } from './components/AdminModal';
 import { MovieRequestModal } from './components/MovieRequestModal';
 import { TrailerModal } from './components/TrailerModal';
+import { WhatsappGateModal } from './components/WhatsappGateModal';
+import { NoticeBanner } from './components/NoticeBanner';
 import { Footer } from './components/Footer';
 import { Movie } from './types';
 
 const MainAppContent: React.FC = () => {
-  const { activeMovie, setActiveMovie, movies } = useMovie();
+  const { activeMovie, setActiveMovie } = useMovie();
   const [activeTab, setActiveTab] = useState<'home' | 'watchlist' | 'sinhala-sub' | 'sinhala-dub' | 'tv-series'>('home');
 
   const handleWatchMovie = (movie: Movie) => {
@@ -24,7 +26,7 @@ const MainAppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-red-600 selection:text-white">
+    <div className="min-h-screen bg-[#050505] text-zinc-100 flex flex-col font-sans selection:bg-amber-500 selection:text-black">
       
       {/* Top Navbar */}
       <Navbar
@@ -40,6 +42,9 @@ const MainAppContent: React.FC = () => {
       {/* Main Page Body */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4">
         
+        {/* Broadcast Notices & Announcements */}
+        <NoticeBanner />
+
         {/* If Movie Selected -> Show Details View */}
         {activeMovie ? (
           <MovieDetailsView
@@ -74,6 +79,7 @@ const MainAppContent: React.FC = () => {
       <Footer />
 
       {/* Modals & Overlays */}
+      <WhatsappGateModal />
       <AdminModal />
       <MovieRequestModal />
       <TrailerModal />
