@@ -1,11 +1,14 @@
 import React from 'react';
 import { useMovie } from '../context/MovieContext';
 import { X, Film } from 'lucide-react';
+import { formatStreamUrl } from '../utils/streamUtils';
 
 export const TrailerModal: React.FC = () => {
   const { activeTrailerUrl, setActiveTrailerUrl } = useMovie();
 
   if (!activeTrailerUrl) return null;
+
+  const formatted = formatStreamUrl(activeTrailerUrl);
 
   return (
     <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4">
@@ -18,7 +21,7 @@ export const TrailerModal: React.FC = () => {
           </div>
           <button
             onClick={() => setActiveTrailerUrl(null)}
-            className="p-1.5 bg-white/5 border border-white/10 text-white/70 hover:text-white"
+            className="p-1.5 bg-white/5 border border-white/10 text-white/70 hover:text-white transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -26,7 +29,7 @@ export const TrailerModal: React.FC = () => {
 
         <div className="aspect-video w-full bg-black">
           <iframe
-            src={activeTrailerUrl}
+            src={formatted.embedUrl}
             title="Movie Trailer"
             className="w-full h-full border-0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

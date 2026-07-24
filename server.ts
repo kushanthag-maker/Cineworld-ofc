@@ -5,8 +5,14 @@ import { createServer as createViteServer } from 'vite';
 import { INITIAL_MOVIES, INITIAL_REVIEWS } from './src/data/initialMovies';
 
 const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://heshancamika_db_user:XM8EiSj9zHJLeMuG@cluster0.nimdgb1.mongodb.net/?appName=Cluster0';
-const client = new MongoClient(mongoUri);
+const client = new MongoClient(mongoUri, { serverSelectionTimeoutMS: 5000 });
 let db: any = null;
+
+// In-Memory Fallback Caches
+let moviesCache: any[] = [...INITIAL_MOVIES];
+let requestsCache: any[] = [];
+let noticesCache: any[] = [];
+let reviewsCache: Record<string, any[]> = { ...INITIAL_REVIEWS };
 
 async function connectToMongo() {
   try {
@@ -21,6 +27,9 @@ async function connectToMongo() {
       if (count === 0) {
         console.log('Seeding initial movies into MongoDB...');
         await moviesCollection.insertMany(INITIAL_MOVIES);
+      } else {
+        const docs = await moviesCollection.find({}).sort({ createdAt: -1 }).toArray();
+        moviesCache = docs.map(({ _id, ...rest }: any) => rest);
       }
 
       // Seed initial reviews if empty
@@ -35,11 +44,29 @@ async function connectToMongo() {
         if (initialReviewList.length > 0) {
           await reviewsCollection.insertMany(initialReviewList);
         }
+      } else {
+        const reviewList = await reviewsCollection.find({}).toArray();
+        const grouped: Record<string, any[]> = {};
+        reviewList.forEach(({ _id, ...r }: any) => {
+          if (!grouped[r.movieId]) grouped[r.movieId] = [];
+          grouped[r.movieId].push(r);
+        });
+        reviewsCache = grouped;
       }
+
+      // Sync Requests
+      const requestsCollection = db.collection('requests');
+      const reqDocs = await requestsCollection.find({}).sort({ createdAt: -1 }).toArray();
+      requestsCache = reqDocs.map(({ _id, ...rest }: any) => rest);
+
+      // Sync Notices
+      const noticesCollection = db.collection('notices');
+      const noticeDocs = await noticesCollection.find({}).sort({ createdAt: -1 }).toArray();
+      noticesCache = noticeDocs.map(({ _id, ...rest }: any) => rest);
     }
     return db;
   } catch (error) {
-    console.error('Failed to connect to MongoDB:', error);
+    console.warn('MongoDB connection unavailable or delayed. Using resilient in-memory store:', error);
     return null;
   }
 }
@@ -50,8 +77,8 @@ async function startServer() {
 
   app.use(express.json({ limit: '10mb' }));
 
-  // Initialize DB Connection
-  await connectToMongo();
+  // Initialize DB Connection asynchronously in background
+  connectToMongo().catch((err) => console.error('Background DB Connect:', err));
 
   // API Routes
   app.get('/api/health', async (req, res) => {
@@ -61,7 +88,7 @@ async function startServer() {
         const movieCount = await database.collection('movies').countDocuments();
         res.json({ status: 'ok', db: 'connected', movieCount });
       } else {
-        res.json({ status: 'warning', db: 'disconnected' });
+        res.json({ status: 'warning', db: 'disconnected', movieCount: moviesCache.length });
       }
     } catch (e: any) {
       res.status(500).json({ status: 'error', message: e.message });
@@ -74,23 +101,21 @@ async function startServer() {
       const database = await connectToMongo();
       if (database) {
         const movies = await database.collection('movies').find({}).sort({ createdAt: -1 }).toArray();
-        // Remove MongoDB _id from response
         const formatted = movies.map(({ _id, ...rest }: any) => rest);
+        moviesCache = formatted;
         return res.json(formatted);
       }
-      return res.json(INITIAL_MOVIES);
+      return res.json(moviesCache);
     } catch (error: any) {
-      console.error('Error fetching movies:', error);
-      res.status(500).json({ error: error.message });
+      return res.json(moviesCache);
     }
   });
 
   // POST Create Movie
   app.post('/api/movies', async (req, res) => {
     try {
-      const database = await connectToMongo();
       const movieData = req.body;
-      const newId = 'm-' + Date.now();
+      const newId = movieData.id || 'm-' + Date.now();
       const newMovie = {
         ...movieData,
         id: newId,
@@ -99,6 +124,9 @@ async function startServer() {
         createdAt: movieData.createdAt || new Date().toISOString()
       };
 
+      moviesCache = [newMovie, ...moviesCache.filter((m) => m.id !== newId)];
+
+      const database = await connectToMongo();
       if (database) {
         await database.collection('movies').insertOne(newMovie);
       }
@@ -114,6 +142,9 @@ async function startServer() {
     try {
       const { id } = req.params;
       const updates = req.body;
+
+      moviesCache = moviesCache.map((m) => (m.id === id ? { ...m, ...updates } : m));
+
       const database = await connectToMongo();
       if (database) {
         await database.collection('movies').updateOne({ id }, { $set: updates });
@@ -129,6 +160,10 @@ async function startServer() {
   app.delete('/api/movies/:id', async (req, res) => {
     try {
       const { id } = req.params;
+
+      // Update in-memory cache immediately
+      moviesCache = moviesCache.filter((m) => m.id !== id);
+
       const database = await connectToMongo();
       if (database) {
         const result = await database.collection('movies').deleteOne({ id });
@@ -148,26 +183,30 @@ async function startServer() {
       if (database) {
         const notices = await database.collection('notices').find({}).sort({ createdAt: -1 }).toArray();
         const formatted = notices.map(({ _id, ...rest }: any) => rest);
+        noticesCache = formatted;
         return res.json(formatted);
       }
-      return res.json([]);
+      return res.json(noticesCache);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      return res.json(noticesCache);
     }
   });
 
   // POST Notice
   app.post('/api/notices', async (req, res) => {
     try {
-      const database = await connectToMongo();
       const newNotice = {
-        id: 'notice-' + Date.now(),
+        id: req.body.id || 'notice-' + Date.now(),
         title: req.body.title || 'Site Update',
         message: req.body.message || '',
         type: req.body.type || 'info',
-        createdAt: new Date().toISOString(),
+        createdAt: req.body.createdAt || new Date().toISOString(),
         active: true
       };
+
+      noticesCache = [newNotice, ...noticesCache.filter((n) => n.id !== newNotice.id)];
+
+      const database = await connectToMongo();
       if (database) {
         await database.collection('notices').insertOne(newNotice);
       }
@@ -181,6 +220,8 @@ async function startServer() {
   app.delete('/api/notices/:id', async (req, res) => {
     try {
       const { id } = req.params;
+      noticesCache = noticesCache.filter((n) => n.id !== id);
+
       const database = await connectToMongo();
       if (database) {
         await database.collection('notices').deleteOne({ id });
@@ -195,6 +236,10 @@ async function startServer() {
   app.post('/api/movies/:id/view', async (req, res) => {
     try {
       const { id } = req.params;
+      moviesCache = moviesCache.map((m) =>
+        m.id === id ? { ...m, viewsCount: (m.viewsCount || 0) + 1 } : m
+      );
+
       const database = await connectToMongo();
       if (database) {
         await database.collection('movies').updateOne({ id }, { $inc: { viewsCount: 1 } });
@@ -209,6 +254,10 @@ async function startServer() {
   app.post('/api/movies/:id/download', async (req, res) => {
     try {
       const { id } = req.params;
+      moviesCache = moviesCache.map((m) =>
+        m.id === id ? { ...m, downloadsCount: (m.downloadsCount || 0) + 1 } : m
+      );
+
       const database = await connectToMongo();
       if (database) {
         await database.collection('movies').updateOne({ id }, { $inc: { downloadsCount: 1 } });
@@ -226,24 +275,28 @@ async function startServer() {
       if (database) {
         const requests = await database.collection('requests').find({}).sort({ createdAt: -1 }).toArray();
         const formatted = requests.map(({ _id, ...rest }: any) => rest);
+        requestsCache = formatted;
         return res.json(formatted);
       }
-      return res.json([]);
+      return res.json(requestsCache);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      return res.json(requestsCache);
     }
   });
 
   // POST Submit Request
   app.post('/api/requests', async (req, res) => {
     try {
-      const database = await connectToMongo();
       const newReq = {
         id: 'req-' + Date.now(),
         ...req.body,
         status: 'Pending',
         createdAt: new Date().toISOString()
       };
+
+      requestsCache = [newReq, ...requestsCache];
+
+      const database = await connectToMongo();
       if (database) {
         await database.collection('requests').insertOne(newReq);
       }
@@ -258,6 +311,9 @@ async function startServer() {
     try {
       const { id } = req.params;
       const { status } = req.body;
+
+      requestsCache = requestsCache.map((r) => (r.id === id ? { ...r, status } : r));
+
       const database = await connectToMongo();
       if (database) {
         await database.collection('requests').updateOne({ id }, { $set: { status } });
@@ -279,23 +335,28 @@ async function startServer() {
           if (!grouped[r.movieId]) grouped[r.movieId] = [];
           grouped[r.movieId].push(r);
         });
+        reviewsCache = grouped;
         return res.json(grouped);
       }
-      return res.json(INITIAL_REVIEWS);
+      return res.json(reviewsCache);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      return res.json(reviewsCache);
     }
   });
 
   // POST Add Review
   app.post('/api/reviews', async (req, res) => {
     try {
-      const database = await connectToMongo();
       const newReview = {
         id: 'rev-' + Date.now(),
         ...req.body,
         date: new Date().toISOString().split('T')[0]
       };
+
+      const mId = newReview.movieId;
+      reviewsCache[mId] = [newReview, ...(reviewsCache[mId] || [])];
+
+      const database = await connectToMongo();
       if (database) {
         await database.collection('reviews').insertOne(newReview);
       }
