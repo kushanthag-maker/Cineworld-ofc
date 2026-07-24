@@ -236,9 +236,9 @@ async function importCartoonToDb(searchItem: any, dlDetails: any) {
 
       return {
         id: `opt-ep-${idx + 1}`,
-        quality: `Episode ${epNum} HD (${ep.title || 'Sinhala Dubbed'})`,
+        quality: `Episode ${epNum} (${ep.title || 'HD'})`,
         resolution: '1080p HD',
-        size: '150 - 280 MB',
+        size: '150 - 300 MB',
         format: 'MP4 Direct',
         downloadUrl: s1Url,
         server2Url: s2Url,
@@ -282,7 +282,7 @@ async function importCartoonToDb(searchItem: any, dlDetails: any) {
 
   const formattedEpisodes = episodes.map((ep: any, idx: number) => ({
     episode: ep.episode || String(idx + 1).padStart(2, '0'),
-    title: ep.title || `Episode ${ep.episode || idx + 1}`,
+    title: ep.title || `Episode ${idx + 1}`,
     stream_url: ep.stream_url
   }));
 
@@ -291,12 +291,12 @@ async function importCartoonToDb(searchItem: any, dlDetails: any) {
     title: cleanTitle,
     originalTitle: searchItem.title,
     releaseYear: 2024,
-    duration: dlDetails?.total_episodes ? `${dlDetails.total_episodes} Episodes` : formattedEpisodes.length > 0 ? `${formattedEpisodes.length} Episodes` : 'Complete Cartoon Series',
+    duration: dlDetails?.total_episodes ? `${dlDetails.total_episodes} Episodes` : 'Complete Cartoon Series',
     rating: parseFloat(searchItem.rating) || 8.5,
     genres: ['Animation', 'Sinhala Cartoon', 'Action', 'Family'],
     director: 'Sinhala Cartoons LK',
     cast: ['Sinhala Dubbing Team'],
-    description: `${cleanTitle} - Sinhala Dubbed Cartoon / Anime Series with online HD streaming & high-speed direct downloads. Total Episodes: ${dlDetails?.total_episodes || formattedEpisodes.length || 1}.`,
+    description: `${cleanTitle} - Sinhala Dubbed Cartoon / Anime Series with online HD streaming & high-speed direct downloads. Total Episodes: ${dlDetails?.total_episodes || episodes.length || 1}.`,
     posterUrl: searchItem.thumbnail,
     backdropUrl: searchItem.thumbnail,
     streamUrl: streamUrl,
@@ -320,51 +320,6 @@ async function importCartoonToDb(searchItem: any, dlDetails: any) {
 
   return movieObj;
 }
-
-// Automatic continuous background sync routine
-async function runAutoSyncTask() {
-  console.log('[AUTO-SYNC] Starting automatic cartoon catalog sync...');
-  const keywords = [
-    'ben 10', 'tom and jerry', 'scooby', 'avatar', 'dora', 'naruto',
-    'pokemon', 'dragon ball', 'tintin', 'batman', 'spiderman', 'sinhala', 'dubbed', 'cartoons'
-  ];
-  let importedCount = 0;
-  for (const kw of keywords) {
-    try {
-      const searchRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/search?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(kw)}`);
-      const searchText = await searchRes.text();
-      const searchJson = JSON.parse(searchText);
-
-      if (searchJson.success && Array.isArray(searchJson.results)) {
-        for (const item of searchJson.results.slice(0, 10)) {
-          try {
-            const dlRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/dl?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(item.url)}`);
-            const dlText = await dlRes.text();
-            const dlJson = JSON.parse(dlText);
-            if (dlJson.success) {
-              await importCartoonToDb(item, dlJson.results);
-              importedCount++;
-            }
-          } catch (e) {
-            // ignore individual item error
-          }
-        }
-      }
-    } catch (err) {
-      // ignore kw error
-    }
-  }
-  console.log(`[AUTO-SYNC] Complete. Synced ${importedCount} items into catalog.`);
-}
-
-// Trigger initial sync after 3 seconds, and then every 5 minutes
-setTimeout(() => {
-  runAutoSyncTask().catch((err) => console.error('Initial auto sync error:', err));
-}, 3000);
-
-setInterval(() => {
-  runAutoSyncTask().catch((err) => console.error('Periodic auto sync error:', err));
-}, 5 * 60 * 1000);
 
 // GET /api/cartoons/search
 app.get('/api/cartoons/search', async (req, res) => {
