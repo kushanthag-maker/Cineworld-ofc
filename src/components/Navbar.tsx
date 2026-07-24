@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMovie } from '../context/MovieContext';
-import { Search, Film, Bookmark, PlusCircle, Shield, Menu, X, Sparkles } from 'lucide-react';
+import { Search, Film, Bookmark, PlusCircle, Shield, Menu, X, DownloadCloud, Sparkles, Tv } from 'lucide-react';
 
 export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (tab: 'home' | 'watchlist') => void }> = ({
   activeTab,
@@ -13,6 +13,7 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
     setSelectedCategory,
     setIsAdminOpen,
     setIsRequestOpen,
+    setIsApiImportOpen,
     watchlist
   } = useMovie();
 
@@ -29,7 +30,7 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
   ];
 
   return (
-    <nav className="sticky top-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10">
+    <nav className="sticky top-0 z-40 bg-black/95 backdrop-blur-md border-b border-amber-500/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
@@ -42,33 +43,43 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
             }}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-10 h-10 bg-amber-500 flex items-center justify-center text-black font-black text-xl rounded-none shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:bg-white transition-colors">
-              <Film className="w-6 h-6" />
+            <div className="relative">
+              <div className="w-11 h-11 bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 flex items-center justify-center text-black font-black text-xl rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.6)] group-hover:scale-105 transition-transform">
+                <Film className="w-6 h-6 fill-black" />
+              </div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-black" />
             </div>
+
             <div>
-              <span className="text-2xl font-black text-white tracking-widest font-brand block leading-none">
-                CINE<span className="text-amber-500">WORLD</span>
-              </span>
-              <span className="text-[9px] uppercase tracking-widest text-amber-500 font-mono block mt-1">
-                Movies & Sinhala Cartoons
+              <div className="flex items-center gap-2">
+                <span className="text-2xl font-black text-white tracking-widest font-brand block leading-none">
+                  CINE<span className="text-amber-500">WORLD</span>
+                </span>
+                <span className="text-[10px] bg-red-600 text-white font-black px-1.5 py-0.2 rounded uppercase font-mono tracking-wider">
+                  LK
+                </span>
+              </div>
+              <span className="text-[10px] uppercase tracking-widest text-amber-400 font-mono block mt-1 font-bold flex items-center gap-1">
+                <span>සිංහල Cartoons & Movie Cinema</span>
               </span>
             </div>
           </div>
 
           {/* Search Bar */}
-          <div className="hidden md:flex flex-1 max-w-md mx-8 relative">
-            <Search className="w-4 h-4 absolute left-3.5 top-3.5 text-white/40" />
+          <div className="hidden md:flex flex-1 max-w-md mx-6 relative">
+            <Search className="w-4 h-4 absolute left-3.5 top-3.5 text-amber-500/70" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search Ben 10, Cartoons, Avatar, Movies..."
-              className="w-full bg-zinc-900/90 border border-white/10 text-white text-xs pl-10 pr-4 py-3 rounded-none focus:border-amber-500 outline-none transition-colors"
+              className="w-full bg-zinc-900/90 border border-zinc-800 text-white text-xs pl-10 pr-4 py-3 rounded-xl focus:border-amber-500 outline-none transition-colors font-mono"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-3 text-xs text-white/50 hover:text-white"
+                className="absolute right-3 top-3 text-xs text-zinc-400 hover:text-white"
               >
                 Clear
               </button>
@@ -76,30 +87,38 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
           </div>
 
           {/* Nav Actions */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={() => setIsApiImportOpen(true)}
+              className="px-3.5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-black text-xs uppercase tracking-wider flex items-center gap-2 rounded-xl shadow-lg shadow-amber-500/20 transition-all cursor-pointer hover:scale-105"
+            >
+              <DownloadCloud className="w-4 h-4" />
+              <span>Search & Import API</span>
+            </button>
+
             <button
               onClick={() => setActiveTab(activeTab === 'home' ? 'watchlist' : 'home')}
-              className={`px-4 py-2 font-bold text-xs uppercase tracking-wider flex items-center gap-2 border transition-all cursor-pointer ${
+              className={`px-3.5 py-2.5 font-bold text-xs uppercase tracking-wider flex items-center gap-2 border rounded-xl transition-all cursor-pointer ${
                 activeTab === 'watchlist'
                   ? 'bg-amber-500 text-black border-amber-500'
-                  : 'bg-white/5 hover:bg-white/10 text-white border-white/10'
+                  : 'bg-zinc-900 hover:bg-zinc-800 text-white border-zinc-800'
               }`}
             >
-              <Bookmark className="w-4 h-4" />
+              <Bookmark className="w-4 h-4 text-amber-500" />
               <span>Watchlist ({watchlist.length})</span>
             </button>
 
             <button
               onClick={() => setIsRequestOpen(true)}
-              className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 text-amber-400 font-bold text-xs uppercase tracking-wider flex items-center gap-2 border border-amber-500/30 transition-all cursor-pointer"
+              className="px-3.5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-amber-400 font-bold text-xs uppercase tracking-wider flex items-center gap-2 border border-amber-500/30 rounded-xl transition-all cursor-pointer"
             >
               <PlusCircle className="w-4 h-4 text-amber-500" />
-              <span>Request Content</span>
+              <span>Request</span>
             </button>
 
             <button
               onClick={() => setIsAdminOpen(true)}
-              className="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 border border-amber-500/40 transition-all cursor-pointer"
+              className="px-3 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 border border-zinc-800 rounded-xl transition-all cursor-pointer"
               title="Admin Panel & API Auto Sync"
             >
               <Shield className="w-4 h-4 text-amber-500" />
@@ -125,10 +144,10 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
                 setSelectedCategory(cat);
                 setActiveTab('home');
               }}
-              className={`px-3 py-1.5 whitespace-nowrap transition-colors cursor-pointer border ${
+              className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors cursor-pointer border ${
                 selectedCategory === cat && activeTab === 'home'
-                  ? 'bg-amber-500 text-black border-amber-500 font-black'
-                  : 'bg-zinc-900/50 hover:bg-zinc-800 text-white/70 border-white/5'
+                  ? 'bg-amber-500 text-black border-amber-500 font-black shadow-md shadow-amber-500/20'
+                  : 'bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 border-zinc-800'
               }`}
             >
               {cat === 'Sinhala Dubbed' ? 'Sinhala Dubbed Cartoons' : cat}
@@ -141,23 +160,34 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
       {isMobileMenuOpen && (
         <div className="md:hidden bg-zinc-950 border-b border-white/10 px-4 py-4 space-y-3">
           <div className="relative">
-            <Search className="w-4 h-4 absolute left-3 top-3 text-white/40" />
+            <Search className="w-4 h-4 absolute left-3 top-3 text-amber-500" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search movies, Ben 10, cartoons..."
-              className="w-full bg-zinc-900 border border-white/10 text-white text-xs pl-9 pr-4 py-2.5 rounded-none outline-none"
+              className="w-full bg-zinc-900 border border-zinc-800 text-white text-xs pl-9 pr-4 py-2.5 rounded-lg outline-none"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-2 pt-2">
             <button
               onClick={() => {
+                setIsApiImportOpen(true);
+                setIsMobileMenuOpen(false);
+              }}
+              className="col-span-2 py-3 bg-amber-500 text-black font-black text-xs uppercase tracking-wider rounded-lg flex items-center justify-center gap-2"
+            >
+              <DownloadCloud className="w-4 h-4" />
+              <span>Search & Import Movies/Cartoons</span>
+            </button>
+
+            <button
+              onClick={() => {
                 setActiveTab(activeTab === 'home' ? 'watchlist' : 'home');
                 setIsMobileMenuOpen(false);
               }}
-              className="px-3 py-2 bg-zinc-900 text-white text-xs font-bold uppercase tracking-wider border border-white/10 flex items-center justify-center gap-2"
+              className="px-3 py-2 bg-zinc-900 text-white text-xs font-bold uppercase tracking-wider border border-zinc-800 rounded-lg flex items-center justify-center gap-2"
             >
               <Bookmark className="w-4 h-4 text-amber-500" />
               <span>Watchlist ({watchlist.length})</span>
@@ -168,7 +198,7 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
                 setIsRequestOpen(true);
                 setIsMobileMenuOpen(false);
               }}
-              className="px-3 py-2 bg-amber-500/10 text-amber-400 text-xs font-bold uppercase tracking-wider border border-amber-500/30 flex items-center justify-center gap-2"
+              className="px-3 py-2 bg-zinc-900 text-amber-400 text-xs font-bold uppercase tracking-wider border border-amber-500/30 rounded-lg flex items-center justify-center gap-2"
             >
               <PlusCircle className="w-4 h-4 text-amber-500" />
               <span>Request</span>
@@ -179,9 +209,9 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
                 setIsAdminOpen(true);
                 setIsMobileMenuOpen(false);
               }}
-              className="col-span-2 px-3 py-2 bg-amber-500 text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+              className="col-span-2 px-3 py-2 bg-zinc-900 text-zinc-300 font-bold text-xs uppercase tracking-wider border border-zinc-800 rounded-lg flex items-center justify-center gap-2"
             >
-              <Shield className="w-4 h-4" />
+              <Shield className="w-4 h-4 text-amber-500" />
               <span>Admin Panel & Auto-Sync Engine</span>
             </button>
           </div>

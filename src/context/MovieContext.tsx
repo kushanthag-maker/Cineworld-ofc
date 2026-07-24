@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Movie, MovieRequest, Notice } from '../types';
+import { Movie, MovieRequest, Notice, MovieComment } from '../types';
 import { initialMovies } from '../data/initialMovies';
 
 interface MovieContextType {
@@ -15,10 +15,13 @@ interface MovieContextType {
   requests: MovieRequest[];
   addMovieRequest: (request: Omit<MovieRequest, 'id' | 'status' | 'createdAt'>) => void;
   notices: Notice[];
+  comments: MovieComment[];
   isAdminOpen: boolean;
   setIsAdminOpen: (open: boolean) => void;
   isRequestOpen: boolean;
   setIsRequestOpen: (open: boolean) => void;
+  isApiImportOpen: boolean;
+  setIsApiImportOpen: (open: boolean) => void;
   activeTrailerUrl: string | null;
   setActiveTrailerUrl: (url: string | null) => void;
   whatsappModalMovie: Movie | null;
@@ -34,6 +37,10 @@ interface MovieContextType {
   exportJsonCatalog: () => string;
   importJsonCatalog: (jsonString: string) => boolean;
   refreshMovies: () => Promise<void>;
+  fetchComments: (movieId?: string) => Promise<void>;
+  addComment: (movieId: string, userName: string, comment: string, rating: number) => Promise<boolean>;
+  likeComment: (commentId: string) => Promise<void>;
+  importCartoonFromApi: (searchItem: any, details?: any) => Promise<Movie | null>;
 }
 
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
@@ -54,9 +61,11 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [requests, setRequests] = useState<MovieRequest[]>([]);
   const [notices, setNotices] = useState<Notice[]>([]);
+  const [comments, setComments] = useState<MovieComment[]>([]);
 
   const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
   const [isRequestOpen, setIsRequestOpen] = useState<boolean>(false);
+  const [isApiImportOpen, setIsApiImportOpen] = useState<boolean>(false);
   const [activeTrailerUrl, setActiveTrailerUrl] = useState<string | null>(null);
   const [whatsappModalMovie, setWhatsappModalMovie] = useState<Movie | null>(null);
 
@@ -99,10 +108,77 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const fetchComments = async (movieId?: string) => {
+    try {
+      const url = movieId ? `/api/comments?movieId=${encodeURIComponent(movieId)}` : '/api/comments';
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) setComments(data);
+      }
+    } catch (err) {
+      console.warn('Comments fetch error:', err);
+    }
+  };
+
+  const addComment = async (movieId: string, userName: string, comment: string, rating: number): Promise<boolean> => {
+    try {
+      const res = await fetch('/api/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ movieId, userName, comment, rating })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.comment) {
+          setComments((prev) => [data.comment, ...prev]);
+          return true;
+        }
+      }
+      return false;
+    } catch (err) {
+      console.error('Add comment error:', err);
+      return false;
+    }
+  };
+
+  const likeComment = async (commentId: string) => {
+    setComments((prev) =>
+      prev.map((c) => (c.id === commentId ? { ...c, likes: (c.likes || 0) + 1 } : c))
+    );
+    try {
+      await fetch(`/api/comments/${commentId}/like`, { method: 'POST' });
+    } catch (err) {
+      console.error('Like comment error:', err);
+    }
+  };
+
+  const importCartoonFromApi = async (searchItem: any, details?: any): Promise<Movie | null> => {
+    try {
+      const res = await fetch('/api/cartoons/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item: searchItem, details })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.movie) {
+          await refreshMovies();
+          return data.movie;
+        }
+      }
+      return null;
+    } catch (err) {
+      console.error('Import cartoon error:', err);
+      return null;
+    }
+  };
+
   useEffect(() => {
     refreshMovies();
     fetchNotices();
     fetchRequests();
+    fetchComments();
   }, []);
 
   useEffect(() => {
@@ -248,10 +324,13 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         requests,
         addMovieRequest,
         notices,
+        comments,
         isAdminOpen,
         setIsAdminOpen,
         isRequestOpen,
         setIsRequestOpen,
+        isApiImportOpen,
+        setIsApiImportOpen,
         activeTrailerUrl,
         setActiveTrailerUrl,
         whatsappModalMovie,
@@ -266,7 +345,11 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         resetToDefaultData,
         exportJsonCatalog,
         importJsonCatalog,
-        refreshMovies
+        refreshMovies,
+        fetchComments,
+        addComment,
+        likeComment,
+        importCartoonFromApi
       }}
     >
       {children}

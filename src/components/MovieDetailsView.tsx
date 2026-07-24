@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useMovie } from '../context/MovieContext';
 import { VideoPlayer } from './VideoPlayer';
 import { DownloadSection } from './DownloadSection';
+import { CommentSection } from './CommentSection';
 import { ArrowLeft, Star, Clock, Eye, Download, Bookmark, Check, Share2, Film, Heart } from 'lucide-react';
 
 export const MovieDetailsView: React.FC = () => {
@@ -26,7 +27,7 @@ export const MovieDetailsView: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
           <button
             onClick={() => setActiveMovie(null)}
-            className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 border border-white/10 transition-colors cursor-pointer"
+            className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 border border-white/10 transition-colors cursor-pointer rounded-lg"
           >
             <ArrowLeft className="w-4 h-4 text-amber-500" />
             <span>Back to All Movies & Cartoons</span>
@@ -35,7 +36,7 @@ export const MovieDetailsView: React.FC = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => toggleWatchlist(activeMovie.id)}
-              className={`px-3 py-2 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 border transition-colors cursor-pointer ${
+              className={`px-3 py-2 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 border rounded-lg transition-colors cursor-pointer ${
                 isBookmarked ? 'bg-amber-500 text-black border-amber-500 font-black' : 'bg-zinc-900 text-white border-white/10'
               }`}
             >
@@ -45,7 +46,7 @@ export const MovieDetailsView: React.FC = () => {
 
             <button
               onClick={() => setWhatsappModalMovie(activeMovie)}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 rounded-lg transition-colors cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Download Options</span>
@@ -59,7 +60,7 @@ export const MovieDetailsView: React.FC = () => {
         {/* Main Title Header */}
         <div className="space-y-2 border-b border-white/10 pb-6">
           <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-amber-500 uppercase tracking-widest">
-            <span className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 font-bold">
+            <span className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 font-bold rounded">
               {activeMovie.category || 'Sinhala Dubbed'}
             </span>
             <span>•</span>
@@ -94,7 +95,7 @@ export const MovieDetailsView: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-4">
           
           {/* Main Description */}
-          <div className="lg:col-span-2 space-y-6 bg-[#080808] border border-white/10 p-6">
+          <div className="lg:col-span-2 space-y-6 bg-[#080808] border border-white/10 p-6 rounded-xl">
             <div className="space-y-2">
               <h3 className="text-sm font-black text-amber-500 uppercase tracking-widest font-mono">
                 Synopsis & Details
@@ -128,7 +129,7 @@ export const MovieDetailsView: React.FC = () => {
           </div>
 
           {/* Genres & Sidebar */}
-          <div className="space-y-6 bg-[#080808] border border-white/10 p-6">
+          <div className="space-y-6 bg-[#080808] border border-white/10 p-6 rounded-xl">
             <div className="space-y-3">
               <h4 className="text-xs font-black text-amber-500 uppercase tracking-widest font-mono">
                 Categories & Genres
@@ -137,7 +138,7 @@ export const MovieDetailsView: React.FC = () => {
                 {activeMovie.genres.map((g) => (
                   <span
                     key={g}
-                    className="px-2.5 py-1 bg-zinc-900 border border-white/10 text-white/80 text-xs font-bold uppercase tracking-wider"
+                    className="px-2.5 py-1 bg-zinc-900 border border-white/10 text-white/80 text-xs font-bold uppercase tracking-wider rounded"
                   >
                     {g}
                   </span>
@@ -159,6 +160,9 @@ export const MovieDetailsView: React.FC = () => {
             )}
           </div>
         </div>
+
+        {/* Comments Section */}
+        <CommentSection movieId={activeMovie.id} movieTitle={activeMovie.title} />
       </div>
     </div>
   );

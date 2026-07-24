@@ -9,6 +9,7 @@ import { AdminModal } from './components/AdminModal';
 import { MovieRequestModal } from './components/MovieRequestModal';
 import { TrailerModal } from './components/TrailerModal';
 import { WhatsappGateModal } from './components/WhatsappGateModal';
+import { ApiSearchImportModal } from './components/ApiSearchImportModal';
 import { NoticeBanner } from './components/NoticeBanner';
 import { Footer } from './components/Footer';
 
@@ -41,6 +42,7 @@ const AppContent: React.FC = () => {
       <MovieRequestModal />
       <TrailerModal />
       <WhatsappGateModal />
+      <ApiSearchImportModal />
     </div>
   );
 };

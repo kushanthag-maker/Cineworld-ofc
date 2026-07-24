@@ -92,6 +92,39 @@ let noticesCache: any[] = [
   }
 ];
 
+let commentsCache: any[] = [
+  {
+    id: 'c1',
+    movieId: 'ben-10-af-s3',
+    userName: 'Kasun Perera',
+    comment: 'Supiri!! Ben 10 Alien Force Season 3 full hd audio ekka thiyenawa. Episode 1 to 17 okkoma down karagaththa. TFS admin!',
+    rating: 5,
+    likes: 24,
+    avatarBg: 'bg-amber-600',
+    createdAt: new Date(Date.now() - 3600000 * 5).toISOString()
+  },
+  {
+    id: 'c2',
+    movieId: 'ben-10-af-s3',
+    userName: 'Nalaka Bandara',
+    comment: 'Sinhala hoda quality ekata dubbed karala thiyenne. Direct links fast download wenawa server 1 eken.',
+    rating: 5,
+    likes: 18,
+    avatarBg: 'bg-emerald-600',
+    createdAt: new Date(Date.now() - 3600000 * 12).toISOString()
+  },
+  {
+    id: 'c3',
+    movieId: 'ben-10-af-s3',
+    userName: 'Dinusha Jayasinghe',
+    comment: 'Meka maara gathi. Avatar and Scooby-Doo eth add karannako pls!',
+    rating: 5,
+    likes: 11,
+    avatarBg: 'bg-blue-600',
+    createdAt: new Date(Date.now() - 3600000 * 24).toISOString()
+  }
+];
+
 // MongoDB Client
 let dbClient: MongoClient | null = null;
 async function connectToMongo() {
@@ -236,9 +269,9 @@ async function importCartoonToDb(searchItem: any, dlDetails: any) {
 
       return {
         id: `opt-ep-${idx + 1}`,
-        quality: `Episode ${epNum} (${ep.title || 'HD'})`,
+        quality: `Episode ${epNum} HD (${ep.title || 'Sinhala Dubbed'})`,
         resolution: '1080p HD',
-        size: '150 - 300 MB',
+        size: '150 - 280 MB',
         format: 'MP4 Direct',
         downloadUrl: s1Url,
         server2Url: s2Url,
@@ -282,7 +315,7 @@ async function importCartoonToDb(searchItem: any, dlDetails: any) {
 
   const formattedEpisodes = episodes.map((ep: any, idx: number) => ({
     episode: ep.episode || String(idx + 1).padStart(2, '0'),
-    title: ep.title || `Episode ${idx + 1}`,
+    title: ep.title || `Episode ${ep.episode || idx + 1}`,
     stream_url: ep.stream_url
   }));
 
@@ -291,12 +324,12 @@ async function importCartoonToDb(searchItem: any, dlDetails: any) {
     title: cleanTitle,
     originalTitle: searchItem.title,
     releaseYear: 2024,
-    duration: dlDetails?.total_episodes ? `${dlDetails.total_episodes} Episodes` : 'Complete Cartoon Series',
+    duration: dlDetails?.total_episodes ? `${dlDetails.total_episodes} Episodes` : formattedEpisodes.length > 0 ? `${formattedEpisodes.length} Episodes` : 'Complete Cartoon Series',
     rating: parseFloat(searchItem.rating) || 8.5,
     genres: ['Animation', 'Sinhala Cartoon', 'Action', 'Family'],
     director: 'Sinhala Cartoons LK',
     cast: ['Sinhala Dubbing Team'],
-    description: `${cleanTitle} - Sinhala Dubbed Cartoon / Anime Series with online HD streaming & high-speed direct downloads. Total Episodes: ${dlDetails?.total_episodes || episodes.length || 1}.`,
+    description: `${cleanTitle} - Sinhala Dubbed Cartoon / Anime Series with online HD streaming & high-speed direct downloads. Total Episodes: ${dlDetails?.total_episodes || formattedEpisodes.length || 1}.`,
     posterUrl: searchItem.thumbnail,
     backdropUrl: searchItem.thumbnail,
     streamUrl: streamUrl,
@@ -320,6 +353,51 @@ async function importCartoonToDb(searchItem: any, dlDetails: any) {
 
   return movieObj;
 }
+
+// Automatic continuous background sync routine
+async function runAutoSyncTask() {
+  console.log('[AUTO-SYNC] Starting automatic cartoon catalog sync...');
+  const keywords = [
+    'ben 10', 'tom and jerry', 'scooby', 'avatar', 'dora', 'naruto',
+    'pokemon', 'dragon ball', 'tintin', 'batman', 'spiderman', 'sinhala', 'dubbed', 'cartoons'
+  ];
+  let importedCount = 0;
+  for (const kw of keywords) {
+    try {
+      const searchRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/search?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(kw)}`);
+      const searchText = await searchRes.text();
+      const searchJson = JSON.parse(searchText);
+
+      if (searchJson.success && Array.isArray(searchJson.results)) {
+        for (const item of searchJson.results.slice(0, 10)) {
+          try {
+            const dlRes = await fetch(`https://api.zanta-mini.store/api/slcartoons/dl?apiKey=${ZANTA_API_KEY}&text=${encodeURIComponent(item.url)}`);
+            const dlText = await dlRes.text();
+            const dlJson = JSON.parse(dlText);
+            if (dlJson.success) {
+              await importCartoonToDb(item, dlJson.results);
+              importedCount++;
+            }
+          } catch (e) {
+            // ignore individual item error
+          }
+        }
+      }
+    } catch (err) {
+      // ignore kw error
+    }
+  }
+  console.log(`[AUTO-SYNC] Complete. Synced ${importedCount} items into catalog.`);
+}
+
+// Trigger initial sync after 3 seconds, and then every 5 minutes
+setTimeout(() => {
+  runAutoSyncTask().catch((err) => console.error('Initial auto sync error:', err));
+}, 3000);
+
+setInterval(() => {
+  runAutoSyncTask().catch((err) => console.error('Periodic auto sync error:', err));
+}, 5 * 60 * 1000);
 
 // GET /api/cartoons/search
 app.get('/api/cartoons/search', async (req, res) => {
@@ -442,6 +520,73 @@ app.post('/api/notices', async (req, res) => {
   const db = await connectToMongo();
   if (db) await db.collection('notices').insertOne(newNotice);
   return res.json({ success: true, notice: newNotice });
+});
+
+// Comments API
+app.get('/api/comments', (req, res) => {
+  const { movieId } = req.query;
+  if (movieId) {
+    const filtered = commentsCache.filter((c) => c.movieId === movieId);
+    return res.json(filtered);
+  }
+  return res.json(commentsCache);
+});
+
+app.post('/api/comments', async (req, res) => {
+  try {
+    const { movieId, userName, comment, rating } = req.body;
+    if (!movieId || !comment) {
+      return res.status(400).json({ error: 'movieId and comment are required' });
+    }
+
+    const bgColors = ['bg-amber-600', 'bg-emerald-600', 'bg-blue-600', 'bg-purple-600', 'bg-rose-600', 'bg-indigo-600'];
+    const randomBg = bgColors[Math.floor(Math.random() * bgColors.length)];
+
+    const newComment = {
+      id: 'comm-' + Date.now(),
+      movieId,
+      userName: userName || 'Anonymus Fan',
+      comment,
+      rating: Number(rating) || 5,
+      likes: 0,
+      avatarBg: randomBg,
+      createdAt: new Date().toISOString()
+    };
+
+    commentsCache = [newComment, ...commentsCache];
+
+    const db = await connectToMongo();
+    if (db) {
+      await db.collection('comments').insertOne(newComment);
+    }
+
+    return res.json({ success: true, comment: newComment });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.post('/api/comments/:id/like', async (req, res) => {
+  try {
+    const { id } = req.params;
+    let foundComment: any = null;
+    commentsCache = commentsCache.map((c) => {
+      if (c.id === id) {
+        foundComment = { ...c, likes: (c.likes || 0) + 1 };
+        return foundComment;
+      }
+      return c;
+    });
+
+    const db = await connectToMongo();
+    if (db && foundComment) {
+      await db.collection('comments').updateOne({ id }, { $inc: { likes: 1 } });
+    }
+
+    return res.json({ success: true, comment: foundComment });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 // Catch-all route to serve SPA or fallback

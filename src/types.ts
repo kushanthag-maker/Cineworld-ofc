@@ -62,3 +62,14 @@ export interface Notice {
   isActive: boolean;
   createdAt: string;
 }
+
+export interface MovieComment {
+  id: string;
+  movieId: string;
+  userName: string;
+  avatarBg?: string;
+  comment: string;
+  rating: number;
+  likes: number;
+  createdAt: string;
+}
