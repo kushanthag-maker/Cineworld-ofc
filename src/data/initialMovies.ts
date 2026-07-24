@@ -88,5 +88,84 @@ export const initialMovies: Movie[] = [
       }
     ],
     createdAt: new Date().toISOString()
+  },
+  {
+    id: 'the-croods-a-new-age-2020',
+    title: 'The Croods: A New Age (2020)',
+    originalTitle: 'The Croods: A New Age (2020) Sinhala Subtitles | සිංහල උපසිරසි සමඟ',
+    releaseYear: 2020,
+    duration: '1h 35m',
+    rating: 7.0,
+    genres: ['Animation', 'Adventure', 'Comedy', 'Family', 'Sinhala Subbed'],
+    director: 'Joel Crawford',
+    cast: ['Nicolas Cage', 'Emma Stone', 'Ryan Reynolds', 'Catherine Keener', 'Peter Dinklage'],
+    description: 'Searching for a safer habitat, the prehistoric Crood family discovers an enclosed, walled-in paradise that meets all of its needs. However, they must learn to live with the Bettermans — a family that is a couple of steps above the Croods on the evolutionary ladder. Includes complete Sinhala Subtitles (සිංහල උපසිරසි සමඟ).',
+    posterUrl: 'https://image.tmdb.org/t/p/w780/ytTQoYkdpsgtfDWrNFCei8Mfbxu.jpg',
+    backdropUrl: 'https://image.tmdb.org/t/p/w780/ytTQoYkdpsgtfDWrNFCei8Mfbxu.jpg',
+    streamUrl: 'https://pixeldrain.com/api/file/oNhYjVmP?download=1',
+    category: 'Sinhala Subbed',
+    language: 'English with Sinhala Sub (සිංහල Sub)',
+    hasSinhalaSub: true,
+    quality: '1080p Full HD',
+    viewsCount: 1850,
+    downloadsCount: 1240,
+    downloadOptions: [
+      {
+        id: 'opt-croods-1',
+        quality: 'Pixeldrain - FHD 1080p Direct',
+        resolution: '1920x1080',
+        size: '1.4 GB',
+        format: 'MP4 / MKV Direct',
+        downloadUrl: 'https://pixeldrain.com/api/file/oNhYjVmP?download=1',
+        server2Url: 'https://sinhalasub.lk/links/fcdb3h7ioe/',
+        server1Name: 'Pixeldrain High-Speed',
+        server2Name: 'DLServer-01'
+      },
+      {
+        id: 'opt-croods-2',
+        quality: 'Pixeldrain - HD 720p Direct',
+        resolution: '1280x720',
+        size: '850 MB',
+        format: 'MP4 / MKV Direct',
+        downloadUrl: 'https://pixeldrain.com/api/file/JPXaFV1F?download=1',
+        server2Url: 'https://sinhalasub.lk/links/imckmis17v/',
+        server1Name: 'Pixeldrain 720p',
+        server2Name: 'DLServer-01 720p'
+      },
+      {
+        id: 'opt-croods-3',
+        quality: 'Pixeldrain - SD 480p Direct',
+        resolution: '854x480',
+        size: '450 MB',
+        format: 'MP4 / MKV Direct',
+        downloadUrl: 'https://pixeldrain.com/api/file/xAf4LesY?download=1',
+        server2Url: 'https://sinhalasub.lk/links/awuqbmk2ho/',
+        server1Name: 'Pixeldrain 480p',
+        server2Name: 'DLServer-01 480p'
+      },
+      {
+        id: 'opt-croods-4',
+        quality: 'DLServer-02 - FHD 1080p',
+        resolution: '1920x1080',
+        size: '1.4 GB',
+        format: 'Direct Mirror',
+        downloadUrl: 'https://sinhalasub.lk/links/tjxcnonzhs/',
+        server2Url: 'https://sinhalasub.lk/links/fmkouvifxd/',
+        server1Name: 'DLServer-02',
+        server2Name: 'FilesPayout'
+      },
+      {
+        id: 'opt-croods-sub',
+        quality: 'Sinhala Subtitles (SRT File)',
+        resolution: 'SRT Subtitle',
+        size: '120 KB',
+        format: 'SRT',
+        downloadUrl: 'https://sinhalasub.lk/links/htw6q92avg/',
+        server2Url: 'https://sinhalasub.lk/links/htw6q92avg/',
+        server1Name: 'SinhalaSub Direct',
+        server2Name: 'SinhalaSub Mirror'
+      }
+    ],
+    createdAt: new Date().toISOString()
   }
 ];
