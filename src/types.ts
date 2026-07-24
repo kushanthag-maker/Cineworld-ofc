@@ -8,8 +8,11 @@ export interface DownloadOption {
   size: string;
   resolution: string;
   format: string;
-  downloadUrl: string;
+  downloadUrl: string; // Primary Server 1 URL
+  server2Url?: string; // Backup Server 2 URL
   directServerName?: string;
+  server1Name?: string;
+  server2Name?: string;
 }
 
 export interface Movie {

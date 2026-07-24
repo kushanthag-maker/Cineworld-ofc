@@ -692,20 +692,37 @@ export const AdminModal: React.FC = () => {
                         />
                         <input
                           type="text"
-                          placeholder="Server Name"
-                          value={opt.directServerName || ''}
-                          onChange={(e) => handleDownloadOptionChange(opt.id, 'directServerName', e.target.value)}
+                          placeholder="Server 1 Name"
+                          value={opt.server1Name || 'Server 1 Direct'}
+                          onChange={(e) => handleDownloadOptionChange(opt.id, 'server1Name', e.target.value)}
                           className="bg-zinc-900 text-white text-xs p-2 rounded-lg border border-zinc-800"
                         />
                       </div>
 
-                      <input
-                        type="url"
-                        placeholder="Direct Download URL (e.g. https://.../movie.mp4)"
-                        value={opt.downloadUrl}
-                        onChange={(e) => handleDownloadOptionChange(opt.id, 'downloadUrl', e.target.value)}
-                        className="w-full bg-zinc-900 text-emerald-300 font-mono text-xs p-2 rounded-lg border border-zinc-800"
-                      />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                          <label className="text-[10px] text-amber-400 font-mono block mb-1">Server 1 (Primary Direct URL)</label>
+                          <input
+                            type="url"
+                            placeholder="Server 1 Direct URL (e.g. https://.../movie.mp4)"
+                            value={opt.downloadUrl}
+                            onChange={(e) => handleDownloadOptionChange(opt.id, 'downloadUrl', e.target.value)}
+                            className="w-full bg-zinc-900 text-amber-300 font-mono text-xs p-2 rounded-lg border border-zinc-800"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label className="text-[10px] text-zinc-400 font-mono block mb-1">Server 2 (Backup Mirror URL - Optional)</label>
+                          <input
+                            type="url"
+                            placeholder="Server 2 Backup Mirror URL"
+                            value={opt.server2Url || ''}
+                            onChange={(e) => handleDownloadOptionChange(opt.id, 'server2Url', e.target.value)}
+                            className="w-full bg-zinc-900 text-zinc-300 font-mono text-xs p-2 rounded-lg border border-zinc-800"
+                          />
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
