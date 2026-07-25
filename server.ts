@@ -94,6 +94,26 @@ let commentsCache: any[] = [
     likes: 18,
     avatarBg: 'bg-emerald-600',
     createdAt: new Date(Date.now() - 3600000 * 12).toISOString()
+  },
+  {
+    id: 'c3',
+    movieId: 'harry-potter-1-2001',
+    userName: 'Pathum Fernando',
+    comment: 'Harry Potter 1 Sinhala sub eka godak lassanai! Movie quality eka 1080p super high quality. Direct download eka ikmanata wuna. Bohoma sthuthi!',
+    rating: 5,
+    likes: 31,
+    avatarBg: 'bg-indigo-600',
+    createdAt: new Date(Date.now() - 3600000 * 2).toISOString()
+  },
+  {
+    id: 'c4',
+    movieId: 'harry-potter-8-2-2011',
+    userName: 'Dilshan Silva',
+    comment: 'Harry Potter Deathly Hallows Part 2 sinhala sub ekka 1080p baluwa. Final battle eka elatama thiyenawa. DLServer links wada. Admin ta sthuthi!',
+    rating: 5,
+    likes: 42,
+    avatarBg: 'bg-purple-600',
+    createdAt: new Date(Date.now() - 3600000 * 1).toISOString()
   }
 ];
 
@@ -172,6 +192,32 @@ app.post('/api/requests', rateLimitShield(5, 60000), async (req, res) => {
   const db = await connectToMongo();
   if (db) await db.collection('requests').insertOne(newReq);
   return res.json({ success: true, request: newReq });
+});
+
+// Sinhala Cartoons API Proxy
+app.get('/api/slcartoons/search', async (req, res) => {
+  try {
+    const text = (req.query.text as string) || 'ben 10';
+    const apiKey = 'zan_FLUs8y9T_fcz7cgi12p';
+    const response = await fetch(`https://api.zanta-mini.store/api/slcartoons/search?apiKey=${apiKey}&text=${encodeURIComponent(text)}`);
+    const data = await response.json();
+    return res.json(data);
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.get('/api/slcartoons/dl', async (req, res) => {
+  try {
+    const text = req.query.text as string;
+    if (!text) return res.status(400).json({ success: false, error: 'URL parameter text is required' });
+    const apiKey = 'zan_FLUs8y9T_fcz7cgi12p';
+    const response = await fetch(`https://api.zanta-mini.store/api/slcartoons/dl?apiKey=${apiKey}&text=${encodeURIComponent(text)}`);
+    const data = await response.json();
+    return res.json(data);
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 // Notices API
