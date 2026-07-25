@@ -31,7 +31,7 @@ export interface Movie {
   posterUrl: string;
   backdropUrl?: string;
   streamUrl: string;
-  category: 'Sinhala Subbed' | 'Sinhala Dubbed' | 'Hollywood' | 'Bollywood' | 'Tamil / South' | 'Animation';
+  category: 'Sinhala Subbed' | 'Sinhala Dubbed' | 'Sinhala Movie' | 'Hollywood' | 'Bollywood' | 'Tamil / South' | 'Animation';
   language: string;
   hasSinhalaSub: boolean;
   quality: string;

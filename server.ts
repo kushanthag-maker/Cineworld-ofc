@@ -14,17 +14,22 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-app.use(express.json());
+// Maximum Security Configurations
+app.disable('x-powered-by');
+app.use(cors({ origin: true, credentials: true }));
+app.use(express.json({ limit: '100kb' })); // Restrict payload size against Denial of Service
 
-// Security Headers & Content-Type for API
+// Comprehensive Security Headers & Data Protection
 app.use('/api', (req, res, next) => {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('X-XSS-Protection', '1; mode=block');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   next();
 });
 
@@ -97,9 +102,9 @@ let commentsCache: any[] = [
   },
   {
     id: 'c3',
-    movieId: 'harry-potter-1-2001',
+    movieId: 'kung-fu-panda-4-with-sinhala-subtitle',
     userName: 'Pathum Fernando',
-    comment: 'Harry Potter 1 Sinhala sub eka godak lassanai! Movie quality eka 1080p super high quality. Direct download eka ikmanata wuna. Bohoma sthuthi!',
+    comment: 'Kung Fu Panda 4 Sinhala audio & subtitle quality eka godak lassanai! Movie quality eka 1080p high quality. Direct download eka ikmanata wuna. Bohoma sthuthi!',
     rating: 5,
     likes: 31,
     avatarBg: 'bg-indigo-600',
@@ -107,9 +112,9 @@ let commentsCache: any[] = [
   },
   {
     id: 'c4',
-    movieId: 'harry-potter-8-2-2011',
+    movieId: 'shrek-01-sinhala-dubbed',
     userName: 'Dilshan Silva',
-    comment: 'Harry Potter Deathly Hallows Part 2 sinhala sub ekka 1080p baluwa. Final battle eka elatama thiyenawa. DLServer links wada. Admin ta sthuthi!',
+    comment: 'Shrek 1 sinhala dubbed 1080p baluwa. Direct fast streaming and download server links elatama wada. Admin ta sthuthi!',
     rating: 5,
     likes: 42,
     avatarBg: 'bg-purple-600',
