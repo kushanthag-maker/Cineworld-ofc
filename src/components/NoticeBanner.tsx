@@ -10,7 +10,7 @@ export const NoticeBanner: React.FC = () => {
 
   return (
     <div className="bg-amber-500 text-black px-4 py-2 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 font-mono">
-      <Sparkles className="w-4 h-4 fill-black shrink-0 animate-spin" />
+      <Sparkles className="w-4 h-4 text-black shrink-0 animate-spin" />
       <span className="font-black">{activeNotice.title}:</span>
       <span className="font-semibold">{activeNotice.content}</span>
     </div>

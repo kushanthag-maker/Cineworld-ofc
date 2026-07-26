@@ -124,11 +124,28 @@ let commentsCache: any[] = [
 
 let reportsCache: any[] = [];
 
+// Real Analytics Engine Cache
+const activeSessionsMap = new Map<string, number>(); // sessionId -> timestamp
+const visitorSessionsToday = new Set<string>(); // unique session IDs for today
+let currentStatsDate = new Date().toISOString().split('T')[0];
+let totalDownloadsToday = 0;
+
+function checkDateReset() {
+  const today = new Date().toISOString().split('T')[0];
+  if (today !== currentStatsDate) {
+    currentStatsDate = today;
+    visitorSessionsToday.clear();
+    totalDownloadsToday = 0;
+  }
+}
+
 // MongoDB Client Connection (if MONGODB_URI is provided)
 let dbClient: MongoClient | null = null;
 async function connectToMongo() {
-  const mongoUri = process.env.MONGODB_URI;
-  if (!mongoUri) return null;
+  const mongoUri = process.env.MONGODB_URI?.trim();
+  if (!mongoUri || (!mongoUri.startsWith('mongodb://') && !mongoUri.startsWith('mongodb+srv://'))) {
+    return null;
+  }
   try {
     if (!dbClient) {
       dbClient = new MongoClient(mongoUri);
@@ -163,6 +180,94 @@ async function initDb() {
 initDb();
 
 // ==================== API ROUTES ====================
+
+// Real Analytics & Heartbeat API
+app.post('/api/stats/heartbeat', (req, res) => {
+  checkDateReset();
+  const sessionId = (req.body && req.body.sessionId) || req.ip || 'session-default';
+  const now = Date.now();
+  activeSessionsMap.set(sessionId, now);
+  visitorSessionsToday.add(sessionId);
+
+  // Clean stale active sessions older than 90 seconds
+  for (const [sId, ts] of activeSessionsMap.entries()) {
+    if (now - ts > 90000) activeSessionsMap.delete(sId);
+  }
+
+  const onlineCount = Math.max(1, activeSessionsMap.size);
+  const todayVisitors = Math.max(1, visitorSessionsToday.size);
+
+  return res.json({
+    success: true,
+    onlineCount,
+    todayVisitors,
+    todayDownloads: totalDownloadsToday
+  });
+});
+
+app.get('/api/stats', (req, res) => {
+  checkDateReset();
+  const now = Date.now();
+  for (const [sId, ts] of activeSessionsMap.entries()) {
+    if (now - ts > 90000) activeSessionsMap.delete(sId);
+  }
+
+  const removedIds = ['the-croods-a-new-age-2020', 'avatar-tla-s1'];
+  const validMovies = moviesCache.filter((m: any) => !removedIds.includes(m.id));
+  const topMovie = [...validMovies].sort((a: any, b: any) => (b.viewsCount || 0) - (a.viewsCount || 0))[0] || validMovies[0];
+
+  return res.json({
+    onlineCount: Math.max(1, activeSessionsMap.size),
+    todayVisitors: Math.max(1, visitorSessionsToday.size),
+    todayDownloads: totalDownloadsToday,
+    totalMovies: validMovies.length,
+    topMovie: topMovie ? {
+      id: topMovie.id,
+      title: topMovie.title,
+      viewsCount: topMovie.viewsCount || 0,
+      downloadsCount: topMovie.downloadsCount || 0,
+      category: topMovie.category
+    } : null
+  });
+});
+
+app.post('/api/movies/:id/view', async (req, res) => {
+  const { id } = req.params;
+  let updatedMovie: any = null;
+  moviesCache = moviesCache.map((m: any) => {
+    if (m.id === id) {
+      updatedMovie = { ...m, viewsCount: (m.viewsCount || 0) + 1 };
+      return updatedMovie;
+    }
+    return m;
+  });
+
+  const db = await connectToMongo();
+  if (db && updatedMovie) {
+    await db.collection('movies').updateOne({ id }, { $inc: { viewsCount: 1 } });
+  }
+  return res.json({ success: true, viewsCount: updatedMovie?.viewsCount || 1 });
+});
+
+app.post('/api/movies/:id/download', async (req, res) => {
+  checkDateReset();
+  const { id } = req.params;
+  totalDownloadsToday += 1;
+  let updatedMovie: any = null;
+  moviesCache = moviesCache.map((m: any) => {
+    if (m.id === id) {
+      updatedMovie = { ...m, downloadsCount: (m.downloadsCount || 0) + 1 };
+      return updatedMovie;
+    }
+    return m;
+  });
+
+  const db = await connectToMongo();
+  if (db && updatedMovie) {
+    await db.collection('movies').updateOne({ id }, { $inc: { downloadsCount: 1 } });
+  }
+  return res.json({ success: true, downloadsCount: updatedMovie?.downloadsCount || 1, todayDownloads: totalDownloadsToday });
+});
 
 // GET /api/movies
 app.get('/api/movies', async (req, res) => {

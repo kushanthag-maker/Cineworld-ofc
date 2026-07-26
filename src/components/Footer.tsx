@@ -11,13 +11,13 @@ export const Footer: React.FC = () => {
         
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-black flex items-center justify-center font-black rounded-2xl shadow-lg shadow-amber-500/20">
-              <Film className="w-6 h-6 fill-black" />
+            <div className="w-11 h-11 bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-zinc-950 flex items-center justify-center font-black rounded-2xl shadow-lg shadow-amber-500/20 border border-amber-300/40">
+              <Film className="w-6 h-6 text-zinc-950 stroke-[2.5]" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-2xl font-black font-brand tracking-widest block">
-                  CINE<span className="text-amber-500">WORLD</span>
+                  CINE<span className="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 bg-clip-text text-transparent">WORLD</span>
                 </span>
                 <span className="text-[10px] bg-red-600 text-white font-black px-1.5 py-0.5 rounded uppercase font-mono">
                   LK

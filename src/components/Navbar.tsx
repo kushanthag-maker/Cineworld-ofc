@@ -45,8 +45,8 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
             className="flex items-center gap-3 cursor-pointer group"
           >
             <div className="relative">
-              <div className="w-12 h-12 bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 flex items-center justify-center text-black font-black text-xl rounded-2xl shadow-[0_0_25px_rgba(245,158,11,0.5)] group-hover:scale-105 transition-transform border border-amber-300/40">
-                <Film className="w-7 h-7 fill-black" />
+              <div className="w-12 h-12 bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 flex items-center justify-center text-zinc-950 font-black text-xl rounded-2xl shadow-[0_0_25px_rgba(245,158,11,0.6)] group-hover:scale-105 transition-transform border border-amber-300/50">
+                <Film className="w-7 h-7 text-zinc-950 stroke-[2.5]" />
               </div>
               <div className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 rounded-full animate-ping" />
               <div className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 rounded-full border-2 border-black" />
@@ -54,8 +54,8 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
 
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-2xl sm:text-3xl font-black text-white tracking-widest font-brand block leading-none">
-                  CINE<span className="text-amber-500">WORLD</span>
+                <span className="text-2xl sm:text-3xl font-black text-white tracking-widest font-brand block leading-none drop-shadow-[0_2px_10px_rgba(245,158,11,0.3)]">
+                  CINE<span className="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 bg-clip-text text-transparent">WORLD</span>
                 </span>
                 <span className="text-[10px] bg-red-600 text-white font-black px-1.5 py-0.5 rounded uppercase font-mono tracking-wider shadow-sm">
                   LK

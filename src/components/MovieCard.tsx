@@ -1,16 +1,23 @@
 import React from 'react';
 import { Movie } from '../types';
 import { useMovie } from '../context/MovieContext';
-import { Play, Download, Star, Bookmark, Check, Eye } from 'lucide-react';
+import { Play, Download, Star, Bookmark, Check, Eye, Share2 } from 'lucide-react';
 
 interface MovieCardProps {
   movie: Movie;
 }
 
 export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
-  const { setActiveMovie, setWhatsappModalMovie, watchlist, toggleWatchlist } = useMovie();
+  const { setActiveMovie, setWhatsappModalMovie, watchlist, toggleWatchlist, showToast } = useMovie();
 
   const isBookmarked = watchlist.includes(movie.id);
+
+  const handleCopyMovieLink = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const movieUrl = `${window.location.origin}${window.location.pathname}?movie=${encodeURIComponent(movie.id)}`;
+    navigator.clipboard.writeText(movieUrl);
+    showToast(`Link for "${movie.title}" copied to clipboard!`, 'success');
+  };
 
   return (
     <div className="group relative bg-[#080808] border border-white/10 hover:border-amber-500/60 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-lg">
@@ -39,19 +46,29 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           )}
         </div>
 
-        {/* Bookmark Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleWatchlist(movie.id);
-          }}
-          className={`absolute top-2 right-2 p-2 z-10 backdrop-blur-md transition-colors ${
-            isBookmarked ? 'bg-amber-500 text-black' : 'bg-black/60 text-white hover:bg-amber-500 hover:text-black'
-          }`}
-          title={isBookmarked ? 'Remove from Watchlist' : 'Add to Watchlist'}
-        >
-          {isBookmarked ? <Check className="w-3.5 h-3.5 stroke-[3]" /> : <Bookmark className="w-3.5 h-3.5" />}
-        </button>
+        {/* Bookmark & Share Buttons */}
+        <div className="absolute top-2 right-2 flex flex-col gap-1.5 z-10">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleWatchlist(movie.id);
+            }}
+            className={`p-2 backdrop-blur-md transition-colors ${
+              isBookmarked ? 'bg-amber-500 text-black' : 'bg-black/60 text-white hover:bg-amber-500 hover:text-black'
+            }`}
+            title={isBookmarked ? 'Remove from Watchlist' : 'Add to Watchlist'}
+          >
+            {isBookmarked ? <Check className="w-3.5 h-3.5 stroke-[3]" /> : <Bookmark className="w-3.5 h-3.5" />}
+          </button>
+
+          <button
+            onClick={handleCopyMovieLink}
+            className="p-2 bg-black/60 hover:bg-amber-500 text-white hover:text-black backdrop-blur-md transition-colors"
+            title="Copy Direct Movie Link"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+          </button>
+        </div>
 
         {/* Hover Overlay */}
         <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 p-4">

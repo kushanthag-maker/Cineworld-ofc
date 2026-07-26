@@ -30,8 +30,15 @@ export const MovieDetailsView: React.FC = () => {
   const isBookmarked = watchlist.includes(activeMovie.id);
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    showToast('Direct CINEWORLD link copied to clipboard!', 'success');
+    const movieUrl = `${window.location.origin}${window.location.pathname}?movie=${encodeURIComponent(activeMovie.id)}`;
+    navigator.clipboard.writeText(movieUrl);
+    showToast('Direct movie link copied! Share this link to open this movie automatically.', 'success');
+  };
+
+  const handleWhatsAppShare = () => {
+    const movieUrl = `${window.location.origin}${window.location.pathname}?movie=${encodeURIComponent(activeMovie.id)}`;
+    const shareText = `🍿 Watch "${activeMovie.title}" (${activeMovie.category || 'Sinhala Dubbed'}) for FREE on CINEWORLD LK!\n\n👇 Click to watch / download directly:\n${movieUrl}`;
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`, '_blank', 'noopener,noreferrer');
   };
 
   const handleOpenReport = () => {
@@ -60,7 +67,16 @@ export const MovieDetailsView: React.FC = () => {
               title="Copy Direct Link"
             >
               <Share2 className="w-3.5 h-3.5 text-amber-500" />
-              <span className="hidden sm:inline">Share Link</span>
+              <span className="hidden sm:inline">Copy Link</span>
+            </button>
+
+            <button
+              onClick={handleWhatsAppShare}
+              className="px-3 py-2 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 border border-emerald-500/40 rounded-lg transition-colors cursor-pointer"
+              title="Share Movie via WhatsApp"
+            >
+              <Share2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="hidden sm:inline">Share on WhatsApp</span>
             </button>
 
             <button

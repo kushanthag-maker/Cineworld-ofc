@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MovieProvider, useMovie } from './context/MovieContext';
 import { Navbar } from './components/Navbar';
 import { HeroBanner } from './components/HeroBanner';
+import { SiteStatsBar } from './components/SiteStatsBar';
 import { MovieGrid } from './components/MovieGrid';
 import { MovieDetailsView } from './components/MovieDetailsView';
 import { WatchlistView } from './components/WatchlistView';
@@ -21,7 +22,6 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     // Basic site security layer: disable right-click inspect context menu if desired or protect frame
     const handleContextMenu = (e: MouseEvent) => {
-      // Prevent unauthorized code tampering on live public deployment
       if (process.env.NODE_ENV === 'production') {
         e.preventDefault();
       }
@@ -31,7 +31,7 @@ const AppContent: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col justify-between selection:bg-amber-500 selection:text-black">
+    <div className="min-h-screen bg-black text-white flex flex-col justify-between selection:bg-amber-500 selection:text-black font-sans">
       <div>
         <NoticeBanner />
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -43,6 +43,7 @@ const AppContent: React.FC = () => {
         ) : (
           <main>
             <HeroBanner />
+            <SiteStatsBar />
             <MovieGrid />
           </main>
         )}

@@ -301,6 +301,36 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     fetchReports();
   }, []);
 
+  // Movie Deep Link handling: automatically open movie if ?movie=<id> or ?m=<id> is present in URL
+  useEffect(() => {
+    if (movies.length > 0) {
+      const params = new URLSearchParams(window.location.search);
+      const movieId = params.get('movie') || params.get('m');
+      if (movieId) {
+        const found = movies.find(
+          (m) => m.id === movieId || encodeURIComponent(m.id) === movieId || m.id.toLowerCase() === movieId.toLowerCase()
+        );
+        if (found && (!activeMovie || activeMovie.id !== found.id)) {
+          setActiveMovie(found);
+        }
+      }
+    }
+  }, [movies]);
+
+  // Sync activeMovie state to URL query string & increment views
+  useEffect(() => {
+    if (activeMovie) {
+      incrementMovieViews(activeMovie.id);
+      const newUrl = `${window.location.pathname}?movie=${encodeURIComponent(activeMovie.id)}`;
+      window.history.replaceState({ movieId: activeMovie.id }, '', newUrl);
+    } else {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('movie') || params.has('m')) {
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+    }
+  }, [activeMovie?.id]);
+
   const toggleWatchlist = (movieId: string) => {
     setWatchlist((prev) => {
       const exists = prev.includes(movieId);
@@ -314,16 +344,26 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     });
   };
 
-  const incrementMovieViews = (id: string) => {
+  const incrementMovieViews = async (id: string) => {
     setMovies((prev) =>
       prev.map((m) => (m.id === id ? { ...m, viewsCount: (m.viewsCount || 0) + 1 } : m))
     );
+    try {
+      await fetch(`/api/movies/${encodeURIComponent(id)}/view`, { method: 'POST' });
+    } catch (e) {
+      console.warn('View increment sync note:', e);
+    }
   };
 
-  const incrementMovieDownloads = (id: string) => {
+  const incrementMovieDownloads = async (id: string) => {
     setMovies((prev) =>
       prev.map((m) => (m.id === id ? { ...m, downloadsCount: (m.downloadsCount || 0) + 1 } : m))
     );
+    try {
+      await fetch(`/api/movies/${encodeURIComponent(id)}/download`, { method: 'POST' });
+    } catch (e) {
+      console.warn('Download increment sync note:', e);
+    }
   };
 
   const addMovieRequest = async (req: Omit<MovieRequest, 'id' | 'status' | 'createdAt'>) => {
