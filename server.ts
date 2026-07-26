@@ -167,8 +167,16 @@ async function initDb() {
       const count = await moviesCol.countDocuments();
       if (count === 0) {
         await moviesCol.insertMany(initialSeedMovies);
+        moviesCache = [...initialSeedMovies];
       } else {
         const storedMovies = await moviesCol.find({}).toArray();
+        const storedIds = new Set(storedMovies.map((m: any) => m.id));
+        const missingSeedMovies = initialSeedMovies.filter(m => !storedIds.has(m.id));
+        
+        if (missingSeedMovies.length > 0) {
+          await moviesCol.insertMany(missingSeedMovies);
+          storedMovies.push(...(missingSeedMovies as any[]));
+        }
         moviesCache = storedMovies;
       }
     } catch (e) {
