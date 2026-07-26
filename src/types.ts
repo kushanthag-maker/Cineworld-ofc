@@ -41,7 +41,7 @@ export interface Movie {
   episodes?: Episode[];
   trailerUrl?: string;
   imdbId?: string;
-  createdAt: string;
+  createdAt?: string;
 }
 
 export interface MovieRequest {
@@ -50,7 +50,7 @@ export interface MovieRequest {
   category: string;
   requestedBy: string;
   whatsappNumber?: string;
-  status: 'Pending' | 'Approved' | 'Completed' | 'Rejected';
+  status: 'Pending' | 'Approved' | 'Completed' | 'Rejected' | 'Fulfilled';
   createdAt: string;
 }
 

@@ -39,6 +39,10 @@ interface MovieContextType {
   fetchComments: (movieId?: string) => Promise<void>;
   addComment: (movieId: string, userName: string, comment: string, rating: number) => Promise<boolean>;
   likeComment: (commentId: string) => Promise<void>;
+  deleteRequest: (id: string) => void;
+  resolveRequest: (id: string) => void;
+  deleteMovie: (id: string) => Promise<void>;
+  addMovie: (movie: Movie) => Promise<void>;
 }
 
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
@@ -132,6 +136,40 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const resolveReport = (id: string) => {
     setReports((prev) => prev.map((r) => (r.id === id ? { ...r, status: 'Resolved' as const } : r)));
     showToast('Report marked as Resolved', 'success');
+  };
+
+  const deleteRequest = (id: string) => {
+    setRequests((prev) => prev.filter((r) => r.id !== id));
+    showToast('Movie request deleted', 'info');
+  };
+
+  const resolveRequest = (id: string) => {
+    setRequests((prev) => prev.map((r) => (r.id === id ? { ...r, status: 'Fulfilled' as const } : r)));
+    showToast('Movie request marked as Fulfilled!', 'success');
+  };
+
+  const deleteMovie = async (id: string) => {
+    setMovies((prev) => prev.filter((m) => m.id !== id));
+    showToast('Movie deleted from collection', 'info');
+    try {
+      await fetch(`/api/movies/${encodeURIComponent(id)}`, { method: 'DELETE' });
+    } catch (e) {
+      console.warn('Delete movie server note:', e);
+    }
+  };
+
+  const addMovie = async (newMovie: Movie) => {
+    setMovies((prev) => [newMovie, ...prev]);
+    showToast(`Movie "${newMovie.title}" added successfully!`, 'success');
+    try {
+      await fetch('/api/movies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newMovie)
+      });
+    } catch (e) {
+      console.warn('Add movie server note:', e);
+    }
   };
 
   // Sync to localStorage
@@ -426,7 +464,11 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         incrementMovieDownloads,
         fetchComments,
         addComment,
-        likeComment
+        likeComment,
+        deleteRequest,
+        resolveRequest,
+        deleteMovie,
+        addMovie
       }}
     >
       {children}

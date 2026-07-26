@@ -2,12 +2,12 @@ import { Movie } from '../types';
 
 export const initialMovies: Movie[] = [
   {
-    "id": "kung-fu-panda-4-with-sinhala-subtitle",
-    "title": "Kung Fu Panda 4 With Sinhala Subtitle - සිංහල උපසිරැස සමග",
-    "originalTitle": "Kung Fu Panda 4 With Sinhala Subtitle – සිංහල උපසිරැස සමග",
+    "id": "ben-10-ultimate-alien-season-03-sinhala-dubbed",
+    "title": "Ben 10: Ultimate Alien Season 03 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Ben 10: Ultimate Alien Season 03 Sinhala Dubbed- සිංහල හඩකැවූ",
     "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 7,
+    "duration": "16 Episodes",
+    "rating": 8.2,
     "genres": [
       "Animation",
       "Sinhala Cartoon",
@@ -18,590 +18,131 @@ export const initialMovies: Movie[] = [
     "cast": [
       "Sinhala Dubbed Cast"
     ],
-    "description": "Watch Kung Fu Panda 4 With Sinhala Subtitle - සිංහල උපසිරැස සමග online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/39fea826565121c4da0f60e3455fab89.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/39fea826565121c4da0f60e3455fab89.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-4-sub/Kung%20Fu%20Panda%204%20(2024).mp4",
-    "category": "Sinhala Subbed",
-    "language": "English (Sinhala Subtitle / සිංහල උපසිරැසි)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 6726,
-    "downloadsCount": 4165,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053592777-sneg",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-4-sub/Kung%20Fu%20Panda%204%20(2024).mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-4-sub/Kung%20Fu%20Panda%204%20(2024).mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053592777-f631",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=1046",
-        "server2Url": "https://t.me/cartoonlk_bot?start=1046",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:13:12.777Z"
-  },
-  {
-    "id": "kung-fu-panda-3-sinhala-dubbed",
-    "title": "Kung Fu Panda 3 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "Kung Fu Panda 3 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 6.9,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Kung Fu Panda 3 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/96cc61a8979edc5b4ddaf76d4f5e9303.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/96cc61a8979edc5b4ddaf76d4f5e9303.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-3/Kung%20Fu%20Panda%203%202016%20720p.mkv.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 7369,
-    "downloadsCount": 4768,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053593760-0etw",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-3/Kung%20Fu%20Panda%203%202016%20720p.mkv.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-3/Kung%20Fu%20Panda%203%202016%20720p.mkv.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053593760-vnuy",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=870",
-        "server2Url": "https://t.me/cartoonlk_bot?start=870",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:13:13.760Z"
-  },
-  {
-    "id": "kung-fu-panda-2-sinhala-dubbed",
-    "title": "Kung Fu Panda 2 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "Kung Fu Panda 2 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 7.1,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Kung Fu Panda 2 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/MV5BYmIxMGYzMTUtZDQzYy00ODc4LWE1YzQtZGMwYTc0YTYyYTE0XkEyXkFqcGc@.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/MV5BYmIxMGYzMTUtZDQzYy00ODc4LWE1YzQtZGMwYTc0YTYyYTE0XkEyXkFqcGc@.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-2/Kung%20Fu%20Panda%202011%20720p.mkv.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 7869,
-    "downloadsCount": 3814,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053594701-r5cp",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-2/Kung%20Fu%20Panda%202011%20720p.mkv.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-2/Kung%20Fu%20Panda%202011%20720p.mkv.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053594701-3lmq",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=868",
-        "server2Url": "https://t.me/cartoonlk_bot?start=868",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:13:14.701Z"
-  },
-  {
-    "id": "kung-fu-panda-1-sinhala-dubbed",
-    "title": "Kung Fu Panda 1 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "Kung Fu Panda 1 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 7.3,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Kung Fu Panda 1 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/268-1.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/268-1.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-1/Kung%20Fu%20Panda%202008%20720p.mkv.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 5325,
-    "downloadsCount": 2945,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053595662-5cow",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-1/Kung%20Fu%20Panda%202008%20720p.mkv.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-1/Kung%20Fu%20Panda%202008%20720p.mkv.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053595662-fy05",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=866",
-        "server2Url": "https://t.me/cartoonlk_bot?start=866",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:13:15.663Z"
-  },
-  {
-    "id": "shrek-the-third-sinhala-dubbed",
-    "title": "Shrek the Third Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "Shrek the Third Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 6.3,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Shrek the Third Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/shrekthethird.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/shrekthethird.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Shrek-the-Third-2007/Shrek%20the%20Third%20(2007)%20720p.mkv.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 3250,
-    "downloadsCount": 2061,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053597546-fh2r",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Shrek-the-Third-2007/Shrek%20the%20Third%20(2007)%20720p.mkv.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Shrek-the-Third-2007/Shrek%20the%20Third%20(2007)%20720p.mkv.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053597546-9i6q",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=832",
-        "server2Url": "https://t.me/cartoonlk_bot?start=832",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:13:17.546Z"
-  },
-  {
-    "id": "shrek-02-sinhala-dubbed",
-    "title": "Shrek 02 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "Shrek 02 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 7.3,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Shrek 02 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/photo_2026-06-19_22-17-07.jpg",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/photo_2026-06-19_22-17-07.jpg",
-    "streamUrl": "https://dl.sinhalacartoons.com/Shrek-2/Shrek%202004%20720p.mp4.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 4121,
-    "downloadsCount": 2384,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053598517-me54",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Shrek-2/Shrek%202004%20720p.mp4.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Shrek-2/Shrek%202004%20720p.mp4.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053598517-4i8d",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=830",
-        "server2Url": "https://t.me/cartoonlk_bot?start=830",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:13:18.517Z"
-  },
-  {
-    "id": "shrek-01-sinhala-dubbed",
-    "title": "Shrek 01 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "Shrek 01 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 7.8,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Shrek 01 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/268-1.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/268-1.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Shrek-2001/Shrek%202001%20720p.mp4.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 7574,
-    "downloadsCount": 3386,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053599471-gzc7",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Shrek-2001/Shrek%202001%20720p.mp4.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Shrek-2001/Shrek%202001%20720p.mp4.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053599471-png4",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=828",
-        "server2Url": "https://t.me/cartoonlk_bot?start=828",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:13:19.471Z"
-  },
-  {
-    "id": "puss-in-boots-2011-sinhala-dubbed-%e0%b7%83%e0%b7%92%e0%b6%82%e0%b7%84%e0%b6%bd-%e0%b7%84%e0%b6%a9%e0%b6%9a%e0%b7%90%e0%b7%80%e0%b7%96",
-    "title": "Puss in Boots 2011 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "Puss in Boots 2011 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 6.6,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Puss in Boots 2011 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/puss-in-boots-2011-poster.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/puss-in-boots-2011-poster.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Puss-in-BootsPuss-in-Boots/Puss.in.Boots.2011.720p.BluRay.x264.mkv.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 5557,
-    "downloadsCount": 2691,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053600453-qtww",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Puss-in-BootsPuss-in-Boots/Puss.in.Boots.2011.720p.BluRay.x264.mkv.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Puss-in-BootsPuss-in-Boots/Puss.in.Boots.2011.720p.BluRay.x264.mkv.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053600453-hkbb",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=768",
-        "server2Url": "https://t.me/cartoonlk_bot?start=768",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:13:20.453Z"
-  },
-  {
-    "id": "rio-2-movie-sinhala-dubbed",
-    "title": "Rio 2 Movie Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "Rio 2 Movie Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 6.5,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Rio 2 Movie Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/92af202cdce5d6079f456da9b7509651.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/92af202cdce5d6079f456da9b7509651.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/rio-2/Rio.2.2014.720p.BluRay.x264.mkv.mp4",
-    "category": "Sinhala Movie",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 3737,
-    "downloadsCount": 2295,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053602535-ai51",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/rio-2/Rio.2.2014.720p.BluRay.x264.mkv.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/rio-2/Rio.2.2014.720p.BluRay.x264.mkv.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053602535-qphi",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=766",
-        "server2Url": "https://t.me/cartoonlk_bot?start=766",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:13:22.535Z"
-  },
-  {
-    "id": "rio-1-cartoon-movie-sinhala-dubbed",
-    "title": "Rio 1 Cartoon Movie Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "Rio 1 Cartoon Movie Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 6.8,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Rio 1 Cartoon Movie Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/650f4d6f807966a81e4565c52ede7af9.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/650f4d6f807966a81e4565c52ede7af9.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/rio-1/Rio.2011.DUAL-AUDIO.SIN-ENG.720p.BluRay.x264-DubHubLK.mkv.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 7439,
-    "downloadsCount": 3866,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053603473-sxe2",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/rio-1/Rio.2011.DUAL-AUDIO.SIN-ENG.720p.BluRay.x264-DubHubLK.mkv.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/rio-1/Rio.2011.DUAL-AUDIO.SIN-ENG.720p.BluRay.x264-DubHubLK.mkv.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053603473-zihz",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=776",
-        "server2Url": "https://t.me/cartoonlk_bot?start=776",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:13:23.473Z"
-  },
-  {
-    "id": "casper-1995-sinhala-dubbed",
-    "title": "Casper 1995 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "Casper 1995 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 6.3,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Casper 1995 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/w9xdkk5czpm21.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/w9xdkk5czpm21.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Casper-1995/Casper%20(1995).mp4",
+    "description": "Watch Ben 10: Ultimate Alien Season 03 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/SEASON-1-1.jpg",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/SEASON-1-1.jpg",
+    "streamUrl": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E01.mkv.mp4",
     "category": "Sinhala Dubbed",
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "HD",
-    "viewsCount": 4844,
-    "downloadsCount": 3516,
-    "episodes": [],
+    "viewsCount": 3641,
+    "downloadsCount": 4967,
+    "episodes": [
+      {
+        "episode": "01",
+        "title": "Episode 01 - Episode 01",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E01.mkv.mp4"
+      },
+      {
+        "episode": "02",
+        "title": "Episode 02 - Episode 02",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E02.mkv.mp4"
+      },
+      {
+        "episode": "03",
+        "title": "Episode 03 - Episode 03",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E03.mkv.mp4"
+      },
+      {
+        "episode": "04",
+        "title": "Episode 04 - Episode 04",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E04.mkv.mp4"
+      },
+      {
+        "episode": "05",
+        "title": "Episode 05 - Episode 05",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E05.mkv.mp4"
+      },
+      {
+        "episode": "06",
+        "title": "Episode 06 - Episode 06",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E06.mkv.mp4"
+      },
+      {
+        "episode": "07",
+        "title": "Episode 07 - Episode 07",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E07.mkv.mp4"
+      },
+      {
+        "episode": "08",
+        "title": "Episode 08 - Episode 08",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E08.mkv.mp4"
+      },
+      {
+        "episode": "09",
+        "title": "Episode 09 - Episode 09",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E09.mkv.mp4"
+      },
+      {
+        "episode": "10",
+        "title": "Episode 10 - Episode 10",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E10.mkv.mp4"
+      },
+      {
+        "episode": "11",
+        "title": "Episode 11 - Episode 11",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E11.mkv.mp4"
+      },
+      {
+        "episode": "12",
+        "title": "Episode 12 - Episode 12",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E12.mkv.mp4"
+      },
+      {
+        "episode": "13",
+        "title": "Episode 13 - Episode 13",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E13.mkv.mp4"
+      },
+      {
+        "episode": "14",
+        "title": "Episode 14 - Episode 14",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E14.mkv.mp4"
+      },
+      {
+        "episode": "15",
+        "title": "Episode 15 - Episode 15",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E15.mkv.mp4"
+      },
+      {
+        "episode": "16",
+        "title": "Episode 16 - Episode 16",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E16.mkv.mp4"
+      }
+    ],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053604416-hk6k",
+        "id": "dl-1-1785053411818-oda5",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
         "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Casper-1995/Casper%20(1995).mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Casper-1995/Casper%20(1995).mp4",
+        "downloadUrl": "https://dl.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E01.mkv.mp4",
+        "server2Url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E01.mkv.mp4",
         "server1Name": "Cloudflare R2 Direct Server",
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053604416-kfyw",
+        "id": "dl-2-1785053411818-eifl",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
         "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=978",
-        "server2Url": "https://t.me/cartoonlk_bot?start=978",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=467",
+        "server2Url": "https://t.me/cartoonlk_bot?start=467",
         "server1Name": "Telegram Official Bot",
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:24.416Z"
+    "createdAt": "2026-07-26T08:10:11.818Z"
   },
   {
-    "id": "the-garfield-movie-2024-sinhala-dubbed",
-    "title": "The Garfield Movie 2024 Sinhala Dubbed - සිංහල හඩකැවූ",
-    "originalTitle": "The Garfield Movie 2024 Sinhala Dubbed – සිංහල හඩකැවූ",
+    "id": "ben-10-ultimate-alien-season-02-sinhala-dubbed",
+    "title": "Ben 10: Ultimate Alien Season 02 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Ben 10: Ultimate Alien Season 02 Sinhala Dubbed- සිංහල හඩකැවූ",
     "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 7,
+    "duration": "13 Episodes",
+    "rating": 8.2,
     "genres": [
       "Animation",
       "Sinhala Cartoon",
@@ -612,42 +153,638 @@ export const initialMovies: Movie[] = [
     "cast": [
       "Sinhala Dubbed Cast"
     ],
-    "description": "Watch The Garfield Movie 2024 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/garfild.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/garfild.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/The-Garfield-Movie-2024/video.mp4",
-    "category": "Sinhala Movie",
+    "description": "Watch Ben 10: Ultimate Alien Season 02 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/SEASON-1.jpg",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/SEASON-1.jpg",
+    "streamUrl": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E1_SlmoviesHDX264.mp4.mp4",
+    "category": "Sinhala Dubbed",
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
-    "quality": "WEB-DL",
-    "viewsCount": 3078,
-    "downloadsCount": 3522,
-    "episodes": [],
+    "quality": "HD",
+    "viewsCount": 3480,
+    "downloadsCount": 3763,
+    "episodes": [
+      {
+        "episode": "01",
+        "title": "Episode 01 - Episode 01",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E1_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "02",
+        "title": "Episode 02 - Episode 02",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E2_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "03",
+        "title": "Episode 03 - Episode 03",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E4_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "04",
+        "title": "Episode 04 - Episode 04",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E5_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "05",
+        "title": "Episode 05 - Episode 05",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E6_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "06",
+        "title": "Episode 06 - Episode 06",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E7_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "07",
+        "title": "Episode 07 - Episode 07",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E8_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "08",
+        "title": "Episode 08 - Episode 08",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E9_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "09",
+        "title": "Episode 09 - Episode 09",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E10_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "10",
+        "title": "Episode 10 - Episode 10",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E12_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "11",
+        "title": "Episode 11 - Episode 11",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E13_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "12",
+        "title": "Episode 12 - Episode 12",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E14_SlmoviesHDX264.mp4.mp4"
+      },
+      {
+        "episode": "13",
+        "title": "Episode 13 - Episode 13",
+        "stream_url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E15_SlmoviesHDX264.mp4.mp4"
+      }
+    ],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053605503-7use",
+        "id": "dl-1-1785053414619-np5c",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
         "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/The-Garfield-Movie-2024/video.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/The-Garfield-Movie-2024/video.mp4",
+        "downloadUrl": "https://dl.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E1_SlmoviesHDX264.mp4.mp4",
+        "server2Url": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s2/Ben.10.Ultimate.Alien.S02%20E1_SlmoviesHDX264.mp4.mp4",
         "server1Name": "Cloudflare R2 Direct Server",
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053605503-nzkp",
+        "id": "dl-2-1785053414619-rm4t",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
         "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=410",
-        "server2Url": "https://t.me/cartoonlk_bot?start=410",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=453",
+        "server2Url": "https://t.me/cartoonlk_bot?start=453",
         "server1Name": "Telegram Official Bot",
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:25.503Z"
+    "createdAt": "2026-07-26T08:10:14.619Z"
+  },
+  {
+    "id": "ben-10-ultimate-alien-season-01-sinhala-dubbed",
+    "title": "Ben 10: Ultimate Alien Season 01 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Ben 10: Ultimate Alien Season 01 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "20 Episodes",
+    "rating": 8.2,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Ben 10: Ultimate Alien Season 01 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/SEASON-1-3-1.jpg",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/SEASON-1-3-1.jpg",
+    "streamUrl": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E1%20Sinhala%20Dubbed%20Cartoon.mp4.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "HD",
+    "viewsCount": 4523,
+    "downloadsCount": 5968,
+    "episodes": [
+      {
+        "episode": "01",
+        "title": "Episode 01 - Episode 01",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E1%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "02",
+        "title": "Episode 02 - Episode 02",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E2%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "03",
+        "title": "Episode 03 - Episode 03",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E3%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "04",
+        "title": "Episode 04 - Episode 04",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E4%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "05",
+        "title": "Episode 05 - Episode 05",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E5%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "06",
+        "title": "Episode 06 - Episode 06",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E6%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "07",
+        "title": "Episode 07 - Episode 07",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E7%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "08",
+        "title": "Episode 08 - Episode 08",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E8%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "09",
+        "title": "Episode 09 - Episode 09",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E9%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "10",
+        "title": "Episode 10 - Episode 10",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E10%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "11",
+        "title": "Episode 11 - Episode 11",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E11%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "12",
+        "title": "Episode 12 - Episode 12",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E12%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "13",
+        "title": "Episode 13 - Episode 13",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E13%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "14",
+        "title": "Episode 14 - Episode 14",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E14%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "15",
+        "title": "Episode 15 - Episode 15",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E15%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "16",
+        "title": "Episode 16 - Episode 16",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E16%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "17",
+        "title": "Episode 17 - Episode 17",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E17%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "18",
+        "title": "Episode 18 - Episode 18",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E18%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "19",
+        "title": "Episode 19 - Episode 19",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E19%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      },
+      {
+        "episode": "20",
+        "title": "Episode 20 - Episode 20",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E20%20Sinhala%20Dubbed%20Cartoon.mp4.mp4"
+      }
+    ],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053415842-om78",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E1%20Sinhala%20Dubbed%20Cartoon.mp4.mp4",
+        "server2Url": "https://cdn.sinhalacartoons.com/Ben-10-Ultimate-Alien-season1/B10%20S1%20E1%20Sinhala%20Dubbed%20Cartoon.mp4.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053415842-cq69",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=429",
+        "server2Url": "https://t.me/cartoonlk_bot?start=429",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:15.842Z"
+  },
+  {
+    "id": "ben-10-alien-force-season-03",
+    "title": "Ben 10: Alien Force Season 03 - සිංහල හඩකැවූ",
+    "originalTitle": "Ben 10: Alien Force Season 03 – සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "17 Episodes",
+    "rating": 8.3,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Ben 10: Alien Force Season 03 - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/SEASON-01-3.png",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/SEASON-01-3.png",
+    "streamUrl": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E1.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "HD",
+    "viewsCount": 3481,
+    "downloadsCount": 5902,
+    "episodes": [
+      {
+        "episode": "01",
+        "title": "Episode 01 - Episode 01",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E1.mp4"
+      },
+      {
+        "episode": "02",
+        "title": "Episode 02 - Episode 02",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E2.mp4"
+      },
+      {
+        "episode": "03",
+        "title": "Episode 03 - Episode 03",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E3.mp4"
+      },
+      {
+        "episode": "04",
+        "title": "Episode 04 - Episode 04",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E4.mp4"
+      },
+      {
+        "episode": "05",
+        "title": "Episode 05 - Episode 05",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E5.mp4"
+      },
+      {
+        "episode": "06",
+        "title": "Episode 06 - Episode 06",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E7.mp4"
+      },
+      {
+        "episode": "07",
+        "title": "Episode 07 - Episode 07",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E8.mp4"
+      },
+      {
+        "episode": "08",
+        "title": "Episode 08 - Episode 08",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E9.mp4"
+      },
+      {
+        "episode": "09",
+        "title": "Episode 09 - Episode 09",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E10.mp4"
+      },
+      {
+        "episode": "10",
+        "title": "Episode 10 - Episode 10",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E12.mp4"
+      },
+      {
+        "episode": "11",
+        "title": "Episode 11 - Episode 11",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E13.mp4"
+      },
+      {
+        "episode": "12",
+        "title": "Episode 12 - Episode 12",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E14.mp4"
+      },
+      {
+        "episode": "13",
+        "title": "Episode 13 - Episode 13",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E15.mp4"
+      },
+      {
+        "episode": "14",
+        "title": "Episode 14 - Episode 14",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E16.mp4"
+      },
+      {
+        "episode": "15",
+        "title": "Episode 15 - Episode 15",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E17.mp4"
+      },
+      {
+        "episode": "16",
+        "title": "Episode 16 - Episode 16",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E18.mp4"
+      },
+      {
+        "episode": "17",
+        "title": "Episode 17 - Episode 17",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E20.mp4"
+      }
+    ],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053416974-5658",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E1.mp4",
+        "server2Url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S3//B10S3E1.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053416974-wbj0",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=587",
+        "server2Url": "https://t.me/cartoonlk_bot?start=587",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:16.974Z"
+  },
+  {
+    "id": "ben-10-alien-force-season-02",
+    "title": "Ben 10: Alien Force Season 02 - සිංහල හඩකැවූ",
+    "originalTitle": "Ben 10: Alien Force Season 02 – සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "13 Episodes",
+    "rating": 8.3,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Ben 10: Alien Force Season 02 - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/SEASON-01-4.png",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/SEASON-01-4.png",
+    "streamUrl": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E1.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "HD",
+    "viewsCount": 7903,
+    "downloadsCount": 4234,
+    "episodes": [
+      {
+        "episode": "01",
+        "title": "Episode 01 - Episode 01",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E1.mp4"
+      },
+      {
+        "episode": "02",
+        "title": "Episode 02 - Episode 02",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E2.mp4"
+      },
+      {
+        "episode": "03",
+        "title": "Episode 03 - Episode 03",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E3.mp4"
+      },
+      {
+        "episode": "04",
+        "title": "Episode 04 - Episode 04",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E04.mp4"
+      },
+      {
+        "episode": "05",
+        "title": "Episode 05 - Episode 05",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E5.mp4"
+      },
+      {
+        "episode": "06",
+        "title": "Episode 06 - Episode 06",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E6.mp4"
+      },
+      {
+        "episode": "07",
+        "title": "Episode 07 - Episode 07",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S3E7.mp4"
+      },
+      {
+        "episode": "08",
+        "title": "Episode 08 - Episode 08",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S3E8.mp4"
+      },
+      {
+        "episode": "09",
+        "title": "Episode 09 - Episode 09",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S3E9.mp4"
+      },
+      {
+        "episode": "10",
+        "title": "Episode 10 - Episode 10",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E10.mp4"
+      },
+      {
+        "episode": "11",
+        "title": "Episode 11 - Episode 11",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E11.mp4"
+      },
+      {
+        "episode": "12",
+        "title": "Episode 12 - Episode 12",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E12.mp4"
+      },
+      {
+        "episode": "13",
+        "title": "Episode 13 - Episode 13",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E13.mp4"
+      }
+    ],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053418155-zxgu",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E1.mp4",
+        "server2Url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S2/B10S2E1.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053418155-99ll",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=571",
+        "server2Url": "https://t.me/cartoonlk_bot?start=571",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:18.155Z"
+  },
+  {
+    "id": "ben-10-alien-force-season-01",
+    "title": "Ben 10: Alien Force Season 01 - සිංහල හඩකැවූ",
+    "originalTitle": "Ben 10: Alien Force Season 01 – සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "12 Episodes",
+    "rating": 8.3,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Ben 10: Alien Force Season 01 - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/SEASON-01-5.png",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/SEASON-01-5.png",
+    "streamUrl": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/Ben10%20S1%20E1.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "HD",
+    "viewsCount": 7357,
+    "downloadsCount": 2776,
+    "episodes": [
+      {
+        "episode": "01",
+        "title": "Episode 01 - Episode 01",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/Ben10%20S1%20E1.mp4"
+      },
+      {
+        "episode": "02",
+        "title": "Episode 02 - Episode 02",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/B10S1E2.mp4"
+      },
+      {
+        "episode": "03",
+        "title": "Episode 03 - Episode 03",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/B10S1E3.mp4"
+      },
+      {
+        "episode": "04",
+        "title": "Episode 04 - Episode 04",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/B10S1E4.mp4"
+      },
+      {
+        "episode": "05",
+        "title": "Episode 05 - Episode 05",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/B10S1E5.mp4"
+      },
+      {
+        "episode": "06",
+        "title": "Episode 06 - Episode 06",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/B10S1E06.mp4"
+      },
+      {
+        "episode": "07",
+        "title": "Episode 07 - Episode 07",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/B10S1E8.mp4"
+      },
+      {
+        "episode": "08",
+        "title": "Episode 08 - Episode 08",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/Ben10S01E09.mkv"
+      },
+      {
+        "episode": "09",
+        "title": "Episode 09 - Episode 09",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/B10S1E10.mp4"
+      },
+      {
+        "episode": "10",
+        "title": "Episode 10 - Episode 10",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/Ben10S01E11.mkv"
+      },
+      {
+        "episode": "11",
+        "title": "Episode 11 - Episode 11",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/Ben10S01E12.mkv"
+      },
+      {
+        "episode": "12",
+        "title": "Episode 12 - Episode 12",
+        "stream_url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/B10S1E13.mp4"
+      }
+    ],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053418955-rtlg",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Ben-10-Aliem-Force-S1/Ben10%20S1%20E1.mp4",
+        "server2Url": "https://cdn.sinhalacartoons.com/Ben-10-Aliem-Force-S1/Ben10%20S1%20E1.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053418955-qxwt",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=557",
+        "server2Url": "https://t.me/cartoonlk_bot?start=557",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:18.955Z"
   },
   {
     "id": "ben-10-2005-tv-series",
@@ -674,8 +811,8 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "HD",
-    "viewsCount": 4904,
-    "downloadsCount": 4479,
+    "viewsCount": 5279,
+    "downloadsCount": 4262,
     "episodes": [
       {
         "episode": "01",
@@ -845,7 +982,7 @@ export const initialMovies: Movie[] = [
     ],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053606426-hi01",
+        "id": "dl-1-1785053420754-mqsr",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -856,7 +993,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053606426-86gu",
+        "id": "dl-2-1785053420754-t6bi",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -867,7 +1004,655 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:26.426Z"
+    "createdAt": "2026-07-26T08:10:20.754Z"
+  },
+  {
+    "id": "kung-fu-panda-4-with-sinhala-subtitle",
+    "title": "Kung Fu Panda 4 With Sinhala Subtitle - සිංහල උපසිරැස සමග",
+    "originalTitle": "Kung Fu Panda 4 With Sinhala Subtitle – සිංහල උපසිරැස සමග",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 7,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Kung Fu Panda 4 With Sinhala Subtitle - සිංහල උපසිරැස සමග online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/39fea826565121c4da0f60e3455fab89.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/39fea826565121c4da0f60e3455fab89.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-4-sub/Kung%20Fu%20Panda%204%20(2024).mp4",
+    "category": "Sinhala Subbed",
+    "language": "English (Sinhala Subtitle / සිංහල උපසිරැසි)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 3842,
+    "downloadsCount": 5428,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053422670-9b24",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-4-sub/Kung%20Fu%20Panda%204%20(2024).mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-4-sub/Kung%20Fu%20Panda%204%20(2024).mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053422670-p3hy",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=1046",
+        "server2Url": "https://t.me/cartoonlk_bot?start=1046",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:22.670Z"
+  },
+  {
+    "id": "kung-fu-panda-3-sinhala-dubbed",
+    "title": "Kung Fu Panda 3 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Kung Fu Panda 3 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 6.9,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Kung Fu Panda 3 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/96cc61a8979edc5b4ddaf76d4f5e9303.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/96cc61a8979edc5b4ddaf76d4f5e9303.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-3/Kung%20Fu%20Panda%203%202016%20720p.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 7387,
+    "downloadsCount": 3910,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053423776-kvw8",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-3/Kung%20Fu%20Panda%203%202016%20720p.mkv.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-3/Kung%20Fu%20Panda%203%202016%20720p.mkv.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053423776-em5j",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=870",
+        "server2Url": "https://t.me/cartoonlk_bot?start=870",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:23.776Z"
+  },
+  {
+    "id": "kung-fu-panda-2-sinhala-dubbed",
+    "title": "Kung Fu Panda 2 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Kung Fu Panda 2 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 7.1,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Kung Fu Panda 2 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/MV5BYmIxMGYzMTUtZDQzYy00ODc4LWE1YzQtZGMwYTc0YTYyYTE0XkEyXkFqcGc@.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/MV5BYmIxMGYzMTUtZDQzYy00ODc4LWE1YzQtZGMwYTc0YTYyYTE0XkEyXkFqcGc@.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-2/Kung%20Fu%20Panda%202011%20720p.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 4364,
+    "downloadsCount": 2406,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053424788-w774",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-2/Kung%20Fu%20Panda%202011%20720p.mkv.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-2/Kung%20Fu%20Panda%202011%20720p.mkv.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053424788-nz29",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=868",
+        "server2Url": "https://t.me/cartoonlk_bot?start=868",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:24.788Z"
+  },
+  {
+    "id": "kung-fu-panda-1-sinhala-dubbed",
+    "title": "Kung Fu Panda 1 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Kung Fu Panda 1 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 7.3,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Kung Fu Panda 1 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/268-1.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/268-1.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-1/Kung%20Fu%20Panda%202008%20720p.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 3995,
+    "downloadsCount": 3304,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053425564-0p0f",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-1/Kung%20Fu%20Panda%202008%20720p.mkv.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Kung-Fu-Panda-1/Kung%20Fu%20Panda%202008%20720p.mkv.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053425564-7sma",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=866",
+        "server2Url": "https://t.me/cartoonlk_bot?start=866",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:25.565Z"
+  },
+  {
+    "id": "shrek-the-third-sinhala-dubbed",
+    "title": "Shrek the Third Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Shrek the Third Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 6.3,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Shrek the Third Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/shrekthethird.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/shrekthethird.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Shrek-the-Third-2007/Shrek%20the%20Third%20(2007)%20720p.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 5827,
+    "downloadsCount": 3650,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053427528-dmms",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Shrek-the-Third-2007/Shrek%20the%20Third%20(2007)%20720p.mkv.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Shrek-the-Third-2007/Shrek%20the%20Third%20(2007)%20720p.mkv.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053427528-2mqt",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=832",
+        "server2Url": "https://t.me/cartoonlk_bot?start=832",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:27.528Z"
+  },
+  {
+    "id": "shrek-02-sinhala-dubbed",
+    "title": "Shrek 02 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Shrek 02 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 7.3,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Shrek 02 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/photo_2026-06-19_22-17-07.jpg",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/photo_2026-06-19_22-17-07.jpg",
+    "streamUrl": "https://dl.sinhalacartoons.com/Shrek-2/Shrek%202004%20720p.mp4.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 6663,
+    "downloadsCount": 3417,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053428285-4mqh",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Shrek-2/Shrek%202004%20720p.mp4.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Shrek-2/Shrek%202004%20720p.mp4.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053428285-fotz",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=830",
+        "server2Url": "https://t.me/cartoonlk_bot?start=830",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:28.285Z"
+  },
+  {
+    "id": "shrek-01-sinhala-dubbed",
+    "title": "Shrek 01 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Shrek 01 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 7.8,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Shrek 01 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/268-1.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/268-1.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Shrek-2001/Shrek%202001%20720p.mp4.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 4355,
+    "downloadsCount": 4066,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053429042-f18q",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Shrek-2001/Shrek%202001%20720p.mp4.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Shrek-2001/Shrek%202001%20720p.mp4.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053429042-744v",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=828",
+        "server2Url": "https://t.me/cartoonlk_bot?start=828",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:29.042Z"
+  },
+  {
+    "id": "puss-in-boots-2011-sinhala-dubbed-%e0%b7%83%e0%b7%92%e0%b6%82%e0%b7%84%e0%b6%bd-%e0%b7%84%e0%b6%a9%e0%b6%9a%e0%b7%90%e0%b7%80%e0%b7%96",
+    "title": "Puss in Boots 2011 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Puss in Boots 2011 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 6.6,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Puss in Boots 2011 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/puss-in-boots-2011-poster.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/puss-in-boots-2011-poster.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Puss-in-BootsPuss-in-Boots/Puss.in.Boots.2011.720p.BluRay.x264.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 7493,
+    "downloadsCount": 3560,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053430031-9azc",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Puss-in-BootsPuss-in-Boots/Puss.in.Boots.2011.720p.BluRay.x264.mkv.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Puss-in-BootsPuss-in-Boots/Puss.in.Boots.2011.720p.BluRay.x264.mkv.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053430031-or13",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=768",
+        "server2Url": "https://t.me/cartoonlk_bot?start=768",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:30.031Z"
+  },
+  {
+    "id": "rio-2-movie-sinhala-dubbed",
+    "title": "Rio 2 Movie Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Rio 2 Movie Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 6.5,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Rio 2 Movie Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/92af202cdce5d6079f456da9b7509651.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/92af202cdce5d6079f456da9b7509651.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/rio-2/Rio.2.2014.720p.BluRay.x264.mkv.mp4",
+    "category": "Sinhala Movie",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 6326,
+    "downloadsCount": 4339,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053431674-nvpw",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/rio-2/Rio.2.2014.720p.BluRay.x264.mkv.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/rio-2/Rio.2.2014.720p.BluRay.x264.mkv.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053431674-cgxz",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=766",
+        "server2Url": "https://t.me/cartoonlk_bot?start=766",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:31.674Z"
+  },
+  {
+    "id": "rio-1-cartoon-movie-sinhala-dubbed",
+    "title": "Rio 1 Cartoon Movie Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Rio 1 Cartoon Movie Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 6.8,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Rio 1 Cartoon Movie Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/650f4d6f807966a81e4565c52ede7af9.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/650f4d6f807966a81e4565c52ede7af9.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/rio-1/Rio.2011.DUAL-AUDIO.SIN-ENG.720p.BluRay.x264-DubHubLK.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 5079,
+    "downloadsCount": 4519,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053432466-kn6a",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/rio-1/Rio.2011.DUAL-AUDIO.SIN-ENG.720p.BluRay.x264-DubHubLK.mkv.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/rio-1/Rio.2011.DUAL-AUDIO.SIN-ENG.720p.BluRay.x264-DubHubLK.mkv.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053432466-8yf6",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=776",
+        "server2Url": "https://t.me/cartoonlk_bot?start=776",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:32.466Z"
+  },
+  {
+    "id": "casper-1995-sinhala-dubbed",
+    "title": "Casper 1995 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Casper 1995 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 6.3,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Casper 1995 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/w9xdkk5czpm21.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/w9xdkk5czpm21.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Casper-1995/Casper%20(1995).mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "HD",
+    "viewsCount": 5026,
+    "downloadsCount": 4545,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053433230-mkou",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Casper-1995/Casper%20(1995).mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Casper-1995/Casper%20(1995).mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053433230-x8av",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=978",
+        "server2Url": "https://t.me/cartoonlk_bot?start=978",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:33.230Z"
+  },
+  {
+    "id": "the-garfield-movie-2024-sinhala-dubbed",
+    "title": "The Garfield Movie 2024 Sinhala Dubbed - සිංහල හඩකැවූ",
+    "originalTitle": "The Garfield Movie 2024 Sinhala Dubbed – සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 7,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch The Garfield Movie 2024 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/garfild.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/garfild.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/The-Garfield-Movie-2024/video.mp4",
+    "category": "Sinhala Movie",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "WEB-DL",
+    "viewsCount": 7732,
+    "downloadsCount": 5566,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053434023-9d4d",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/The-Garfield-Movie-2024/video.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/The-Garfield-Movie-2024/video.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053434023-by3r",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=410",
+        "server2Url": "https://t.me/cartoonlk_bot?start=410",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:10:34.023Z"
   },
   {
     "id": "green-snake-sinhala-dubbed",
@@ -894,12 +1679,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "HD",
-    "viewsCount": 3769,
-    "downloadsCount": 5780,
+    "viewsCount": 6356,
+    "downloadsCount": 5292,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053607380-qk41",
+        "id": "dl-1-1785053434833-kn6g",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -910,7 +1695,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053607380-slpm",
+        "id": "dl-2-1785053434833-qw53",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -921,7 +1706,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:27.380Z"
+    "createdAt": "2026-07-26T08:10:34.833Z"
   },
   {
     "id": "jack-the-giant-slayer-sinhala-dubbed",
@@ -948,12 +1733,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "WEB-DL",
-    "viewsCount": 7601,
-    "downloadsCount": 2483,
+    "viewsCount": 3285,
+    "downloadsCount": 2593,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053608335-4qa5",
+        "id": "dl-1-1785053435651-c5aj",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -964,7 +1749,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053608335-eciq",
+        "id": "dl-2-1785053435651-c0op",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -975,7 +1760,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:28.335Z"
+    "createdAt": "2026-07-26T08:10:35.651Z"
   },
   {
     "id": "alvin-and-the-chipmunks-1",
@@ -1002,12 +1787,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "WEB-DL",
-    "viewsCount": 3353,
-    "downloadsCount": 3679,
+    "viewsCount": 5250,
+    "downloadsCount": 4750,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053609289-t20u",
+        "id": "dl-1-1785053436439-47pv",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1018,7 +1803,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053609289-owdr",
+        "id": "dl-2-1785053436439-mvew",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1029,7 +1814,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:29.289Z"
+    "createdAt": "2026-07-26T08:10:36.439Z"
   },
   {
     "id": "raya-and-the-last-dragon-sinhala-dubbed",
@@ -1056,12 +1841,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 3507,
-    "downloadsCount": 4112,
+    "viewsCount": 7864,
+    "downloadsCount": 4204,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053610307-lqqj",
+        "id": "dl-1-1785053439853-047u",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1072,7 +1857,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053610307-u2ev",
+        "id": "dl-2-1785053439853-uyt6",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1083,7 +1868,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:30.307Z"
+    "createdAt": "2026-07-26T08:10:39.853Z"
   },
   {
     "id": "the-angry-birds-01",
@@ -1110,12 +1895,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "WEB-DL",
-    "viewsCount": 7409,
-    "downloadsCount": 4211,
+    "viewsCount": 4852,
+    "downloadsCount": 2147,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053611290-sxrb",
+        "id": "dl-1-1785053440691-dwhb",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1126,7 +1911,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053611290-ey57",
+        "id": "dl-2-1785053440691-td6l",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1137,7 +1922,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:31.290Z"
+    "createdAt": "2026-07-26T08:10:40.691Z"
   },
   {
     "id": "the-lion-king-sinhala-dubbed",
@@ -1164,12 +1949,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "WEB-DL",
-    "viewsCount": 5954,
-    "downloadsCount": 5010,
+    "viewsCount": 5297,
+    "downloadsCount": 3232,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053612252-57qd",
+        "id": "dl-1-1785053441510-cc5l",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1180,7 +1965,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053612252-flae",
+        "id": "dl-2-1785053441510-bac9",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1191,7 +1976,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:32.252Z"
+    "createdAt": "2026-07-26T08:10:41.510Z"
   },
   {
     "id": "diary-of-a-wimpy-kid-4-the-long-haul-2017",
@@ -1218,12 +2003,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "HD",
-    "viewsCount": 5683,
-    "downloadsCount": 4194,
+    "viewsCount": 5921,
+    "downloadsCount": 3351,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053613110-0570",
+        "id": "dl-1-1785053443036-7e3b",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1234,7 +2019,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053613110-1bva",
+        "id": "dl-2-1785053443036-hboo",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1245,7 +2030,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:33.110Z"
+    "createdAt": "2026-07-26T08:10:43.036Z"
   },
   {
     "id": "frozen-2013-sinhala-dubbed",
@@ -1272,12 +2057,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 5678,
-    "downloadsCount": 5799,
+    "viewsCount": 7541,
+    "downloadsCount": 2028,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053614870-wmf7",
+        "id": "dl-1-1785053444836-uwyi",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1288,7 +2073,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053614870-zi9j",
+        "id": "dl-2-1785053444836-6sar",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1299,7 +2084,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:34.870Z"
+    "createdAt": "2026-07-26T08:10:44.836Z"
   },
   {
     "id": "frozen-ii-sinhala-dubbed",
@@ -1326,12 +2111,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "WEB-DL",
-    "viewsCount": 5190,
-    "downloadsCount": 5879,
+    "viewsCount": 4525,
+    "downloadsCount": 2291,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053615808-fp82",
+        "id": "dl-1-1785053445756-mqpd",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1342,7 +2127,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053615808-6c08",
+        "id": "dl-2-1785053445756-kaj1",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1353,7 +2138,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:35.808Z"
+    "createdAt": "2026-07-26T08:10:45.756Z"
   },
   {
     "id": "the-garfield-show-tv-series-sinhla-dubbed",
@@ -1380,8 +2165,8 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "HD",
-    "viewsCount": 3570,
-    "downloadsCount": 3596,
+    "viewsCount": 5372,
+    "downloadsCount": 2591,
     "episodes": [
       {
         "episode": "01",
@@ -1456,7 +2241,7 @@ export const initialMovies: Movie[] = [
     ],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053629299-j8k9",
+        "id": "dl-1-1785053447826-54k1",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1467,7 +2252,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053629299-cuar",
+        "id": "dl-2-1785053447826-hnv0",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1478,7 +2263,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:49.299Z"
+    "createdAt": "2026-07-26T08:10:47.826Z"
   },
   {
     "id": "gajaman-sinhala-movie",
@@ -1505,12 +2290,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 7194,
-    "downloadsCount": 2550,
+    "viewsCount": 3486,
+    "downloadsCount": 2652,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053634913-dqte",
+        "id": "dl-1-1785053457547-poyc",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1521,7 +2306,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053634913-165f",
+        "id": "dl-2-1785053457547-yue6",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1532,7 +2317,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:13:54.913Z"
+    "createdAt": "2026-07-26T08:10:57.547Z"
   },
   {
     "id": "bee-movie-2007-sinhala-dubbed",
@@ -1559,12 +2344,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 4630,
-    "downloadsCount": 3602,
+    "viewsCount": 6895,
+    "downloadsCount": 5022,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053642788-uetw",
+        "id": "dl-1-1785053465480-0mcs",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1575,7 +2360,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053642788-lgaj",
+        "id": "dl-2-1785053465480-00vr",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1586,7 +2371,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:02.788Z"
+    "createdAt": "2026-07-26T08:11:05.480Z"
   },
   {
     "id": "a-pup-named-scooby-doo-s01-sinhala-dubbed",
@@ -1613,8 +2398,8 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "SD",
-    "viewsCount": 4822,
-    "downloadsCount": 2050,
+    "viewsCount": 4916,
+    "downloadsCount": 2802,
     "episodes": [
       {
         "episode": "01",
@@ -1679,7 +2464,7 @@ export const initialMovies: Movie[] = [
     ],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053644768-ywl7",
+        "id": "dl-1-1785053469473-z07c",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1690,7 +2475,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053644768-8v5d",
+        "id": "dl-2-1785053469473-y7ob",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1701,7 +2486,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:04.768Z"
+    "createdAt": "2026-07-26T08:11:09.473Z"
   },
   {
     "id": "scooby-doo-2-monsters-unleashed-sinhala-dubbed",
@@ -1728,12 +2513,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 3554,
-    "downloadsCount": 4942,
+    "viewsCount": 3234,
+    "downloadsCount": 2090,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053647445-8wyg",
+        "id": "dl-1-1785053473890-jfug",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1744,7 +2529,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053647445-e9r3",
+        "id": "dl-2-1785053473890-8970",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1755,7 +2540,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:07.445Z"
+    "createdAt": "2026-07-26T08:11:13.890Z"
   },
   {
     "id": "scooby-doo-and-the-witchs-ghost-sinhala-dubbed",
@@ -1782,12 +2567,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 6493,
-    "downloadsCount": 3248,
+    "viewsCount": 5346,
+    "downloadsCount": 4181,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053648550-qza0",
+        "id": "dl-1-1785053474909-wpit",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1798,7 +2583,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053648550-vuq2",
+        "id": "dl-2-1785053474909-p560",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1809,7 +2594,117 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:08.550Z"
+    "createdAt": "2026-07-26T08:11:14.909Z"
+  },
+  {
+    "id": "scooby-doo-sinhala-dubbed-cartoon-s1",
+    "title": "Scooby-Doo Sinhala Dubbed Cartoon S1- සිංහල හඩකැවූ",
+    "originalTitle": "Scooby-Doo Sinhala Dubbed Cartoon S1- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "11 Episodes",
+    "rating": 7.8,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Scooby-Doo Sinhala Dubbed Cartoon S1- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/MV5BMTIwN2U2OTctMTcxMi00NjllLWE5ZjktZmFiNzAxOWM3YWEwXkEyXkFqcGc@.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/MV5BMTIwN2U2OTctMTcxMi00NjllLWE5ZjktZmFiNzAxOWM3YWEwXkEyXkFqcGc@.webp",
+    "streamUrl": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E01.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "HD",
+    "viewsCount": 3881,
+    "downloadsCount": 4255,
+    "episodes": [
+      {
+        "episode": "01",
+        "title": "Episode 01 - Episode 01",
+        "stream_url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E01.mp4"
+      },
+      {
+        "episode": "02",
+        "title": "Episode 02 - Episode 02",
+        "stream_url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E02.mp4"
+      },
+      {
+        "episode": "03",
+        "title": "Episode 03 - Episode 03",
+        "stream_url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E03.mp4"
+      },
+      {
+        "episode": "04",
+        "title": "Episode 04 - Episode 04",
+        "stream_url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E04.mp4"
+      },
+      {
+        "episode": "05",
+        "title": "Episode 05 - Episode 05",
+        "stream_url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E05.mp4"
+      },
+      {
+        "episode": "06",
+        "title": "Episode 06 - Episode 06",
+        "stream_url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E06.mp4"
+      },
+      {
+        "episode": "07",
+        "title": "Episode 07 - Episode 07",
+        "stream_url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E07.mp4"
+      },
+      {
+        "episode": "08",
+        "title": "Episode 08 - Episode 08",
+        "stream_url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E08.mp4"
+      },
+      {
+        "episode": "09",
+        "title": "Episode 09 - Episode 09",
+        "stream_url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E09.mp4"
+      },
+      {
+        "episode": "10",
+        "title": "Episode 10 - Episode 10",
+        "stream_url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E10.mp4"
+      },
+      {
+        "episode": "11",
+        "title": "Episode 11 - Episode 11",
+        "stream_url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E11.mp4"
+      }
+    ],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053476757-545t",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E01.mp4",
+        "server2Url": "https://cdn.sinhalacartoons.com/Scooby-Doo-S1/Whats.New.Scooby-Doo.S01E01.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053476757-4bzk",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=414",
+        "server2Url": "https://t.me/cartoonlk_bot?start=414",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:11:16.757Z"
   },
   {
     "id": "how-to-train-your-dragon-homecoming-sinhala-sub",
@@ -1836,12 +2731,12 @@ export const initialMovies: Movie[] = [
     "language": "English (Sinhala Subtitle / සිංහල උපසිරැසි)",
     "hasSinhalaSub": true,
     "quality": "HD",
-    "viewsCount": 3424,
-    "downloadsCount": 4112,
+    "viewsCount": 3676,
+    "downloadsCount": 2002,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053663388-07cb",
+        "id": "dl-1-1785053488603-wnjg",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -1852,7 +2747,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053663388-4p6t",
+        "id": "dl-2-1785053488603-gknr",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -1863,115 +2758,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:23.388Z"
-  },
-  {
-    "id": "how-to-train-your-dragon2-sinhala-dubbed",
-    "title": "How to Train Your Dragon 2 Sinhala Dubbed - සිංහල හඩකැවූ",
-    "originalTitle": "How to Train Your Dragon 2 Sinhala Dubbed | සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 7.7,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch How to Train Your Dragon 2 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/MV5BMzMwMTAwODczN15BMl5BanBnXkFtZTgwMDk2NDA4MTE@.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/MV5BMzMwMTAwODczN15BMl5BanBnXkFtZTgwMDk2NDA4MTE@.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/How-to-Train-Your-Dragon/How.To.Train.Your.Dragon.2014.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "WEB-DL",
-    "viewsCount": 4662,
-    "downloadsCount": 5863,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053664477-u444",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/How-to-Train-Your-Dragon/How.To.Train.Your.Dragon.2014.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/How-to-Train-Your-Dragon/How.To.Train.Your.Dragon.2014.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053664477-289t",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=490",
-        "server2Url": "https://t.me/cartoonlk_bot?start=490",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:14:24.477Z"
-  },
-  {
-    "id": "how-to-train-your-dragon-the-hidden-world-sinhala-dubbed",
-    "title": "How to Train Your Dragon: The Hidden World Sinhala Dubbed - සිංහල හඩකැවූ",
-    "originalTitle": "How to Train Your Dragon: The Hidden World Sinhala Dubbed | සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 7.7,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch How to Train Your Dragon: The Hidden World Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/MV5BMjIwMDIwNjAyOF5BMl5BanBnXkFtZTgwNDE1MDc2NTM@.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/04/MV5BMjIwMDIwNjAyOF5BMl5BanBnXkFtZTgwNDE1MDc2NTM@.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/How-to-Train-Your-Dragon/How.To.Train.Your.Dragon.The.Hidden.World.2019.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "WEB-DL",
-    "viewsCount": 6236,
-    "downloadsCount": 5322,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053665473-7fbd",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/How-to-Train-Your-Dragon/How.To.Train.Your.Dragon.The.Hidden.World.2019.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/How-to-Train-Your-Dragon/How.To.Train.Your.Dragon.The.Hidden.World.2019.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053665473-tst1",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=492",
-        "server2Url": "https://t.me/cartoonlk_bot?start=492",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:14:25.473Z"
+    "createdAt": "2026-07-26T08:11:28.603Z"
   },
   {
     "id": "how-to-train-your-dragon",
@@ -1998,12 +2785,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "WEB-DL",
-    "viewsCount": 5824,
-    "downloadsCount": 4218,
+    "viewsCount": 7787,
+    "downloadsCount": 5592,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053666562-zp8z",
+        "id": "dl-1-1785053514398-sqf4",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -2014,7 +2801,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053666562-wfrh",
+        "id": "dl-2-1785053514398-9hfc",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -2025,7 +2812,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:26.562Z"
+    "createdAt": "2026-07-26T08:11:54.398Z"
   },
   {
     "id": "the-angry-birds-2",
@@ -2052,12 +2839,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 4302,
-    "downloadsCount": 3402,
+    "viewsCount": 5461,
+    "downloadsCount": 2515,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053668711-1iq8",
+        "id": "dl-1-1785053516487-99uj",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -2068,7 +2855,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053668711-xq0f",
+        "id": "dl-2-1785053516487-ofy2",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -2079,7 +2866,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:28.711Z"
+    "createdAt": "2026-07-26T08:11:56.487Z"
   },
   {
     "id": "sonic-the-hedgehog-2-sinhala-dubbed",
@@ -2106,12 +2893,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 6069,
-    "downloadsCount": 3323,
+    "viewsCount": 4424,
+    "downloadsCount": 5475,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053671140-ql5j",
+        "id": "dl-1-1785053528453-eh6c",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -2122,7 +2909,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053671140-4ukt",
+        "id": "dl-2-1785053528453-tx1i",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -2133,7 +2920,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:31.140Z"
+    "createdAt": "2026-07-26T08:12:08.453Z"
   },
   {
     "id": "sonic-the-hedgehog-1-sinhala-dubbed",
@@ -2160,12 +2947,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 7513,
-    "downloadsCount": 4839,
+    "viewsCount": 4793,
+    "downloadsCount": 4577,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053672203-8kgd",
+        "id": "dl-1-1785053531555-mqla",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -2176,7 +2963,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053672203-pwwe",
+        "id": "dl-2-1785053531555-q4br",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -2187,7 +2974,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:32.203Z"
+    "createdAt": "2026-07-26T08:12:11.555Z"
   },
   {
     "id": "ratatouille-sinhala-dubbed",
@@ -2214,12 +3001,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 4708,
-    "downloadsCount": 4091,
+    "viewsCount": 4337,
+    "downloadsCount": 2333,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053677732-2lne",
+        "id": "dl-1-1785053537783-gkx2",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -2230,7 +3017,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053677732-xg70",
+        "id": "dl-2-1785053537783-ymtr",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -2241,223 +3028,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:37.732Z"
-  },
-  {
-    "id": "cars-3-sinhala-dubbed",
-    "title": "Cars 3 Sinhala Dubbed - සිංහල හඩකැවූ",
-    "originalTitle": "Cars 3 Sinhala Dubbed – සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 6.9,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Cars 3 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/1d3348dcf3c7ccd7d2a8005e8fadcdc3.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/1d3348dcf3c7ccd7d2a8005e8fadcdc3.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Cars-1/Cars%203.2017.mkv.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 7739,
-    "downloadsCount": 3579,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053679861-2us1",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Cars-1/Cars%203.2017.mkv.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Cars-1/Cars%203.2017.mkv.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053679861-jdfq",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=876",
-        "server2Url": "https://t.me/cartoonlk_bot?start=876",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:14:39.861Z"
-  },
-  {
-    "id": "cars-2-sinhala-dubbed",
-    "title": "Cars 2 Sinhala Dubbed - සිංහල හඩකැවූ",
-    "originalTitle": "Cars 2 Sinhala Dubbed – සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 6.2,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Cars 2 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/516.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/516.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Cars-2/Cars%202.2011.720p.mp4.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 6555,
-    "downloadsCount": 2664,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053680865-zwxb",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Cars-2/Cars%202.2011.720p.mp4.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Cars-2/Cars%202.2011.720p.mp4.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053680865-uatp",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=874",
-        "server2Url": "https://t.me/cartoonlk_bot?start=874",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:14:40.865Z"
-  },
-  {
-    "id": "cars-1-sinhala-dubbed",
-    "title": "Cars 1 Sinhala Dubbed - සිංහල හඩකැවූ",
-    "originalTitle": "Cars 1 Sinhala Dubbed – සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 7,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Cars 1 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/cars-2006-in-full-16-9-v0-tyhwbqil31pd1.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/cars-2006-in-full-16-9-v0-tyhwbqil31pd1.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Cars-1/Cars.2006.720p.mp4.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 5828,
-    "downloadsCount": 3644,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053690185-k4dq",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Cars-1/Cars.2006.720p.mp4.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Cars-1/Cars.2006.720p.mp4.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053690185-sq1o",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=872",
-        "server2Url": "https://t.me/cartoonlk_bot?start=872",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:14:50.185Z"
-  },
-  {
-    "id": "moana-2016-sinhala-dubbed",
-    "title": "Moana 2016 Sinhala Dubbed - සිංහල හඩකැවූ",
-    "originalTitle": "Moana 2016 Sinhala Dubbed – සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 7.6,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Moana 2016 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/p_moana_20530_214883e3.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/p_moana_20530_214883e3.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Moana/%F0%9D%96%AC%F0%9D%97%88%F0%9D%96%BA%F0%9D%97%87%F0%9D%96%BA%202016%20720%F0%9D%97%89%20%F0%9D%96%B2%F0%9D%97%82%F0%9D%97%87%F0%9D%97%81%F0%9D%96%BA%F0%9D%97%85%F0%9D%96%BA%20%F0%9D%96%A3%F0%9D%97%8E%F0%9D%96%BB%F0%9D%96%BB%F0%9D%96%BE%F0%9D%96%BD.mkv.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 5537,
-    "downloadsCount": 3357,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053693650-dr42",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Moana/%F0%9D%96%AC%F0%9D%97%88%F0%9D%96%BA%F0%9D%97%87%F0%9D%96%BA%202016%20720%F0%9D%97%89%20%F0%9D%96%B2%F0%9D%97%82%F0%9D%97%87%F0%9D%97%81%F0%9D%96%BA%F0%9D%97%85%F0%9D%96%BA%20%F0%9D%96%A3%F0%9D%97%8E%F0%9D%96%BB%F0%9D%96%BB%F0%9D%96%BE%F0%9D%96%BD.mkv.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Moana/%F0%9D%96%AC%F0%9D%97%88%F0%9D%96%BA%F0%9D%97%87%F0%9D%96%BA%202016%20720%F0%9D%97%89%20%F0%9D%96%B2%F0%9D%97%82%F0%9D%97%87%F0%9D%97%81%F0%9D%96%BA%F0%9D%97%85%F0%9D%96%BA%20%F0%9D%96%A3%F0%9D%97%8E%F0%9D%96%BB%F0%9D%96%BB%F0%9D%96%BE%F0%9D%96%BD.mkv.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053693650-65i7",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=856",
-        "server2Url": "https://t.me/cartoonlk_bot?start=856",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:14:53.650Z"
+    "createdAt": "2026-07-26T08:12:17.783Z"
   },
   {
     "id": "toy-story-1-sinhala-dubbed",
@@ -2484,12 +3055,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 7471,
-    "downloadsCount": 2748,
+    "viewsCount": 7212,
+    "downloadsCount": 3506,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053695828-ld9a",
+        "id": "dl-1-1785053551529-d1g9",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -2500,7 +3071,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053695828-epg2",
+        "id": "dl-2-1785053551529-n4ep",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -2511,15 +3082,15 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:55.828Z"
+    "createdAt": "2026-07-26T08:12:31.529Z"
   },
   {
-    "id": "the-penguins-of-madagascar-sinhala-dubbed",
-    "title": "The Penguins of Madagascar 2014 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "The Penguins of Madagascar 2014 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "id": "cars-3-sinhala-dubbed",
+    "title": "Cars 3 Sinhala Dubbed - සිංහල හඩකැවූ",
+    "originalTitle": "Cars 3 Sinhala Dubbed – සිංහල හඩකැවූ",
     "releaseYear": 2024,
     "duration": "1h 35m",
-    "rating": 6.5,
+    "rating": 6.9,
     "genres": [
       "Animation",
       "Sinhala Cartoon",
@@ -2530,42 +3101,204 @@ export const initialMovies: Movie[] = [
     "cast": [
       "Sinhala Dubbed Cast"
     ],
-    "description": "Watch The Penguins of Madagascar 2014 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/MV5BM2JjZTNhMWYtN2M3ZC00MThkLWFlODAtNTdiM2I1N2U0N2MwXkEyXkFqcGc@.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/MV5BM2JjZTNhMWYtN2M3ZC00MThkLWFlODAtNTdiM2I1N2U0N2MwXkEyXkFqcGc@.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/The-Penguins-of-Madagascar-2014/The%20Penguins%20of%20Madagascar%20(2014).mp4",
+    "description": "Watch Cars 3 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/1d3348dcf3c7ccd7d2a8005e8fadcdc3.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/1d3348dcf3c7ccd7d2a8005e8fadcdc3.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Cars-1/Cars%203.2017.mkv.mp4",
     "category": "Sinhala Dubbed",
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 6472,
-    "downloadsCount": 5553,
+    "viewsCount": 3878,
+    "downloadsCount": 4684,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053699719-pwy7",
+        "id": "dl-1-1785053555168-6t32",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
         "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/The-Penguins-of-Madagascar-2014/The%20Penguins%20of%20Madagascar%20(2014).mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/The-Penguins-of-Madagascar-2014/The%20Penguins%20of%20Madagascar%20(2014).mp4",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Cars-1/Cars%203.2017.mkv.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Cars-1/Cars%203.2017.mkv.mp4",
         "server1Name": "Cloudflare R2 Direct Server",
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053699719-9r8w",
+        "id": "dl-2-1785053555168-oiug",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
         "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=1022",
-        "server2Url": "https://t.me/cartoonlk_bot?start=1022",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=876",
+        "server2Url": "https://t.me/cartoonlk_bot?start=876",
         "server1Name": "Telegram Official Bot",
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:14:59.719Z"
+    "createdAt": "2026-07-26T08:12:35.168Z"
+  },
+  {
+    "id": "cars-2-sinhala-dubbed",
+    "title": "Cars 2 Sinhala Dubbed - සිංහල හඩකැවූ",
+    "originalTitle": "Cars 2 Sinhala Dubbed – සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 6.2,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Cars 2 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/516.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/516.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Cars-2/Cars%202.2011.720p.mp4.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 3389,
+    "downloadsCount": 4422,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053557131-b86y",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Cars-2/Cars%202.2011.720p.mp4.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Cars-2/Cars%202.2011.720p.mp4.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053557131-9f7d",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=874",
+        "server2Url": "https://t.me/cartoonlk_bot?start=874",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:12:37.131Z"
+  },
+  {
+    "id": "cars-1-sinhala-dubbed",
+    "title": "Cars 1 Sinhala Dubbed - සිංහල හඩකැවූ",
+    "originalTitle": "Cars 1 Sinhala Dubbed – සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 7,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Cars 1 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/cars-2006-in-full-16-9-v0-tyhwbqil31pd1.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/cars-2006-in-full-16-9-v0-tyhwbqil31pd1.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Cars-1/Cars.2006.720p.mp4.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 6732,
+    "downloadsCount": 3579,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053558168-fh7f",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Cars-1/Cars.2006.720p.mp4.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Cars-1/Cars.2006.720p.mp4.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053558168-dc4c",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=872",
+        "server2Url": "https://t.me/cartoonlk_bot?start=872",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:12:38.168Z"
+  },
+  {
+    "id": "moana-2016-sinhala-dubbed",
+    "title": "Moana 2016 Sinhala Dubbed - සිංහල හඩකැවූ",
+    "originalTitle": "Moana 2016 Sinhala Dubbed – සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 7.6,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Moana 2016 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/p_moana_20530_214883e3.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/p_moana_20530_214883e3.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Moana/%F0%9D%96%AC%F0%9D%97%88%F0%9D%96%BA%F0%9D%97%87%F0%9D%96%BA%202016%20720%F0%9D%97%89%20%F0%9D%96%B2%F0%9D%97%82%F0%9D%97%87%F0%9D%97%81%F0%9D%96%BA%F0%9D%97%85%F0%9D%96%BA%20%F0%9D%96%A3%F0%9D%97%8E%F0%9D%96%BB%F0%9D%96%BB%F0%9D%96%BE%F0%9D%96%BD.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 3433,
+    "downloadsCount": 2811,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053560165-4krb",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Moana/%F0%9D%96%AC%F0%9D%97%88%F0%9D%96%BA%F0%9D%97%87%F0%9D%96%BA%202016%20720%F0%9D%97%89%20%F0%9D%96%B2%F0%9D%97%82%F0%9D%97%87%F0%9D%97%81%F0%9D%96%BA%F0%9D%97%85%F0%9D%96%BA%20%F0%9D%96%A3%F0%9D%97%8E%F0%9D%96%BB%F0%9D%96%BB%F0%9D%96%BE%F0%9D%96%BD.mkv.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Moana/%F0%9D%96%AC%F0%9D%97%88%F0%9D%96%BA%F0%9D%97%87%F0%9D%96%BA%202016%20720%F0%9D%97%89%20%F0%9D%96%B2%F0%9D%97%82%F0%9D%97%87%F0%9D%97%81%F0%9D%96%BA%F0%9D%97%85%F0%9D%96%BA%20%F0%9D%96%A3%F0%9D%97%8E%F0%9D%96%BB%F0%9D%96%BB%F0%9D%96%BE%F0%9D%96%BD.mkv.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053560165-39je",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=856",
+        "server2Url": "https://t.me/cartoonlk_bot?start=856",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:12:40.165Z"
   },
   {
     "id": "madagascar-3-europe-most-wanted-sinhala-dubbed",
@@ -2592,12 +3325,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 6499,
-    "downloadsCount": 3010,
+    "viewsCount": 7621,
+    "downloadsCount": 3974,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053700828-6nze",
+        "id": "dl-1-1785053584042-urbo",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -2608,7 +3341,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053700828-5y39",
+        "id": "dl-2-1785053584042-hy9c",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -2619,7 +3352,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:15:00.828Z"
+    "createdAt": "2026-07-26T08:13:04.042Z"
   },
   {
     "id": "madagascar-escape-2-africa-sinhala-dubbed",
@@ -2646,12 +3379,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 3842,
-    "downloadsCount": 4390,
+    "viewsCount": 5376,
+    "downloadsCount": 5106,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053701794-c7fn",
+        "id": "dl-1-1785053584961-xh9p",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -2662,7 +3395,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053701794-kbcp",
+        "id": "dl-2-1785053584961-o665",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -2673,7 +3406,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:15:01.794Z"
+    "createdAt": "2026-07-26T08:13:04.961Z"
   },
   {
     "id": "madagascar-1-sinhala-dubbed",
@@ -2700,12 +3433,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 6478,
-    "downloadsCount": 5905,
+    "viewsCount": 6911,
+    "downloadsCount": 3678,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053702934-mpgu",
+        "id": "dl-1-1785053585881-aeot",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -2716,7 +3449,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053702934-zcxe",
+        "id": "dl-2-1785053585881-5sxs",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -2727,15 +3460,15 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:15:02.934Z"
+    "createdAt": "2026-07-26T08:13:05.881Z"
   },
   {
-    "id": "the-smurfs-3-sinhala-dubbed",
-    "title": "The Smurfs 3 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "The Smurfs 3 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "id": "monsters-vs-aliens-2009-sinhala-dubbed",
+    "title": "Monsters vs. Aliens 2009 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "Monsters vs. Aliens 2009 Sinhala Dubbed- සිංහල හඩකැවූ",
     "releaseYear": 2024,
     "duration": "1h 35m",
-    "rating": 6.4,
+    "rating": 6.3,
     "genres": [
       "Animation",
       "Sinhala Cartoon",
@@ -2746,258 +3479,42 @@ export const initialMovies: Movie[] = [
     "cast": [
       "Sinhala Dubbed Cast"
     ],
-    "description": "Watch The Smurfs 3 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/268-1-1.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/268-1-1.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Smurfs-3-2017/Smurfs%203%20The%20Lost%20Village%20(2017).mp4",
+    "description": "Watch Monsters vs. Aliens 2009 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/photo_2026-06-29_00-33-10.jpg",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/photo_2026-06-29_00-33-10.jpg",
+    "streamUrl": "https://dl.sinhalacartoons.com/Monsters-vs-Aliens-2009/Monsters%20vs%20Aliens%20(2009).mp4",
     "category": "Sinhala Dubbed",
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "FHD",
-    "viewsCount": 3296,
-    "downloadsCount": 4557,
+    "viewsCount": 5318,
+    "downloadsCount": 4270,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053706363-w788",
+        "id": "dl-1-1785053604592-0fe8",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
         "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Smurfs-3-2017/Smurfs%203%20The%20Lost%20Village%20(2017).mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Smurfs-3-2017/Smurfs%203%20The%20Lost%20Village%20(2017).mp4",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Monsters-vs-Aliens-2009/Monsters%20vs%20Aliens%20(2009).mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Monsters-vs-Aliens-2009/Monsters%20vs%20Aliens%20(2009).mp4",
         "server1Name": "Cloudflare R2 Direct Server",
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053706363-uy74",
+        "id": "dl-2-1785053604592-r3mq",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
         "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=939",
-        "server2Url": "https://t.me/cartoonlk_bot?start=939",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=1039",
+        "server2Url": "https://t.me/cartoonlk_bot?start=1039",
         "server1Name": "Telegram Official Bot",
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:15:06.363Z"
-  },
-  {
-    "id": "the-smurfs-2-sinhala-dubbed",
-    "title": "The Smurfs 2 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "The Smurfs 2 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 5.8,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch The Smurfs 2 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/7739432257b4429ec5df56cd5e739928.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/7739432257b4429ec5df56cd5e739928.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/The-Smurfs-2013/The%20Smurfs%202%20(2013).mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 6102,
-    "downloadsCount": 3404,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053707473-09ok",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/The-Smurfs-2013/The%20Smurfs%202%20(2013).mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/The-Smurfs-2013/The%20Smurfs%202%20(2013).mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053707473-ukl9",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=941",
-        "server2Url": "https://t.me/cartoonlk_bot?start=941",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:15:07.473Z"
-  },
-  {
-    "id": "the-smurfs-1-sinhala-dubbed",
-    "title": "The Smurfs 1 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "The Smurfs 1 Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 5.8,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch The Smurfs 1 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/7c648b92cbb6b835f30c2a4548feeeaa.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/7c648b92cbb6b835f30c2a4548feeeaa.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/The-Smurfs-2011/The%20Smurfs%20(2011).mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 4840,
-    "downloadsCount": 3744,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053708383-wksw",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/The-Smurfs-2011/The%20Smurfs%20(2011).mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/The-Smurfs-2011/The%20Smurfs%20(2011).mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053708383-an2h",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=943",
-        "server2Url": "https://t.me/cartoonlk_bot?start=943",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:15:08.383Z"
-  },
-  {
-    "id": "ainbo-spirit-of-the-amazon-sinhala-dubbed",
-    "title": "AINBO Spirit of the Amazon Sinhala Dubbed- සිංහල හඩකැවූ",
-    "originalTitle": "AINBO Spirit of the Amazon Sinhala Dubbed- සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 7,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch AINBO Spirit of the Amazon Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/c75096277581d200a36013a4cbae39c9.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/c75096277581d200a36013a4cbae39c9.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/AINBO-Spirit-of-the-Amazon/AINBO%3A%20Spirit%20of%20the%20Amazon%20(2021).mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "FHD",
-    "viewsCount": 3064,
-    "downloadsCount": 3951,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053711256-kuw8",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/AINBO-Spirit-of-the-Amazon/AINBO%3A%20Spirit%20of%20the%20Amazon%20(2021).mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/AINBO-Spirit-of-the-Amazon/AINBO%3A%20Spirit%20of%20the%20Amazon%20(2021).mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053711256-fdlg",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=947",
-        "server2Url": "https://t.me/cartoonlk_bot?start=947",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:15:11.256Z"
-  },
-  {
-    "id": "son-of-the-mask-2005-sinhala-dubbed",
-    "title": "Son of the Mask 2005 Sinhala Dubbed - සිංහල හඩකැවූ",
-    "originalTitle": "Son of the Mask 2005 Sinhala Dubbed – සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 4.2,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Son of the Mask 2005 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/af6e9765c5258914ef925b2bab6c6ea8.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/af6e9765c5258914ef925b2bab6c6ea8.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/Son-Of-The-Mask/Son%20of%20the%20Mask%202005%20720p.mkv.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "HD",
-    "viewsCount": 6357,
-    "downloadsCount": 4950,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053713189-d1fg",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Son-Of-The-Mask/Son%20of%20the%20Mask%202005%20720p.mkv.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/Son-Of-The-Mask/Son%20of%20the%20Mask%202005%20720p.mkv.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053713189-gs0s",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=886",
-        "server2Url": "https://t.me/cartoonlk_bot?start=886",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:15:13.189Z"
+    "createdAt": "2026-07-26T08:13:24.592Z"
   },
   {
     "id": "diary-of-a-wimpy-kid-dog-days-2012",
@@ -3024,12 +3541,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "HD",
-    "viewsCount": 4740,
-    "downloadsCount": 5859,
+    "viewsCount": 3690,
+    "downloadsCount": 3501,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053717248-e2oc",
+        "id": "dl-1-1785053605587-ldz0",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -3040,7 +3557,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053717248-z09f",
+        "id": "dl-2-1785053605587-ft4o",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -3051,15 +3568,15 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:15:17.248Z"
+    "createdAt": "2026-07-26T08:13:25.587Z"
   },
   {
-    "id": "diary-of-a-wimpy-kid-2-rodrick-rules-2011",
-    "title": "Diary of a Wimpy Kid 2 Rodrick Rules 2011 - සිංහල හඩකැවූ",
-    "originalTitle": "Diary of a Wimpy Kid 2 Rodrick Rules 2011 – සිංහල හඩකැවූ",
+    "id": "finding-nemo-sinhala-dubbed",
+    "title": "Finding Nemo Sinhala Dubbed (Low Quality) - සිංහල හඩකැවූ",
+    "originalTitle": "Finding Nemo Sinhala Dubbed (Low Quality) – සිංහල හඩකැවූ",
     "releaseYear": 2024,
     "duration": "1h 35m",
-    "rating": 6.7,
+    "rating": 7.8,
     "genres": [
       "Animation",
       "Sinhala Cartoon",
@@ -3070,96 +3587,42 @@ export const initialMovies: Movie[] = [
     "cast": [
       "Sinhala Dubbed Cast"
     ],
-    "description": "Watch Diary of a Wimpy Kid 2 Rodrick Rules 2011 - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/03/s-l500.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/03/s-l500.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/diary-of-a-wimpy-kid/Diary_of_a_Wimpy_Kid_2_2011_720p_SinDub_%40sinhalamovie_telegram_.mp4",
+    "description": "Watch Finding Nemo Sinhala Dubbed (Low Quality) - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/MV5BMDExMDdmNTctYmVhMi00MDhlLTk3ODYtYmM3M2JkMTc2ZmZiXkEyXkFqcGc@.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/MV5BMDExMDdmNTctYmVhMi00MDhlLTk3ODYtYmM3M2JkMTc2ZmZiXkEyXkFqcGc@.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Finding-Nemo-2003/Finding%20Nemo%20(2003)%20low%20quality%20copy.mp4",
     "category": "Sinhala Dubbed",
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
-    "quality": "HD",
-    "viewsCount": 7175,
-    "downloadsCount": 5347,
+    "quality": "FHD",
+    "viewsCount": 6574,
+    "downloadsCount": 2471,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053719906-pu87",
+        "id": "dl-1-1785053612543-8cxg",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
         "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/diary-of-a-wimpy-kid/Diary_of_a_Wimpy_Kid_2_2011_720p_SinDub_%40sinhalamovie_telegram_.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/diary-of-a-wimpy-kid/Diary_of_a_Wimpy_Kid_2_2011_720p_SinDub_%40sinhalamovie_telegram_.mp4",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Finding-Nemo-2003/Finding%20Nemo%20(2003)%20low%20quality%20copy.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Finding-Nemo-2003/Finding%20Nemo%20(2003)%20low%20quality%20copy.mp4",
         "server1Name": "Cloudflare R2 Direct Server",
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053719906-7ouy",
+        "id": "dl-2-1785053612543-qpvn",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
         "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=389",
-        "server2Url": "https://t.me/cartoonlk_bot?start=389",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=1044",
+        "server2Url": "https://t.me/cartoonlk_bot?start=1044",
         "server1Name": "Telegram Official Bot",
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:15:19.906Z"
-  },
-  {
-    "id": "diary-of-a-wimpy-kid-2010",
-    "title": "Diary of a Wimpy Kid (2010) - සිංහල හඩකැවූ",
-    "originalTitle": "Diary of a Wimpy Kid (2010) – සිංහල හඩකැවූ",
-    "releaseYear": 2024,
-    "duration": "1h 35m",
-    "rating": 6.3,
-    "genres": [
-      "Animation",
-      "Sinhala Cartoon",
-      "Action",
-      "Family"
-    ],
-    "director": "Sinhala Cartoons Studio",
-    "cast": [
-      "Sinhala Dubbed Cast"
-    ],
-    "description": "Watch Diary of a Wimpy Kid (2010) - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
-    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/03/diary_of_a_wimpy_kid_film.webp",
-    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/03/diary_of_a_wimpy_kid_film.webp",
-    "streamUrl": "https://dl.sinhalacartoons.com/diary-of-a-wimpy-kid/Diary_of_a_Wimpy_Kid_2010_720p_SinDub_%40sinhalamovie_telegram_.mp4",
-    "category": "Sinhala Dubbed",
-    "language": "Sinhala Dubbed (සිංහල)",
-    "hasSinhalaSub": true,
-    "quality": "HD",
-    "viewsCount": 6855,
-    "downloadsCount": 5341,
-    "episodes": [],
-    "downloadOptions": [
-      {
-        "id": "dl-1-1785053720865-fpjt",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "High Speed Direct",
-        "format": "MP4 / MKV Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/diary-of-a-wimpy-kid/Diary_of_a_Wimpy_Kid_2010_720p_SinDub_%40sinhalamovie_telegram_.mp4",
-        "server2Url": "https://dl.sinhalacartoons.com/diary-of-a-wimpy-kid/Diary_of_a_Wimpy_Kid_2010_720p_SinDub_%40sinhalamovie_telegram_.mp4",
-        "server1Name": "Cloudflare R2 Direct Server",
-        "server2Name": "CDN Stream Server"
-      },
-      {
-        "id": "dl-2-1785053720866-5ej0",
-        "quality": "Telegram Easy Mobile Download",
-        "resolution": "HD Quality",
-        "size": "Telegram Fast",
-        "format": "Telegram Bot Link",
-        "downloadUrl": "https://t.me/cartoonlk_bot?start=386",
-        "server2Url": "https://t.me/cartoonlk_bot?start=386",
-        "server1Name": "Telegram Official Bot",
-        "server2Name": "Telegram Channel"
-      }
-    ],
-    "createdAt": "2026-07-26T08:15:20.866Z"
+    "createdAt": "2026-07-26T08:13:32.543Z"
   },
   {
     "id": "the-croods-sinhala-dubbed",
@@ -3186,12 +3649,12 @@ export const initialMovies: Movie[] = [
     "language": "Sinhala Dubbed (සිංහල)",
     "hasSinhalaSub": true,
     "quality": "WEB-DL",
-    "viewsCount": 3758,
-    "downloadsCount": 2391,
+    "viewsCount": 5822,
+    "downloadsCount": 4781,
     "episodes": [],
     "downloadOptions": [
       {
-        "id": "dl-1-1785053747370-s950",
+        "id": "dl-1-1785053615565-gtdj",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
         "size": "High Speed Direct",
@@ -3202,7 +3665,7 @@ export const initialMovies: Movie[] = [
         "server2Name": "CDN Stream Server"
       },
       {
-        "id": "dl-2-1785053747370-y4bd",
+        "id": "dl-2-1785053615565-ud5w",
         "quality": "Telegram Easy Mobile Download",
         "resolution": "HD Quality",
         "size": "Telegram Fast",
@@ -3213,6 +3676,434 @@ export const initialMovies: Movie[] = [
         "server2Name": "Telegram Channel"
       }
     ],
-    "createdAt": "2026-07-26T08:15:47.370Z"
+    "createdAt": "2026-07-26T08:13:35.565Z"
+  },
+  {
+    "id": "the-smurfs-3-sinhala-dubbed",
+    "title": "The Smurfs 3 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "The Smurfs 3 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 6.4,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch The Smurfs 3 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/268-1-1.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/268-1-1.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Smurfs-3-2017/Smurfs%203%20The%20Lost%20Village%20(2017).mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 4532,
+    "downloadsCount": 2731,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053618752-ekvk",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Smurfs-3-2017/Smurfs%203%20The%20Lost%20Village%20(2017).mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Smurfs-3-2017/Smurfs%203%20The%20Lost%20Village%20(2017).mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053618752-ya47",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=939",
+        "server2Url": "https://t.me/cartoonlk_bot?start=939",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:13:38.752Z"
+  },
+  {
+    "id": "the-smurfs-2-sinhala-dubbed",
+    "title": "The Smurfs 2 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "The Smurfs 2 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 5.8,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch The Smurfs 2 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/7739432257b4429ec5df56cd5e739928.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/7739432257b4429ec5df56cd5e739928.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/The-Smurfs-2013/The%20Smurfs%202%20(2013).mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 4621,
+    "downloadsCount": 2725,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053619727-emyy",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/The-Smurfs-2013/The%20Smurfs%202%20(2013).mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/The-Smurfs-2013/The%20Smurfs%202%20(2013).mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053619727-ksm5",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=941",
+        "server2Url": "https://t.me/cartoonlk_bot?start=941",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:13:39.727Z"
+  },
+  {
+    "id": "the-smurfs-1-sinhala-dubbed",
+    "title": "The Smurfs 1 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "The Smurfs 1 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 5.8,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch The Smurfs 1 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/7c648b92cbb6b835f30c2a4548feeeaa.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/7c648b92cbb6b835f30c2a4548feeeaa.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/The-Smurfs-2011/The%20Smurfs%20(2011).mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 7619,
+    "downloadsCount": 3720,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053620673-vm98",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/The-Smurfs-2011/The%20Smurfs%20(2011).mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/The-Smurfs-2011/The%20Smurfs%20(2011).mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053620673-dy1k",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=943",
+        "server2Url": "https://t.me/cartoonlk_bot?start=943",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:13:40.673Z"
+  },
+  {
+    "id": "the-adventures-of-tintin-2011-sinhala-dubbed",
+    "title": "The Adventures of Tintin 2011 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "The Adventures of Tintin 2011 Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 6.9,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch The Adventures of Tintin 2011 Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/f65485e4a20e778911b8a0616d890d8b.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/06/f65485e4a20e778911b8a0616d890d8b.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 6210,
+    "downloadsCount": 2154,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053623661-rk0e",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053623661-bzpn",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=792",
+        "server2Url": "https://t.me/cartoonlk_bot?start=792",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:13:43.661Z"
+  },
+  {
+    "id": "ainbo-spirit-of-the-amazon-sinhala-dubbed",
+    "title": "AINBO Spirit of the Amazon Sinhala Dubbed- සිංහල හඩකැවූ",
+    "originalTitle": "AINBO Spirit of the Amazon Sinhala Dubbed- සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 7,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch AINBO Spirit of the Amazon Sinhala Dubbed- සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/c75096277581d200a36013a4cbae39c9.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/c75096277581d200a36013a4cbae39c9.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/AINBO-Spirit-of-the-Amazon/AINBO%3A%20Spirit%20of%20the%20Amazon%20(2021).mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "FHD",
+    "viewsCount": 7029,
+    "downloadsCount": 2643,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053639816-49ov",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/AINBO-Spirit-of-the-Amazon/AINBO%3A%20Spirit%20of%20the%20Amazon%20(2021).mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/AINBO-Spirit-of-the-Amazon/AINBO%3A%20Spirit%20of%20the%20Amazon%20(2021).mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053639816-3vsc",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=947",
+        "server2Url": "https://t.me/cartoonlk_bot?start=947",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:13:59.816Z"
+  },
+  {
+    "id": "son-of-the-mask-2005-sinhala-dubbed",
+    "title": "Son of the Mask 2005 Sinhala Dubbed - සිංහල හඩකැවූ",
+    "originalTitle": "Son of the Mask 2005 Sinhala Dubbed – සිංහල හඩකැවූ",
+    "releaseYear": 2024,
+    "duration": "1h 35m",
+    "rating": 4.2,
+    "genres": [
+      "Animation",
+      "Sinhala Cartoon",
+      "Action",
+      "Family"
+    ],
+    "director": "Sinhala Cartoons Studio",
+    "cast": [
+      "Sinhala Dubbed Cast"
+    ],
+    "description": "Watch Son of the Mask 2005 Sinhala Dubbed - සිංහල හඩකැවූ online in high quality. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with fast direct MP4 video streaming and high-speed R2 server downloads.",
+    "posterUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/af6e9765c5258914ef925b2bab6c6ea8.webp",
+    "backdropUrl": "https://sinhalacartoons.com/wp-content/uploads/2026/07/af6e9765c5258914ef925b2bab6c6ea8.webp",
+    "streamUrl": "https://dl.sinhalacartoons.com/Son-Of-The-Mask/Son%20of%20the%20Mask%202005%20720p.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "HD",
+    "viewsCount": 4756,
+    "downloadsCount": 3701,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-1-1785053640759-fol1",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "High Speed Direct",
+        "format": "MP4 / MKV Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Son-Of-The-Mask/Son%20of%20the%20Mask%202005%20720p.mkv.mp4",
+        "server2Url": "https://dl.sinhalacartoons.com/Son-Of-The-Mask/Son%20of%20the%20Mask%202005%20720p.mkv.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Stream Server"
+      },
+      {
+        "id": "dl-2-1785053640759-42mv",
+        "quality": "Telegram Easy Mobile Download",
+        "resolution": "HD Quality",
+        "size": "Telegram Fast",
+        "format": "Telegram Bot Link",
+        "downloadUrl": "https://t.me/cartoonlk_bot?start=886",
+        "server2Url": "https://t.me/cartoonlk_bot?start=886",
+        "server1Name": "Telegram Official Bot",
+        "server2Name": "Telegram Channel"
+      }
+    ],
+    "createdAt": "2026-07-26T08:14:00.759Z"
+  },
+  {
+    "id": "kung-fu-panda-4-2024-sinhala-dubbed",
+    "title": "Kung Fu Panda 4 (2024) Sinhala Dubbed - කුංෆු පැන්ඩා 4",
+    "originalTitle": "Kung Fu Panda 4 (2024) Sinhala Dubbed",
+    "releaseYear": 2024,
+    "duration": "1h 34m",
+    "rating": 8.7,
+    "genres": ["Animation", "Sinhala Cartoon", "Action", "Comedy"],
+    "director": "Mike Mitchell",
+    "cast": ["Jack Black", "Awkwafina", "Viola Davis"],
+    "description": "Po must train a new warrior when he's chosen to become the Spiritual Leader of the Valley of Peace, while facing a powerful shape-shifting sorceress. Features full Sinhala Dubbed audio (සිංහල හඩකැවූ) with direct HD video streaming.",
+    "posterUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/Son-Of-The-Mask/Son%20of%20the%20Mask%202005%20720p.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "1080p Full HD",
+    "viewsCount": 6840,
+    "downloadsCount": 5120,
+    "episodes": [],
+    "downloadOptions": [
+      {
+        "id": "dl-kfp4-1080p",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "1.2 GB",
+        "format": "MP4 Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Son-Of-The-Mask/Son%20of%20the%20Mask%202005%20720p.mkv.mp4",
+        "server1Name": "Cloudflare R2 Direct Server",
+        "server2Name": "CDN Server 2"
+      }
+    ],
+    "createdAt": "2026-07-26T09:00:00.000Z"
+  },
+  {
+    "id": "scooby-doo-and-the-cyber-chase-sinhala-dubbed",
+    "title": "Scooby-Doo! and the Cyber Chase Sinhala Dubbed - ස්කූබි ඩූ සයිබර් චේස්",
+    "originalTitle": "Scooby-Doo! and the Cyber Chase",
+    "releaseYear": 2024,
+    "duration": "1h 15m",
+    "rating": 8.5,
+    "genres": ["Animation", "Sinhala Cartoon", "Mystery", "Comedy"],
+    "director": "Jim Stenstrum",
+    "cast": ["Frank Welker", "Grey DeLisle", "Scott Innes"],
+    "description": "Scooby-Doo and the gang get trapped in a video game created by a phantom virus. High quality Sinhala Dubbed cartoon adventure.",
+    "posterUrl": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=500&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=1200&q=80",
+    "streamUrl": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E01.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "HD",
+    "viewsCount": 5420,
+    "downloadsCount": 4210,
+    "episodes": [],
+    "createdAt": "2026-07-26T09:05:00.000Z"
+  },
+  {
+    "id": "the-adventures-of-tintin-sinhala-dubbed",
+    "title": "The Adventures of Tintin Sinhala Dubbed - ටින්ටින්ගේ සහාසික ක්‍රියා",
+    "originalTitle": "The Adventures of Tintin",
+    "releaseYear": 2024,
+    "duration": "1h 47m",
+    "rating": 8.9,
+    "genres": ["Animation", "Sinhala Cartoon", "Adventure", "Family"],
+    "director": "Steven Spielberg",
+    "cast": ["Jamie Bell", "Andy Serkis", "Daniel Craig"],
+    "description": "Intrepid reporter Tintin and Captain Haddock set off on a treasure hunt for a sunken ship commanded by Haddock's ancestor. Full Sinhala Dubbed audio.",
+    "posterUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/Son-Of-The-Mask/Son%20of%20the%20Mask%202005%20720p.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "1080p Full HD",
+    "viewsCount": 7890,
+    "downloadsCount": 6340,
+    "episodes": [],
+    "createdAt": "2026-07-26T09:10:00.000Z"
+  },
+  {
+    "id": "tom-and-jerry-cowboy-up-sinhala-dubbed",
+    "title": "Tom and Jerry: Cowboy Up! Sinhala Dubbed - ටොම් සහ ජෙරී කව්බෝයි",
+    "originalTitle": "Tom and Jerry: Cowboy Up!",
+    "releaseYear": 2024,
+    "duration": "1h 15m",
+    "rating": 8.3,
+    "genres": ["Animation", "Sinhala Cartoon", "Comedy", "Family"],
+    "director": "Darrell Van Citters",
+    "cast": ["George Ackles", "Trevor Devall"],
+    "description": "This time, the rival duo team up to save a cowgirl and her brother from a greedy land-grabber in the Wild West. Full Sinhala Dubbed voiceover.",
+    "posterUrl": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80",
+    "streamUrl": "https://cdn.sinhalacartoons.com/ben-10-ultimate-alien-s3/Ben%2010%20S03%20E02.mkv.mp4",
+    "category": "Sinhala Dubbed",
+    "language": "Sinhala Dubbed (සිංහල)",
+    "hasSinhalaSub": true,
+    "quality": "HD",
+    "viewsCount": 6120,
+    "downloadsCount": 4890,
+    "episodes": [],
+    "createdAt": "2026-07-26T09:15:00.000Z"
   }
 ];
