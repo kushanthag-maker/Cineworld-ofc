@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMovie } from '../context/MovieContext';
 import { MessageSquare, Send, Star, ThumbsUp, UserCheck, Sparkles } from 'lucide-react';
 
@@ -8,7 +8,7 @@ interface CommentSectionProps {
 }
 
 export const CommentSection: React.FC<CommentSectionProps> = ({ movieId, movieTitle }) => {
-  const { comments, addComment, likeComment } = useMovie();
+  const { comments, fetchComments, addComment, likeComment } = useMovie();
 
   const [userName, setUserName] = useState('');
   const [commentText, setCommentText] = useState('');
@@ -16,6 +16,10 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ movieId, movieTi
   const [hoverRating, setHoverRating] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedMessage, setSubmittedMessage] = useState(false);
+
+  useEffect(() => {
+    fetchComments(movieId);
+  }, [movieId]);
 
   // Filter comments for this movie or general comments
   const movieComments = comments.filter((c) => c.movieId === movieId || !c.movieId);

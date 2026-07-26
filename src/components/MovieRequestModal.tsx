@@ -13,22 +13,16 @@ export const MovieRequestModal: React.FC = () => {
 
   if (!isRequestOpen) return null;
 
-  const processRequest = (sendToWhatsApp: boolean) => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (!movieTitle.trim()) return;
 
     addMovieRequest({
       movieTitle: movieTitle.trim(),
       category,
       requestedBy: requestedBy.trim() || 'CINEWORLD Fan',
-      whatsappNumber: whatsappNumber.trim() || '0769904294'
+      whatsappNumber: whatsappNumber.trim() || 'N/A'
     });
-
-    if (sendToWhatsApp) {
-      const waMessage = `👋 Hi CINEWORLD LK Admin!\n\nI would like to request a Movie / Cartoon:\n🎬 Title: ${movieTitle.trim()}\n🏷️ Category: ${category}\n👤 Requested By: ${requestedBy.trim() || 'CINEWORLD Fan'}\n📱 Contact: ${whatsappNumber.trim() || 'N/A'}\n\nPlease add this movie/cartoon to CINEWORLD LK! Thank you!`;
-      const targetNumber = '94769904294';
-      const url = `https://wa.me/${targetNumber}?text=${encodeURIComponent(waMessage)}`;
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
 
     setSubmitted(true);
     setTimeout(() => {
@@ -36,11 +30,6 @@ export const MovieRequestModal: React.FC = () => {
       setMovieTitle('');
       setIsRequestOpen(false);
     }, 2500);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    processRequest(true); // Default send via WhatsApp
   };
 
   return (
@@ -58,9 +47,8 @@ export const MovieRequestModal: React.FC = () => {
             <PlusCircle className="w-5 h-5" />
             <h2 className="text-lg font-black uppercase tracking-wider">Request Movie or Cartoon</h2>
           </div>
-          <p className="text-xs text-zinc-400 font-mono flex items-center gap-1.5">
-            <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Sends directly to CINEWORLD Admin WhatsApp: <strong className="text-emerald-400">0769904294</strong></span>
+          <p className="text-xs text-zinc-400 font-mono">
+            Submit your request directly to the CINEWORLD Admin Dashboard
           </p>
         </div>
 
@@ -69,9 +57,9 @@ export const MovieRequestModal: React.FC = () => {
             <div className="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/40 mx-auto flex items-center justify-center text-emerald-400">
               <Sparkles className="w-5 h-5 animate-pulse" />
             </div>
-            <p className="font-black text-sm uppercase">Request Sent Successfully!</p>
+            <p className="font-black text-sm uppercase">Request Received!</p>
             <p className="text-zinc-300">
-              Your movie request has been logged and sent to WhatsApp Admin (<strong>0769904294</strong>).
+              Your movie request has been logged into the Admin Panel. Our team will review and upload it soon!
             </p>
           </div>
         ) : (
@@ -85,7 +73,7 @@ export const MovieRequestModal: React.FC = () => {
                 value={movieTitle}
                 onChange={(e) => setMovieTitle(e.target.value)}
                 required
-                placeholder="e.g. Ben 10 Omniverse, Kung Fu Panda 4..."
+                placeholder="e.g. Ben 10 Omniverse, Inside Out 2..."
                 className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
               />
             </div>
@@ -123,7 +111,7 @@ export const MovieRequestModal: React.FC = () => {
 
             <div>
               <label className="block text-zinc-300 font-mono uppercase text-[11px] mb-1">
-                Your WhatsApp Number
+                Your Phone / WhatsApp Number (Optional)
               </label>
               <input
                 type="text"
@@ -134,22 +122,13 @@ export const MovieRequestModal: React.FC = () => {
               />
             </div>
 
-            <div className="pt-2 space-y-2">
+            <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black uppercase tracking-wider text-xs rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-emerald-950 transition-all"
+                className="w-full py-3.5 bg-amber-500 hover:bg-amber-400 text-black font-black uppercase tracking-wider text-xs rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-500/20 transition-all"
               >
-                <MessageCircle className="w-4 h-4 fill-white text-emerald-600" />
-                <span>Send Request via WhatsApp (0769904294)</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => processRequest(false)}
-                className="w-full py-2.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-bold uppercase tracking-wider text-[11px] rounded-xl flex items-center justify-center gap-2 cursor-pointer border border-white/10 transition-colors"
-              >
-                <Send className="w-3.5 h-3.5 text-amber-500" />
-                <span>Submit to Website Only</span>
+                <Send className="w-4 h-4" />
+                <span>Submit Request to Admin</span>
               </button>
             </div>
           </form>
