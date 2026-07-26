@@ -29,7 +29,36 @@ async function generateMovies() {
     { search: 'moana', category: 'Sinhala Dubbed' },
     { search: 'avatar', category: 'Sinhala Subbed' },
     { search: 'doraemon', category: 'Sinhala Dubbed' },
-    { search: 'pokemon', category: 'Sinhala Dubbed' }
+    { search: 'pokemon', category: 'Sinhala Dubbed' },
+    { search: 'madagascar', category: 'Sinhala Dubbed' },
+    { search: 'ice age', category: 'Sinhala Dubbed' },
+    { search: 'hotel transylvania', category: 'Sinhala Dubbed' },
+    { search: 'boss baby', category: 'Sinhala Dubbed' },
+    { search: 'sing', category: 'Sinhala Dubbed' },
+    { search: 'encanto', category: 'Sinhala Dubbed' },
+    { search: 'luca', category: 'Sinhala Dubbed' },
+    { search: 'coco', category: 'Sinhala Dubbed' },
+    { search: 'zootopia', category: 'Sinhala Dubbed' },
+    { search: 'nemo', category: 'Sinhala Dubbed' },
+    { search: 'incredibles', category: 'Sinhala Dubbed' },
+    { search: 'croods', category: 'Sinhala Dubbed' },
+    { search: 'trolls', category: 'Sinhala Dubbed' },
+    { search: 'smurfs', category: 'Sinhala Dubbed' },
+    { search: 'spongebob', category: 'Sinhala Dubbed' },
+    { search: 'tintin', category: 'Sinhala Dubbed' },
+    { search: 'mulan', category: 'Sinhala Dubbed' },
+    { search: 'aladdin', category: 'Sinhala Dubbed' },
+    { search: 'peter pan', category: 'Sinhala Dubbed' },
+    { search: 'tom and jerry', category: 'Sinhala Dubbed' },
+    { search: 'soora pappa', category: 'Sinhala Dubbed' },
+    { search: 'chhota bheem', category: 'Sinhala Dubbed' },
+    { search: 'motu patlu', category: 'Sinhala Dubbed' },
+    { search: 'batman', category: 'Sinhala Dubbed' },
+    { search: 'spider', category: 'Sinhala Dubbed' },
+    { search: 'superman', category: 'Sinhala Dubbed' },
+    { search: 'tarzan', category: 'Sinhala Dubbed' },
+    { search: 'cartoon', category: 'Sinhala Dubbed' },
+    { search: 'dubbed', category: 'Sinhala Dubbed' }
   ];
 
   const processedUrls = new Set();
@@ -116,13 +145,21 @@ async function generateMovies() {
         const id = item.url.split('/').filter(Boolean).pop() || `movie-${Date.now()}`;
         const titleClean = item.title.replace(/–/g, '-').replace(/\|/g, '-').trim();
 
+        // Categorize properly
+        let category = s.category;
+        if (titleClean.toLowerCase().includes('subtitle') || titleClean.toLowerCase().includes('sub')) {
+          category = 'Sinhala Subbed';
+        } else if (titleClean.toLowerCase().includes('movie') && !titleClean.toLowerCase().includes('cartoon')) {
+          category = 'Sinhala Movie';
+        }
+
         movies.push({
           id,
           title: titleClean,
           originalTitle: item.title,
           releaseYear: 2024,
           duration: episodes.length > 0 ? `${episodes.length} Episodes` : '1h 35m',
-          rating: Number(item.rating) || 8.2,
+          rating: Number(item.rating) || 8.4,
           genres: ['Animation', 'Sinhala Cartoon', 'Action', 'Family'],
           director: 'Sinhala Cartoons Studio',
           cast: ['Sinhala Dubbed Cast'],
@@ -130,12 +167,12 @@ async function generateMovies() {
           posterUrl: item.thumbnail || 'https://sinhalacartoons.com/wp-content/uploads/2026/04/SEASON-01-3.png',
           backdropUrl: item.thumbnail || 'https://sinhalacartoons.com/wp-content/uploads/2026/04/SEASON-01-3.png',
           streamUrl: primaryStreamUrl,
-          category: s.category,
-          language: 'Sinhala Dubbed (සිංහල)',
+          category: category,
+          language: category === 'Sinhala Subbed' ? 'English (Sinhala Subtitle / සිංහල උපසිරැසි)' : 'Sinhala Dubbed (සිංහල)',
           hasSinhalaSub: true,
           quality: item.quality || '1080p Full HD',
-          viewsCount: Math.floor(Math.random() * 4000) + 3000,
-          downloadsCount: Math.floor(Math.random() * 3000) + 2000,
+          viewsCount: Math.floor(Math.random() * 5000) + 3000,
+          downloadsCount: Math.floor(Math.random() * 4000) + 2000,
           episodes,
           downloadOptions,
           createdAt: new Date().toISOString()
