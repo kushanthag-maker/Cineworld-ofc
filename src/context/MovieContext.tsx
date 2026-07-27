@@ -58,6 +58,9 @@ interface MovieContextType {
   deleteMovie: (id: string) => Promise<void>;
   addMovie: (movie: Movie) => Promise<void>;
   updateMovie: (movie: Movie) => Promise<void>;
+  featuredMovieId: string | null;
+  setFeaturedMovieId: (id: string | null) => void;
+  fetchNotices: () => Promise<void>;
 }
 
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
@@ -116,19 +119,10 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           if (!isExcluded(initM)) mergedMap.set(initM.id, initM);
         });
 
-        // 2. Override with saved user edits (excluding deleted and horror)
+        // 2. Override with saved user edits and newly added movies (excluding deleted and horror)
         parsed.forEach((m) => {
           if (!isExcluded(m)) {
-            const defaultMatch = initialMovies.find(i => i.id === m.id);
-            if (defaultMatch) {
-              mergedMap.set(m.id, {
-                ...m,
-                posterUrl: defaultMatch.posterUrl,
-                backdropUrl: defaultMatch.backdropUrl
-              });
-            } else {
-              mergedMap.set(m.id, m);
-            }
+            mergedMap.set(m.id, m);
           }
         });
 
@@ -188,7 +182,24 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isReportOpen, setIsReportOpen] = useState<boolean>(false);
   const [reportMovieTarget, setReportMovieTarget] = useState<Movie | null>(null);
   const [activeTrailerUrl, setActiveTrailerUrl] = useState<string | null>(null);
-  const [whatsappModalMovie, setWhatsappModalMovie] = useState<Movie | null>(null);
+  const [featuredMovieId, setFeaturedMovieIdState] = useState<string | null>(() => {
+    try {
+      return localStorage.getItem('cineworld_featured_movie_id') || null;
+    } catch {
+      return null;
+    }
+  });
+
+  const setFeaturedMovieId = (id: string | null) => {
+    setFeaturedMovieIdState(id);
+    if (id) {
+      localStorage.setItem('cineworld_featured_movie_id', id);
+      showToast('Pinned as Homepage Hero Featured Movie!', 'success');
+    } else {
+      localStorage.removeItem('cineworld_featured_movie_id');
+      showToast('Hero Movie Pin Reset', 'info');
+    }
+  };
   const [isPromoModalOpen, setIsPromoModalOpen] = useState<boolean>(false);
   const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
   const [vipRequests, setVipRequests] = useState<VipRequest[]>([]);
@@ -498,7 +509,27 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (res.ok) {
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
-          setMovies(data);
+          setMovies((prevMovies) => {
+            const mergedMap = new Map<string, Movie>();
+            // Add server movies
+            data.forEach((m: Movie) => {
+              if (!deletedMovieIds.includes(m.id)) {
+                mergedMap.set(m.id, m);
+              }
+            });
+            // Preserve local additions/edits
+            prevMovies.forEach((m: Movie) => {
+              if (!deletedMovieIds.includes(m.id)) {
+                if (!mergedMap.has(m.id)) {
+                  mergedMap.set(m.id, m);
+                } else {
+                  // Merge local state if user/admin edited locally
+                  mergedMap.set(m.id, { ...mergedMap.get(m.id)!, ...m });
+                }
+              }
+            });
+            return Array.from(mergedMap.values());
+          });
         }
       }
     } catch (err) {
@@ -773,7 +804,10 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         resolveRequest,
         deleteMovie,
         addMovie,
-        updateMovie
+        updateMovie,
+        featuredMovieId,
+        setFeaturedMovieId,
+        fetchNotices
       }}
     >
       {children}

@@ -3,9 +3,9 @@ import { useMovie } from '../context/MovieContext';
 import { Play, Download, Star } from 'lucide-react';
 
 export const HeroBanner: React.FC = () => {
-  const { movies, setActiveMovie, setWhatsappModalMovie } = useMovie();
+  const { movies, setActiveMovie, setWhatsappModalMovie, featuredMovieId } = useMovie();
 
-  const featured = movies[0];
+  const featured = (featuredMovieId && movies.find((m) => m.id === featuredMovieId)) || movies[0];
   if (!featured) return null;
 
 

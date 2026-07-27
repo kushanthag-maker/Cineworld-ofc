@@ -598,6 +598,46 @@ app.get('/api/slcartoons/dl', async (req, res) => {
 
 // Notices API
 app.get('/api/notices', (req, res) => res.json(noticesCache));
+app.post('/api/notices', (req, res) => {
+  const newNotice = {
+    id: 'notice-' + Date.now(),
+    title: sanitizeText(req.body.title) || 'CINEWORLD ANNOUNCEMENT',
+    content: sanitizeText(req.body.content) || '',
+    type: req.body.type || 'info',
+    isActive: req.body.isActive !== false,
+    createdAt: new Date().toISOString()
+  };
+  noticesCache = [newNotice, ...noticesCache];
+  return res.json({ success: true, notice: newNotice });
+});
+app.delete('/api/notices/:id', (req, res) => {
+  const { id } = req.params;
+  noticesCache = noticesCache.filter(n => n.id !== id);
+  return res.json({ success: true });
+});
+
+// Stream Server Health Diagnostics API
+app.post('/api/admin/check-stream', async (req, res) => {
+  const { url } = req.body;
+  if (!url) return res.status(400).json({ success: false, error: 'URL required' });
+  try {
+    const start = Date.now();
+    const response = await fetch(url, { method: 'HEAD' });
+    const latency = Date.now() - start;
+    return res.json({
+      success: true,
+      status: response.status,
+      statusText: response.statusText,
+      ok: response.ok,
+      latencyMs: latency
+    });
+  } catch (err: any) {
+    return res.json({
+      success: false,
+      error: err.message || 'Stream server unreachable / timeout'
+    });
+  }
+});
 
 // Broken Link Reports API
 app.get('/api/reports', (req, res) => res.json(reportsCache));

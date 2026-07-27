@@ -54,6 +54,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     approveVipRequest,
     deleteVipRequest,
     grantPremiumDirect,
+    featuredMovieId,
+    setFeaturedMovieId,
+    notices,
+    fetchNotices,
     showToast 
   } = useMovie();
 
@@ -62,7 +66,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     return sessionStorage.getItem('cineworld_admin_authed') === 'true';
   });
 
-  const [activeTab, setActiveTab] = useState<'requests' | 'reports' | 'movies' | 'add_movie' | 'promo_codes' | 'vip_requests' | 'security' | 'analytics'>('requests');
+  const [activeTab, setActiveTab] = useState<'requests' | 'reports' | 'movies' | 'add_movie' | 'notices' | 'promo_codes' | 'vip_requests' | 'security' | 'analytics'>('requests');
   const [securityData, setSecurityData] = useState<any>(null);
   const [analyticsData, setAnalyticsData] = useState<any>(null);
 
@@ -79,6 +83,16 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
       console.warn('Analytics fetch note:', e);
     }
   };
+
+  useEffect(() => {
+    fetchAnalyticsData();
+    const interval = setInterval(() => {
+      if (activeTab === 'analytics') {
+        fetchAnalyticsData();
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [activeTab]);
 
   const fetchSecurityData = async () => {
     try {
@@ -119,11 +133,92 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
 
   // Form state for adding new movie
   const [newTitle, setNewTitle] = useState('');
-  const [newCategory, setNewCategory] = useState('Sinhala Dubbed');
+  const [newOriginalTitle, setNewOriginalTitle] = useState('');
+  const [newCategory, setNewCategory] = useState<any>('Sinhala Dubbed');
   const [newYear, setNewYear] = useState(2025);
+  const [newDuration, setNewDuration] = useState('1h 45m');
+  const [newRating, setNewRating] = useState(8.5);
+  const [newQuality, setNewQuality] = useState('1080p Full HD');
+  const [newLanguage, setNewLanguage] = useState('Sinhala Dubbed (සිංහල)');
+  const [newHasSinhalaSub, setNewHasSinhalaSub] = useState(true);
+  const [newDirector, setNewDirector] = useState('CINEWORLD LK Studios');
+  const [newGenres, setNewGenres] = useState('Animation, Action, Comedy');
+  const [newCast, setNewCast] = useState('Sinhala Voice Stars');
   const [newPoster, setNewPoster] = useState('');
+  const [newBackdrop, setNewBackdrop] = useState('');
   const [newStreamUrl, setNewStreamUrl] = useState('');
+  const [newTrailerUrl, setNewTrailerUrl] = useState('');
   const [newDescription, setNewDescription] = useState('');
+  const [newDownloads, setNewDownloads] = useState<DownloadOption[]>([]);
+
+  const handleAddNewDownloadOption = () => {
+    setNewDownloads((prev) => [
+      ...prev,
+      {
+        id: 'dl-' + Date.now(),
+        quality: '1080p Full HD Direct',
+        resolution: '1920x1080',
+        size: '1.4 GB',
+        format: 'MP4 Direct',
+        downloadUrl: newStreamUrl || '',
+        server1Name: 'Fast CDN Server 1',
+        server2Name: 'High Speed Mirror 2'
+      }
+    ]);
+  };
+
+  const handleUpdateNewDownloadOption = (index: number, field: keyof DownloadOption, value: string) => {
+    setNewDownloads((prev) => {
+      const next = [...prev];
+      next[index] = { ...next[index], [field]: value };
+      return next;
+    });
+  };
+
+  const handleRemoveNewDownloadOption = (index: number) => {
+    setNewDownloads((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // Form state for notices
+  const [noticeTitle, setNoticeTitle] = useState('');
+  const [noticeContent, setNoticeContent] = useState('');
+
+  const handleCreateNoticeSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!noticeContent.trim()) {
+      showToast('Notice message content is required!', 'error');
+      return;
+    }
+    try {
+      const res = await fetch('/api/notices', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: noticeTitle.trim() || 'CINEWORLD ANNOUNCEMENT',
+          content: noticeContent.trim()
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('Site announcement notice created!', 'success');
+        setNoticeTitle('');
+        setNoticeContent('');
+        if (fetchNotices) fetchNotices();
+      }
+    } catch {
+      showToast('Error creating notice', 'error');
+    }
+  };
+
+  const handleDeleteNoticeClick = async (id: string) => {
+    try {
+      await fetch(`/api/notices/${encodeURIComponent(id)}`, { method: 'DELETE' });
+      showToast('Notice removed', 'info');
+      if (fetchNotices) fetchNotices();
+    } catch {
+      showToast('Error deleting notice', 'error');
+    }
+  };
 
   // Form state for editing existing movie
   const [editingMovie, setEditingMovie] = useState<Movie | null>(null);
@@ -245,30 +340,47 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     const createdMovie: Movie = {
       id: newTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now(),
       title: newTitle.trim(),
-      originalTitle: newTitle.trim(),
+      originalTitle: newOriginalTitle.trim() || newTitle.trim(),
       releaseYear: Number(newYear) || 2025,
-      duration: 'Full Movie / Cartoon',
-      rating: 8.5,
-      genres: ['Animation', newCategory, 'Action'],
-      director: 'CINEWORLD LK Admin',
-      cast: ['Sinhala Dubbed Stars'],
+      duration: newDuration.trim() || '1h 45m',
+      rating: Number(newRating) || 8.5,
+      genres: newGenres ? newGenres.split(',').map(g => g.trim()).filter(Boolean) : ['Animation', newCategory],
+      director: newDirector.trim() || 'CINEWORLD LK Admin',
+      cast: newCast ? newCast.split(',').map(c => c.trim()).filter(Boolean) : ['Sinhala Dubbed Stars'],
       description: newDescription.trim() || `Watch ${newTitle.trim()} online in HD quality on CINEWORLD LK.`,
       posterUrl: newPoster.trim() || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&q=80',
-      backdropUrl: newPoster.trim() || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80',
+      backdropUrl: newBackdrop.trim() || newPoster.trim() || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80',
       streamUrl: newStreamUrl.trim(),
       category: newCategory as any,
-      language: 'Sinhala Dubbed (සිංහල)',
-      hasSinhalaSub: true,
-      quality: 'HD',
+      language: newLanguage.trim() || 'Sinhala Dubbed (සිංහල)',
+      hasSinhalaSub: newHasSinhalaSub,
+      quality: newQuality.trim() || '1080p Full HD',
+      trailerUrl: newTrailerUrl.trim() || undefined,
+      downloadOptions: newDownloads.length > 0 ? newDownloads : [
+        {
+          id: 'dl-1-' + Date.now(),
+          quality: newQuality.trim() || '1080p Full HD Direct',
+          resolution: '1920x1080',
+          size: '1.4 GB',
+          format: 'MP4 Direct',
+          downloadUrl: newStreamUrl.trim(),
+          server1Name: 'Fast CDN Server 1',
+          server2Name: 'High Speed Mirror 2'
+        }
+      ],
       viewsCount: 1,
       downloadsCount: 0
     };
 
     await addMovie(createdMovie);
     setNewTitle('');
+    setNewOriginalTitle('');
     setNewPoster('');
+    setNewBackdrop('');
     setNewStreamUrl('');
+    setNewTrailerUrl('');
     setNewDescription('');
+    setNewDownloads([]);
     setActiveTab('movies');
   };
 
@@ -424,6 +536,18 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
           >
             <Plus className="w-4 h-4" />
             <span>+ Add New Movie</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('notices')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
+              activeTab === 'notices'
+                ? 'bg-purple-500 text-black shadow-lg shadow-purple-500/20 font-black'
+                : 'bg-purple-950/40 text-purple-400 hover:bg-purple-900/60 border border-purple-500/30'
+            }`}
+          >
+            <Sparkles className="w-4 h-4 text-purple-400" />
+            <span>📢 Site Notices ({notices.length})</span>
           </button>
 
           <button
@@ -687,6 +811,19 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
 
                       <div className="flex items-center gap-1.5">
                         <button
+                          onClick={() => setFeaturedMovieId(featuredMovieId === movie.id ? null : movie.id)}
+                          className={`text-[10px] font-mono uppercase px-2 py-1 rounded border cursor-pointer flex items-center gap-1 font-bold transition-colors ${
+                            featuredMovieId === movie.id
+                              ? 'bg-amber-500 text-black border-amber-400 font-black'
+                              : 'bg-zinc-900 text-zinc-400 hover:text-amber-400 border-zinc-800'
+                          }`}
+                          title={featuredMovieId === movie.id ? 'Pinned as Hero Movie (Click to Unpin)' : 'Pin as Homepage Hero Movie'}
+                        >
+                          <Crown className="w-3 h-3" />
+                          <span>{featuredMovieId === movie.id ? 'Pinned' : 'Pin Hero'}</span>
+                        </button>
+
+                        <button
                           onClick={() => handleOpenEditModal(movie)}
                           className="text-[10px] text-amber-400 hover:text-amber-300 font-mono uppercase bg-amber-950/40 hover:bg-amber-900/60 px-2.5 py-1 rounded border border-amber-500/30 cursor-pointer flex items-center gap-1 font-bold transition-colors"
                         >
@@ -712,8 +849,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
 
         {/* TAB 4: ADD NEW MOVIE */}
         {activeTab === 'add_movie' && (
-          <div className="max-w-2xl mx-auto bg-zinc-950 border border-amber-500/30 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl">
-            <div className="flex items-center gap-3">
+          <div className="max-w-4xl mx-auto bg-zinc-950 border border-amber-500/30 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl">
+            <div className="flex items-center gap-3 border-b border-zinc-800 pb-4">
               <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
                 <Plus className="w-6 h-6" />
               </div>
@@ -722,88 +859,335 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                   Publish New Movie / Cartoon
                 </h2>
                 <p className="text-xs text-zinc-400 font-mono">
-                  Add direct stream MP4 links to your CINEWORLD collection
+                  Enter full movie details, direct stream MP4 links, and download servers to publish
                 </p>
               </div>
             </div>
 
-            <form onSubmit={handleCreateMovieSubmit} className="space-y-4 text-xs font-mono">
-              <div>
-                <label className="block text-zinc-300 mb-1 uppercase font-bold">
-                  Movie / Cartoon Title <span className="text-amber-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  required
-                  placeholder="e.g. Tom and Jerry: Cowboy Up! (2025) Sinhala Dubbed"
-                  className="w-full bg-zinc-900 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans text-sm"
-                />
+            <form onSubmit={handleCreateMovieSubmit} className="space-y-6 text-xs font-mono">
+              {/* Basic Info */}
+              <div className="space-y-4 bg-zinc-900/60 p-4 sm:p-6 rounded-xl border border-white/5">
+                <h3 className="text-xs font-black text-amber-400 uppercase tracking-wider font-mono">
+                  1. Title & Classification
+                </h3>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">
+                      Display Title <span className="text-amber-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={newTitle}
+                      onChange={(e) => setNewTitle(e.target.value)}
+                      required
+                      placeholder="e.g. Tom and Jerry: Cowboy Up! (2025) Sinhala Dubbed"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans text-sm"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Original / English Title</label>
+                    <input
+                      type="text"
+                      value={newOriginalTitle}
+                      onChange={(e) => setNewOriginalTitle(e.target.value)}
+                      placeholder="e.g. Tom and Jerry Cowboy Up!"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Category</label>
+                    <select
+                      value={newCategory}
+                      onChange={(e) => setNewCategory(e.target.value)}
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    >
+                      <option value="Sinhala Dubbed">Sinhala Dubbed Cartoon</option>
+                      <option value="Sinhala Subbed">Sinhala Subtitled Movie</option>
+                      <option value="Sinhala Movie">Sinhala Movie</option>
+                      <option value="Hollywood">Hollywood</option>
+                      <option value="Bollywood">Bollywood</option>
+                      <option value="Tamil / South">Tamil / South</option>
+                      <option value="Animation">Animation</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Release Year</label>
+                    <input
+                      type="number"
+                      value={newYear}
+                      onChange={(e) => setNewYear(Number(e.target.value))}
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">IMDb Rating</label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      value={newRating}
+                      onChange={(e) => setNewRating(Number(e.target.value))}
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Duration</label>
+                    <input
+                      type="text"
+                      value={newDuration}
+                      onChange={(e) => setNewDuration(e.target.value)}
+                      placeholder="e.g. 1h 45m"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Quality Badge</label>
+                    <input
+                      type="text"
+                      value={newQuality}
+                      onChange={(e) => setNewQuality(e.target.value)}
+                      placeholder="e.g. 1080p Full HD"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Language Audio</label>
+                    <input
+                      type="text"
+                      value={newLanguage}
+                      onChange={(e) => setNewLanguage(e.target.value)}
+                      placeholder="e.g. Sinhala Dubbed (සිංහල)"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-zinc-300 mb-1 uppercase font-bold">Category</label>
-                  <select
-                    value={newCategory}
-                    onChange={(e) => setNewCategory(e.target.value)}
-                    className="w-full bg-zinc-900 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
-                  >
-                    <option value="Sinhala Dubbed">Sinhala Dubbed Cartoon</option>
-                    <option value="Sinhala Subbed">Sinhala Subtitled Movie</option>
-                    <option value="Sinhala Movie">Sinhala Movie</option>
-                    <option value="Hollywood">Hollywood</option>
-                    <option value="Bollywood">Bollywood</option>
-                    <option value="Tamil / South">Tamil / South</option>
-                  </select>
+              {/* Streaming Links & Images */}
+              <div className="space-y-4 bg-zinc-900/60 p-4 sm:p-6 rounded-xl border border-white/5">
+                <h3 className="text-xs font-black text-amber-400 uppercase tracking-wider font-mono">
+                  2. Video Player & Image Assets
+                </h3>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">
+                      Direct Stream MP4 URL <span className="text-amber-500">*</span>
+                    </label>
+                    <input
+                      type="url"
+                      value={newStreamUrl}
+                      onChange={(e) => setNewStreamUrl(e.target.value)}
+                      required
+                      placeholder="https://... (Direct .mp4 or stream video URL)"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">YouTube Trailer Link</label>
+                    <input
+                      type="url"
+                      value={newTrailerUrl}
+                      onChange={(e) => setNewTrailerUrl(e.target.value)}
+                      placeholder="https://youtube.com/watch?v=..."
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Poster Image URL</label>
+                    <input
+                      type="url"
+                      value={newPoster}
+                      onChange={(e) => setNewPoster(e.target.value)}
+                      placeholder="https://... (Poster URL)"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Backdrop Banner URL</label>
+                    <input
+                      type="url"
+                      value={newBackdrop}
+                      onChange={(e) => setNewBackdrop(e.target.value)}
+                      placeholder="https://... (Backdrop URL)"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Cast, Director, Genres & Description */}
+              <div className="space-y-4 bg-zinc-900/60 p-4 sm:p-6 rounded-xl border border-white/5">
+                <h3 className="text-xs font-black text-amber-400 uppercase tracking-wider font-mono">
+                  3. Production Details & Synopsis
+                </h3>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Director / Studio</label>
+                    <input
+                      type="text"
+                      value={newDirector}
+                      onChange={(e) => setNewDirector(e.target.value)}
+                      placeholder="e.g. CINEWORLD LK Studios"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Genres (Comma separated)</label>
+                    <input
+                      type="text"
+                      value={newGenres}
+                      onChange={(e) => setNewGenres(e.target.value)}
+                      placeholder="e.g. Animation, Action, Comedy"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Voice Cast / Stars</label>
+                    <input
+                      type="text"
+                      value={newCast}
+                      onChange={(e) => setNewCast(e.target.value)}
+                      placeholder="e.g. Sinhala Voice Artists"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
                 </div>
 
                 <div>
-                  <label className="block text-zinc-300 mb-1 uppercase font-bold">Release Year</label>
-                  <input
-                    type="number"
-                    value={newYear}
-                    onChange={(e) => setNewYear(Number(e.target.value))}
-                    className="w-full bg-zinc-900 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                  <label className="block text-zinc-300 mb-1 uppercase font-bold">Synopsis / Plot Summary</label>
+                  <textarea
+                    value={newDescription}
+                    onChange={(e) => setNewDescription(e.target.value)}
+                    rows={3}
+                    placeholder="Enter movie summary..."
+                    className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-zinc-300 mb-1 uppercase font-bold">Poster Image URL</label>
-                <input
-                  type="url"
-                  value={newPoster}
-                  onChange={(e) => setNewPoster(e.target.value)}
-                  placeholder="https://... (Poster URL)"
-                  className="w-full bg-zinc-900 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
-                />
-              </div>
+              {/* Download Option Servers */}
+              <div className="space-y-4 bg-zinc-900/60 p-4 sm:p-6 rounded-xl border border-white/5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-black text-amber-400 uppercase tracking-wider font-mono">
+                    4. Direct Download Options & Server Mirrors ({newDownloads.length})
+                  </h3>
+                  <button
+                    type="button"
+                    onClick={handleAddNewDownloadOption}
+                    className="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 font-bold text-xs rounded-lg border border-amber-500/40 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Add Download Option</span>
+                  </button>
+                </div>
 
-              <div>
-                <label className="block text-zinc-300 mb-1 uppercase font-bold">
-                  Direct Stream / MP4 Video URL <span className="text-amber-500">*</span>
-                </label>
-                <input
-                  type="url"
-                  value={newStreamUrl}
-                  onChange={(e) => setNewStreamUrl(e.target.value)}
-                  required
-                  placeholder="https://... (Direct .mp4 or stream video link)"
-                  className="w-full bg-zinc-900 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
-                />
-              </div>
+                {newDownloads.map((dl, idx) => (
+                  <div key={dl.id || idx} className="bg-zinc-950 p-4 rounded-xl border border-zinc-800 space-y-3">
+                    <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+                      <span className="text-xs font-bold text-amber-400">Server Option #{idx + 1}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveNewDownloadOption(idx)}
+                        className="text-red-400 hover:text-red-300 text-[10px] uppercase font-bold flex items-center gap-1 cursor-pointer"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                        <span>Remove</span>
+                      </button>
+                    </div>
 
-              <div>
-                <label className="block text-zinc-300 mb-1 uppercase font-bold">Description / Plot</label>
-                <textarea
-                  value={newDescription}
-                  onChange={(e) => setNewDescription(e.target.value)}
-                  rows={3}
-                  placeholder="Short movie description..."
-                  className="w-full bg-zinc-900 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
-                />
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <div>
+                        <label className="block text-[10px] text-zinc-400">Quality Label</label>
+                        <input
+                          type="text"
+                          value={dl.quality}
+                          onChange={(e) => handleUpdateNewDownloadOption(idx, 'quality', e.target.value)}
+                          className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-zinc-400">Resolution</label>
+                        <input
+                          type="text"
+                          value={dl.resolution}
+                          onChange={(e) => handleUpdateNewDownloadOption(idx, 'resolution', e.target.value)}
+                          className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-zinc-400">File Size</label>
+                        <input
+                          type="text"
+                          value={dl.size}
+                          onChange={(e) => handleUpdateNewDownloadOption(idx, 'size', e.target.value)}
+                          className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-zinc-400">Format</label>
+                        <input
+                          type="text"
+                          value={dl.format}
+                          onChange={(e) => handleUpdateNewDownloadOption(idx, 'format', e.target.value)}
+                          className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded text-xs"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div>
+                        <label className="block text-[10px] text-zinc-400">Download Video Link</label>
+                        <input
+                          type="url"
+                          value={dl.downloadUrl}
+                          onChange={(e) => handleUpdateNewDownloadOption(idx, 'downloadUrl', e.target.value)}
+                          placeholder="https://..."
+                          className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-zinc-400">Server 1 Name</label>
+                        <input
+                          type="text"
+                          value={dl.server1Name || ''}
+                          onChange={(e) => handleUpdateNewDownloadOption(idx, 'server1Name', e.target.value)}
+                          placeholder="Fast Server 1"
+                          className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-zinc-400">Server 2 Name</label>
+                        <input
+                          type="text"
+                          value={dl.server2Name || ''}
+                          onChange={(e) => handleUpdateNewDownloadOption(idx, 'server2Name', e.target.value)}
+                          placeholder="Mirror Server 2"
+                          className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded text-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               <button
@@ -814,6 +1198,94 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                 <span>Publish Movie to Site</span>
               </button>
             </form>
+          </div>
+        )}
+
+        {/* TAB: SITE NOTICES & BROADCASTS */}
+        {activeTab === 'notices' && (
+          <div className="space-y-8">
+            <div className="bg-zinc-950 border border-purple-500/30 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl">
+              <div className="flex items-center gap-3 border-b border-zinc-800 pb-4">
+                <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
+                  <Sparkles className="w-6 h-6" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-black text-white uppercase tracking-wide">
+                    Create Site Broadcast / Banner Notice
+                  </h2>
+                  <p className="text-xs text-zinc-400 font-mono">
+                    Publish top announcement ticker alerts across all CINEWORLD pages for all live visitors
+                  </p>
+                </div>
+              </div>
+
+              <form onSubmit={handleCreateNoticeSubmit} className="space-y-4 text-xs font-mono">
+                <div>
+                  <label className="block text-zinc-300 mb-1 uppercase font-bold">
+                    Notice Title Header
+                  </label>
+                  <input
+                    type="text"
+                    value={noticeTitle}
+                    onChange={(e) => setNoticeTitle(e.target.value)}
+                    placeholder="e.g. 🎬 SPECIAL ANNOUNCEMENT"
+                    className="w-full bg-zinc-900 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-purple-500 font-sans"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-zinc-300 mb-1 uppercase font-bold">
+                    Broadcast Message / News Alert <span className="text-purple-400">*</span>
+                  </label>
+                  <textarea
+                    value={noticeContent}
+                    onChange={(e) => setNoticeContent(e.target.value)}
+                    required
+                    rows={3}
+                    placeholder="e.g. Aluth Sinhala Dubbed Cartoons 5k site eke live online balanna puluwan! Stream server high speed fast CDN activated."
+                    className="w-full bg-zinc-900 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-purple-500 font-sans"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3.5 bg-purple-500 hover:bg-purple-400 text-black font-black uppercase tracking-wider text-xs rounded-xl cursor-pointer transition-colors shadow-lg shadow-purple-500/20 flex items-center justify-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4 fill-black" />
+                  <span>Broadcast Notice to All Users</span>
+                </button>
+              </form>
+            </div>
+
+            {/* Active Notices List */}
+            <div className="bg-zinc-950 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-4">
+              <h3 className="text-sm font-black text-white uppercase tracking-wider font-mono flex items-center gap-2">
+                <span>Active Site Notices ({notices.length})</span>
+              </h3>
+
+              {notices.length === 0 ? (
+                <p className="text-xs text-zinc-500 font-mono italic">No active notices broadcasted.</p>
+              ) : (
+                <div className="space-y-3">
+                  {notices.map((n) => (
+                    <div key={n.id} className="bg-zinc-900 border border-purple-500/20 p-4 rounded-xl flex items-center justify-between gap-4">
+                      <div>
+                        <span className="text-xs font-bold text-purple-400 font-mono uppercase">{n.title}</span>
+                        <p className="text-xs text-zinc-200 mt-1 font-sans">{n.content}</p>
+                        <span className="text-[10px] text-zinc-500 font-mono mt-1 block">Created: {n.createdAt}</span>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteNoticeClick(n.id)}
+                        className="px-3 py-1.5 bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-red-400 rounded-lg text-xs font-bold font-mono cursor-pointer flex items-center gap-1"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Remove</span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
 
