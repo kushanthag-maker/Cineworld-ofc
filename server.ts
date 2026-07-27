@@ -349,6 +349,92 @@ app.get('/api/movies', async (req, res) => {
   }
 });
 
+// POST /api/movies - Create new movie
+app.post('/api/movies', async (req, res) => {
+  try {
+    const newMovie = req.body;
+    if (!newMovie || !newMovie.id || !newMovie.title) {
+      return res.status(400).json({ success: false, error: 'Movie ID and Title are required' });
+    }
+
+    const index = moviesCache.findIndex((m: any) => m.id === newMovie.id);
+    if (index !== -1) {
+      moviesCache[index] = newMovie;
+    } else {
+      moviesCache.unshift(newMovie);
+    }
+
+    const db = await connectToMongo();
+    if (db) {
+      await db.collection('movies').updateOne(
+        { id: newMovie.id },
+        { $set: newMovie },
+        { upsert: true }
+      );
+    }
+
+    return res.json({ success: true, movie: newMovie });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// PUT /api/movies/:id - Update existing movie
+app.put('/api/movies/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+    if (!updatedData || !updatedData.title) {
+      return res.status(400).json({ success: false, error: 'Valid movie details required' });
+    }
+
+    const targetId = id || updatedData.id;
+    let found = false;
+
+    moviesCache = moviesCache.map((m: any) => {
+      if (m.id === targetId) {
+        found = true;
+        return { ...m, ...updatedData, id: targetId };
+      }
+      return m;
+    });
+
+    if (!found) {
+      moviesCache.unshift({ ...updatedData, id: targetId });
+    }
+
+    const db = await connectToMongo();
+    if (db) {
+      await db.collection('movies').updateOne(
+        { id: targetId },
+        { $set: { ...updatedData, id: targetId } },
+        { upsert: true }
+      );
+    }
+
+    return res.json({ success: true, message: 'Movie updated successfully', movie: { ...updatedData, id: targetId } });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// DELETE /api/movies/:id - Delete movie
+app.delete('/api/movies/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    moviesCache = moviesCache.filter((m: any) => m.id !== id);
+
+    const db = await connectToMongo();
+    if (db) {
+      await db.collection('movies').deleteOne({ id });
+    }
+
+    return res.json({ success: true });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // Requests API
 app.get('/api/requests', (req, res) => res.json(requestsCache));
 app.post('/api/requests', rateLimitShield(5, 60000), async (req, res) => {

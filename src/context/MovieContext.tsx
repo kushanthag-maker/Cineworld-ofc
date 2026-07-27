@@ -57,6 +57,7 @@ interface MovieContextType {
   resolveRequest: (id: string) => void;
   deleteMovie: (id: string) => Promise<void>;
   addMovie: (movie: Movie) => Promise<void>;
+  updateMovie: (movie: Movie) => Promise<void>;
 }
 
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
@@ -376,6 +377,23 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const updateMovie = async (updatedMovie: Movie) => {
+    setMovies((prev) => prev.map((m) => (m.id === updatedMovie.id ? updatedMovie : m)));
+    if (activeMovie?.id === updatedMovie.id) {
+      setActiveMovie(updatedMovie);
+    }
+    showToast(`Movie "${updatedMovie.title}" updated successfully!`, 'success');
+    try {
+      await fetch(`/api/movies/${encodeURIComponent(updatedMovie.id)}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedMovie)
+      });
+    } catch (e) {
+      console.warn('Update movie server note:', e);
+    }
+  };
+
   // Sync to localStorage
   useEffect(() => {
     try {
@@ -688,7 +706,8 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         deleteRequest,
         resolveRequest,
         deleteMovie,
-        addMovie
+        addMovie,
+        updateMovie
       }}
     >
       {children}

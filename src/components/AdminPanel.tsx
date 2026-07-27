@@ -19,9 +19,11 @@ import {
   Crown,
   Copy,
   Check,
-  Key
+  Key,
+  Edit3,
+  Edit
 } from 'lucide-react';
-import { Movie } from '../types';
+import { Movie, DownloadOption } from '../types';
 
 interface AdminPanelProps {
   onClose: () => void;
@@ -38,6 +40,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     movies, 
     deleteMovie, 
     addMovie,
+    updateMovie,
     promoCodes,
     generatePromoCode,
     deletePromoCode,
@@ -70,6 +73,105 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
   const [newPoster, setNewPoster] = useState('');
   const [newStreamUrl, setNewStreamUrl] = useState('');
   const [newDescription, setNewDescription] = useState('');
+
+  // Form state for editing existing movie
+  const [editingMovie, setEditingMovie] = useState<Movie | null>(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [editOriginalTitle, setEditOriginalTitle] = useState('');
+  const [editCategory, setEditCategory] = useState<any>('Sinhala Dubbed');
+  const [editYear, setEditYear] = useState(2025);
+  const [editDuration, setEditDuration] = useState('1h 30m');
+  const [editRating, setEditRating] = useState(8.5);
+  const [editQuality, setEditQuality] = useState('1080p Full HD');
+  const [editLanguage, setEditLanguage] = useState('Sinhala Subbed (සිංහල)');
+  const [editDirector, setEditDirector] = useState('');
+  const [editGenres, setEditGenres] = useState('');
+  const [editCast, setEditCast] = useState('');
+  const [editPoster, setEditPoster] = useState('');
+  const [editBackdrop, setEditBackdrop] = useState('');
+  const [editStreamUrl, setEditStreamUrl] = useState('');
+  const [editDescription, setEditDescription] = useState('');
+  const [editDownloads, setEditDownloads] = useState<DownloadOption[]>([]);
+
+  const handleOpenEditModal = (m: Movie) => {
+    setEditingMovie(m);
+    setEditTitle(m.title || '');
+    setEditOriginalTitle(m.originalTitle || m.title || '');
+    setEditCategory(m.category || 'Sinhala Dubbed');
+    setEditYear(m.releaseYear || 2025);
+    setEditDuration(m.duration || '1h 30m');
+    setEditRating(m.rating || 8.5);
+    setEditQuality(m.quality || '1080p Full HD');
+    setEditLanguage(m.language || 'Sinhala Subbed (සිංහල)');
+    setEditDirector(m.director || '');
+    setEditGenres((m.genres || []).join(', '));
+    setEditCast((m.cast || []).join(', '));
+    setEditPoster(m.posterUrl || '');
+    setEditBackdrop(m.backdropUrl || '');
+    setEditStreamUrl(m.streamUrl || '');
+    setEditDescription(m.description || '');
+    setEditDownloads(m.downloadOptions ? JSON.parse(JSON.stringify(m.downloadOptions)) : []);
+  };
+
+  const handleSaveMovieEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingMovie) return;
+    if (!editTitle.trim() || !editStreamUrl.trim()) {
+      showToast('Title and Direct Stream URL are required!', 'error');
+      return;
+    }
+
+    const updated: Movie = {
+      ...editingMovie,
+      title: editTitle.trim(),
+      originalTitle: editOriginalTitle.trim(),
+      category: editCategory,
+      releaseYear: Number(editYear) || 2025,
+      duration: editDuration.trim() || '1h 30m',
+      rating: Number(editRating) || 8.5,
+      quality: editQuality.trim() || '1080p Full HD',
+      language: editLanguage.trim() || 'Sinhala Subbed (සිංහල)',
+      director: editDirector.trim() || 'CINEWORLD Admin',
+      genres: editGenres.split(',').map((g) => g.trim()).filter(Boolean),
+      cast: editCast.split(',').map((c) => c.trim()).filter(Boolean),
+      posterUrl: editPoster.trim(),
+      backdropUrl: editBackdrop.trim() || editPoster.trim(),
+      streamUrl: editStreamUrl.trim(),
+      description: editDescription.trim(),
+      downloadOptions: editDownloads.filter((d) => d.downloadUrl && d.downloadUrl.trim().length > 0)
+    };
+
+    await updateMovie(updated);
+    setEditingMovie(null);
+  };
+
+  const handleAddDownloadOption = () => {
+    setEditDownloads((prev) => [
+      ...prev,
+      {
+        id: 'dl-' + Date.now(),
+        quality: '1080p Full HD Direct',
+        resolution: '1920x1080',
+        size: '1.4 GB',
+        format: 'MP4 Direct',
+        downloadUrl: editStreamUrl || '',
+        server1Name: 'Fast CDN Server 1',
+        server2Name: 'High Speed Mirror 2'
+      }
+    ]);
+  };
+
+  const handleUpdateDownloadOption = (index: number, field: keyof DownloadOption, value: string) => {
+    setEditDownloads((prev) => {
+      const next = [...prev];
+      next[index] = { ...next[index], [field]: value };
+      return next;
+    });
+  };
+
+  const handleRemoveDownloadOption = (index: number) => {
+    setEditDownloads((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -490,24 +592,35 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                       </p>
                     </div>
 
-                    <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                    <div className="pt-2 border-t border-white/5 flex items-center justify-between gap-1">
                       <a
                         href={movie.streamUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="text-[10px] text-zinc-400 hover:text-amber-400 flex items-center gap-1 font-mono"
+                        title="Open Direct Stream URL"
                       >
                         <ExternalLink className="w-3 h-3" />
                         <span>Link</span>
                       </a>
 
-                      <button
-                        onClick={() => deleteMovie(movie.id)}
-                        className="text-[10px] text-red-400 hover:text-red-300 font-mono uppercase bg-red-950/30 hover:bg-red-900/50 px-2 py-1 rounded border border-red-500/20 cursor-pointer flex items-center gap-1"
-                      >
-                        <Trash2 className="w-3 h-3" />
-                        <span>Delete</span>
-                      </button>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => handleOpenEditModal(movie)}
+                          className="text-[10px] text-amber-400 hover:text-amber-300 font-mono uppercase bg-amber-950/40 hover:bg-amber-900/60 px-2.5 py-1 rounded border border-amber-500/30 cursor-pointer flex items-center gap-1 font-bold transition-colors"
+                        >
+                          <Edit3 className="w-3 h-3 text-amber-400" />
+                          <span>Edit</span>
+                        </button>
+
+                        <button
+                          onClick={() => deleteMovie(movie.id)}
+                          className="text-[10px] text-red-400 hover:text-red-300 font-mono uppercase bg-red-950/30 hover:bg-red-900/50 px-2 py-1 rounded border border-red-500/20 cursor-pointer flex items-center gap-1 transition-colors"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                          <span>Delete</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -967,6 +1080,373 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
         )}
 
       </div>
+
+      {/* EDIT MOVIE MODAL */}
+      {editingMovie && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-zinc-950 border border-amber-500/40 rounded-2xl w-full max-w-4xl p-6 sm:p-8 space-y-6 shadow-2xl my-8 relative">
+            
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
+                  <Edit3 className="w-5 h-5 stroke-[2.5]" />
+                </div>
+                <div>
+                  <h2 className="text-lg sm:text-xl font-black text-white uppercase tracking-wide font-brand flex items-center gap-2">
+                    <span>Edit Movie Details</span>
+                    <span className="text-xs bg-amber-500 text-black px-2 py-0.5 rounded font-mono font-bold">
+                      {editingMovie.id}
+                    </span>
+                  </h2>
+                  <p className="text-xs text-amber-400/90 font-mono">
+                    චිත්‍රපටයේ ඕනෑම තොරතුරක් (Title, Poster, Video Stream, Downloads) මෙතැනින් සංස්කරණය කරන්න
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setEditingMovie(null)}
+                className="p-2 text-zinc-400 hover:text-white bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-xl transition-all cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Edit Form */}
+            <form onSubmit={handleSaveMovieEdit} className="space-y-6 text-xs font-mono max-h-[75vh] overflow-y-auto pr-2">
+              
+              {/* SECTION 1: TITLES & CATEGORY */}
+              <div className="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 space-y-4">
+                <h3 className="text-xs font-black text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                  <Film className="w-4 h-4" />
+                  <span>1. Title & Classification</span>
+                </h3>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">
+                      Display Title <span className="text-amber-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={editTitle}
+                      onChange={(e) => setEditTitle(e.target.value)}
+                      required
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans text-sm"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Original Title</label>
+                    <input
+                      type="text"
+                      value={editOriginalTitle}
+                      onChange={(e) => setEditOriginalTitle(e.target.value)}
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Category</label>
+                    <select
+                      value={editCategory}
+                      onChange={(e) => setEditCategory(e.target.value as any)}
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    >
+                      <option value="Sinhala Dubbed">Sinhala Dubbed</option>
+                      <option value="Sinhala Subbed">Sinhala Subbed</option>
+                      <option value="Sinhala Movie">Sinhala Movie</option>
+                      <option value="Hollywood">Hollywood</option>
+                      <option value="Bollywood">Bollywood</option>
+                      <option value="Tamil / South">Tamil / South</option>
+                      <option value="Animation">Animation</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Release Year</label>
+                    <input
+                      type="number"
+                      value={editYear}
+                      onChange={(e) => setEditYear(Number(e.target.value))}
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Rating (0-10)</label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      min="0"
+                      max="10"
+                      value={editRating}
+                      onChange={(e) => setEditRating(Number(e.target.value))}
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Duration</label>
+                    <input
+                      type="text"
+                      value={editDuration}
+                      onChange={(e) => setEditDuration(e.target.value)}
+                      placeholder="e.g. 1h 45m"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Quality Badge</label>
+                    <input
+                      type="text"
+                      value={editQuality}
+                      onChange={(e) => setEditQuality(e.target.value)}
+                      placeholder="e.g. 1080p Full HD / 4K Ultra HD"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Language Text</label>
+                    <input
+                      type="text"
+                      value={editLanguage}
+                      onChange={(e) => setEditLanguage(e.target.value)}
+                      placeholder="e.g. Sinhala Subbed (සිංහල උපසිරැසි)"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* SECTION 2: STREAMING & POSTER IMAGES */}
+              <div className="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 space-y-4">
+                <h3 className="text-xs font-black text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  <span>2. Streaming Link & Poster Images</span>
+                </h3>
+
+                <div>
+                  <label className="block text-zinc-300 mb-1 uppercase font-bold">
+                    Direct Stream Video URL <span className="text-amber-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={editStreamUrl}
+                    onChange={(e) => setEditStreamUrl(e.target.value)}
+                    required
+                    placeholder="https://... (Direct .mp4 link or stream video player link)"
+                    className="w-full bg-zinc-950 border border-amber-500/40 text-amber-300 p-3 rounded-xl outline-none focus:border-amber-400 font-sans text-sm font-bold"
+                  />
+                  <p className="text-[10px] text-zinc-400 mt-1">
+                    💡 Users will watch this video directly in the CINEWORLD built-in video player.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Poster Image URL</label>
+                    <input
+                      type="text"
+                      value={editPoster}
+                      onChange={(e) => setEditPoster(e.target.value)}
+                      placeholder="https://... (Poster URL)"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Backdrop Banner Image URL</label>
+                    <input
+                      type="text"
+                      value={editBackdrop}
+                      onChange={(e) => setEditBackdrop(e.target.value)}
+                      placeholder="https://... (Wide Banner URL)"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* SECTION 3: DESCRIPTION, GENRES & CAST */}
+              <div className="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 space-y-4">
+                <h3 className="text-xs font-black text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4" />
+                  <span>3. Cast, Genres & Description</span>
+                </h3>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Director</label>
+                    <input
+                      type="text"
+                      value={editDirector}
+                      onChange={(e) => setEditDirector(e.target.value)}
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Genres (Comma separated)</label>
+                    <input
+                      type="text"
+                      value={editGenres}
+                      onChange={(e) => setEditGenres(e.target.value)}
+                      placeholder="Animation, Horror, Action"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">Cast (Comma separated)</label>
+                    <input
+                      type="text"
+                      value={editCast}
+                      onChange={(e) => setEditCast(e.target.value)}
+                      placeholder="Actor 1, Actor 2"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-zinc-300 mb-1 uppercase font-bold">Plot / Storyline Description</label>
+                  <textarea
+                    value={editDescription}
+                    onChange={(e) => setEditDescription(e.target.value)}
+                    rows={3}
+                    className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                  />
+                </div>
+              </div>
+
+              {/* SECTION 4: DOWNLOAD LINKS & SERVERS */}
+              <div className="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-black text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                    <ExternalLink className="w-4 h-4" />
+                    <span>4. Direct Download Options ({editDownloads.length})</span>
+                  </h3>
+                  <button
+                    type="button"
+                    onClick={handleAddDownloadOption}
+                    className="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black font-black text-[11px] rounded-lg uppercase tracking-wider flex items-center gap-1 cursor-pointer"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Add Download Option</span>
+                  </button>
+                </div>
+
+                {editDownloads.length === 0 ? (
+                  <p className="text-xs text-zinc-500 italic">No custom download servers added. (Stream link will be used as default download link).</p>
+                ) : (
+                  <div className="space-y-3">
+                    {editDownloads.map((dl, idx) => (
+                      <div key={dl.id || idx} className="bg-zinc-950 border border-zinc-800 rounded-xl p-3 space-y-3 relative">
+                        <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+                          <span className="font-bold text-amber-400 text-xs">Server Option #{idx + 1}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveDownloadOption(idx)}
+                            className="text-red-400 hover:text-red-300 text-xs flex items-center gap-1 cursor-pointer"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            <span>Remove</span>
+                          </button>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                          <div>
+                            <label className="block text-[10px] text-zinc-400 uppercase font-bold">Quality Name</label>
+                            <input
+                              type="text"
+                              value={dl.quality}
+                              onChange={(e) => handleUpdateDownloadOption(idx, 'quality', e.target.value)}
+                              placeholder="1080p Full HD Direct"
+                              className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded-lg text-xs"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[10px] text-zinc-400 uppercase font-bold">Resolution</label>
+                            <input
+                              type="text"
+                              value={dl.resolution}
+                              onChange={(e) => handleUpdateDownloadOption(idx, 'resolution', e.target.value)}
+                              placeholder="1920x1080"
+                              className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded-lg text-xs"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[10px] text-zinc-400 uppercase font-bold">File Size</label>
+                            <input
+                              type="text"
+                              value={dl.size}
+                              onChange={(e) => handleUpdateDownloadOption(idx, 'size', e.target.value)}
+                              placeholder="1.4 GB"
+                              className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded-lg text-xs"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-[10px] text-zinc-400 uppercase font-bold">Download URL (Server 1)</label>
+                          <input
+                            type="text"
+                            value={dl.downloadUrl}
+                            onChange={(e) => handleUpdateDownloadOption(idx, 'downloadUrl', e.target.value)}
+                            placeholder="https://..."
+                            className="w-full bg-zinc-900 border border-zinc-800 text-amber-400 p-2 rounded-lg text-xs font-mono"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[10px] text-zinc-400 uppercase font-bold">Backup Mirror URL (Server 2 Optional)</label>
+                          <input
+                            type="text"
+                            value={dl.server2Url || ''}
+                            onChange={(e) => handleUpdateDownloadOption(idx, 'server2Url', e.target.value)}
+                            placeholder="https://... (Optional Backup Link)"
+                            className="w-full bg-zinc-900 border border-zinc-800 text-zinc-300 p-2 rounded-lg text-xs font-mono"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* SUBMIT BUTTONS */}
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-800">
+                <button
+                  type="button"
+                  onClick={() => setEditingMovie(null)}
+                  className="px-5 py-3 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-bold uppercase tracking-wider text-xs rounded-xl cursor-pointer transition-colors"
+                >
+                  කැන්සල් (Cancel)
+                </button>
+
+                <button
+                  type="submit"
+                  className="px-8 py-3 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-zinc-950 font-black uppercase tracking-wider text-xs rounded-xl cursor-pointer transition-all shadow-lg shadow-amber-500/20 flex items-center gap-2"
+                >
+                  <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
+                  <span>වෙනස්කම් සුරකින්න (Save Changes)</span>
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

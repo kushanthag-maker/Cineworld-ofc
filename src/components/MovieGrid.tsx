@@ -23,7 +23,8 @@ export const MovieGrid: React.FC = () => {
     const matchesCategory =
       selectedCategory === 'All' ||
       movie.category === selectedCategory ||
-      (selectedCategory === 'Sinhala Dubbed' && (movie.category === 'Sinhala Dubbed' || movie.genres.includes('Sinhala Cartoon')));
+      (selectedCategory === 'Sinhala Dubbed' && (movie.category === 'Sinhala Dubbed' || movie.genres.includes('Sinhala Cartoon'))) ||
+      (selectedCategory === 'Horror Movies' && movie.genres.some((g) => g.toLowerCase().includes('horror')));
 
     const matchesSearch =
       !searchTerm ||

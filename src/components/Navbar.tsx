@@ -26,6 +26,7 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
     'All',
     'Sinhala Dubbed',
     'Sinhala Subbed',
+    'Horror Movies',
     'Hollywood',
     'Bollywood',
     'Tamil / South',

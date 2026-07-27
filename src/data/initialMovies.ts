@@ -4151,5 +4151,216 @@ export const initialMovies: Movie[] = [
       }
     ],
     "createdAt": "2026-07-26T11:45:00.000Z"
+  },
+  {
+    "id": "the-conjuring-2013-sinhala-sub",
+    "title": "The Conjuring (2013) Sinhala Subtitled - ඩි කන්ජුරින් සිංහල උපසිරැසි සමඟ",
+    "originalTitle": "The Conjuring (2013)",
+    "releaseYear": 2013,
+    "duration": "1h 52m",
+    "rating": 8.8,
+    "genres": [
+      "Horror",
+      "Mystery",
+      "Thriller",
+      "Supernatural"
+    ],
+    "director": "James Wan",
+    "cast": [
+      "Vera Farmiga",
+      "Patrick Wilson",
+      "Lili Taylor"
+    ],
+    "description": "Paranormal investigators Ed and Lorraine Warren work to help a family terrorized by a dark presence in their farmhouse. One of the most terrifying horror movies with complete Sinhala Subtitles.",
+    "posterUrl": "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
+    "category": "Sinhala Subbed",
+    "language": "English with Sinhala Subtitles (සිංහල උපසිරැසි)",
+    "hasSinhalaSub": true,
+    "quality": "1080p Full HD",
+    "viewsCount": 18920,
+    "downloadsCount": 14200,
+    "downloadOptions": [
+      {
+        "id": "dl-conjuring-1080p",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "1.6 GB",
+        "format": "MP4 Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
+        "server1Name": "Fast CDN Server 1",
+        "server2Name": "High Speed Mirror 2"
+      }
+    ],
+    "createdAt": "2026-07-27T00:01:00.000Z"
+  },
+  {
+    "id": "insidious-2010-sinhala-sub",
+    "title": "Insidious (2010) Sinhala Subtitled - ඉන්සිඩියස් සිංහල උපසිරැසි සමඟ",
+    "originalTitle": "Insidious (2010)",
+    "releaseYear": 2010,
+    "duration": "1h 43m",
+    "rating": 8.5,
+    "genres": [
+      "Horror",
+      "Mystery",
+      "Thriller"
+    ],
+    "director": "James Wan",
+    "cast": [
+      "Patrick Wilson",
+      "Rose Byrne",
+      "Lin Shaye"
+    ],
+    "description": "A family looks to prevent evil spirits from trapping their comatose child in a realm called The Further. Classic terrifying horror masterpiece with Sinhala Subtitles.",
+    "posterUrl": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
+    "category": "Sinhala Subbed",
+    "language": "English with Sinhala Subtitles (සිංහල උපසිරැසි)",
+    "hasSinhalaSub": true,
+    "quality": "1080p Full HD",
+    "viewsCount": 16400,
+    "downloadsCount": 11800,
+    "downloadOptions": [
+      {
+        "id": "dl-insidious-1080p",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "1.4 GB",
+        "format": "MP4 Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
+        "server1Name": "Fast CDN Server 1",
+        "server2Name": "High Speed Mirror 2"
+      }
+    ],
+    "createdAt": "2026-07-27T00:02:00.000Z"
+  },
+  {
+    "id": "evil-dead-rise-2023-sinhala-sub",
+    "title": "Evil Dead Rise (2023) Sinhala Subtitled - ඊවිල් ඩෙඩ් රයිස් සිංහල උපසිරැසි",
+    "originalTitle": "Evil Dead Rise (2023)",
+    "releaseYear": 2023,
+    "duration": "1h 36m",
+    "rating": 8.7,
+    "genres": [
+      "Horror",
+      "Supernatural",
+      "Thriller"
+    ],
+    "director": "Lee Cronin",
+    "cast": [
+      "Mirabai Pease",
+      "Richard Crouchley",
+      "Anna-Maree Thomas"
+    ],
+    "description": "A twisted tale of two estranged sisters whose reunion is cut short by the rise of flesh-possessing demons, thrusting them into a primal battle for survival. Sinhala Subtitles included.",
+    "posterUrl": "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/Madagascar-3/Madagascar%203%20Europes%20Most%20Wanted%20(2012).mp4",
+    "category": "Sinhala Subbed",
+    "language": "English with Sinhala Subtitles (සිංහල උපසිරැසි)",
+    "hasSinhalaSub": true,
+    "quality": "4K Ultra HD",
+    "viewsCount": 21500,
+    "downloadsCount": 17300,
+    "downloadOptions": [
+      {
+        "id": "dl-evildead-4k",
+        "quality": "4K Ultra HD Direct",
+        "resolution": "3840x2160",
+        "size": "2.2 GB",
+        "format": "MP4 Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Madagascar-3/Madagascar%203%20Europes%20Most%20Wanted%20(2012).mp4",
+        "server1Name": "Fast CDN Server 1",
+        "server2Name": "High Speed Mirror 2"
+      }
+    ],
+    "createdAt": "2026-07-27T00:03:00.000Z"
+  },
+  {
+    "id": "a-quiet-place-2018-sinhala-sub",
+    "title": "A Quiet Place (2018) Sinhala Subtitled - ඒ ක්වයිට් ප්ලේස්",
+    "originalTitle": "A Quiet Place (2018)",
+    "releaseYear": 2018,
+    "duration": "1h 30m",
+    "rating": 8.6,
+    "genres": [
+      "Horror",
+      "Sci-Fi",
+      "Thriller"
+    ],
+    "director": "John Krasinski",
+    "cast": [
+      "Emily Blunt",
+      "John Krasinski",
+      "Millicent Simmonds"
+    ],
+    "description": "A family must live in silence while hiding from creatures with ultra-sensitive hearing in a post-apocalyptic world. Thrilling horror movie with Sinhala Subtitles.",
+    "posterUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
+    "category": "Sinhala Subbed",
+    "language": "English with Sinhala Subtitles (සිංහල උපසිරැසි)",
+    "hasSinhalaSub": true,
+    "quality": "1080p Full HD",
+    "viewsCount": 19400,
+    "downloadsCount": 15100,
+    "downloadOptions": [
+      {
+        "id": "dl-quietplace-1080p",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "1.3 GB",
+        "format": "MP4 Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
+        "server1Name": "Fast CDN Server 1",
+        "server2Name": "High Speed Mirror 2"
+      }
+    ],
+    "createdAt": "2026-07-27T00:04:00.000Z"
+  },
+  {
+    "id": "demonte-colony-2-2024-sinhala-sub",
+    "title": "Demonte Colony 2 (2024) Sinhala Subtitled - ඩිමොන්ටේ කොලනි 2",
+    "originalTitle": "Demonte Colony 2 (2024)",
+    "releaseYear": 2024,
+    "duration": "2h 24m",
+    "rating": 8.9,
+    "genres": [
+      "Horror",
+      "Thriller",
+      "Mystery"
+    ],
+    "director": "R. Ajay Gnanamuthu",
+    "cast": [
+      "Arulnithi",
+      "Priya Bhavani Shankar",
+      "Archana Chandhoke"
+    ],
+    "description": "Superhit Tamil Horror Thriller Demonte Colony 2 with full Sinhala Subtitles. Unraveling terrifying supernatural mysteries and cursed diamond hauntings.",
+    "posterUrl": "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
+    "category": "Sinhala Subbed",
+    "language": "Tamil with Sinhala Subtitles (සිංහල උපසිරැසි)",
+    "hasSinhalaSub": true,
+    "quality": "1080p Full HD",
+    "viewsCount": 24100,
+    "downloadsCount": 19800,
+    "downloadOptions": [
+      {
+        "id": "dl-demonte2-1080p",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "1.8 GB",
+        "format": "MP4 Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
+        "server1Name": "Fast CDN Server 1",
+        "server2Name": "High Speed Mirror 2"
+      }
+    ],
+    "createdAt": "2026-07-27T00:05:00.000Z"
   }
 ];
