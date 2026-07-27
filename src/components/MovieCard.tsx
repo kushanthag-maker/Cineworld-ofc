@@ -9,13 +9,13 @@ interface MovieCardProps {
 
 export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const { setActiveMovie, setWhatsappModalMovie, watchlist, toggleWatchlist, showToast } = useMovie();
-  const [imgSrc, setImgSrc] = useState(movie.posterUrl);
+  const [hasImageError, setHasImageError] = useState(false);
   const isBookmarked = watchlist.includes(movie.id);
 
-  const handleImageError = () => {
-    // Fallback poster image if original URL fails to load
-    setImgSrc('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&q=80');
-  };
+  if (hasImageError) {
+    // Hide movie completely if poster fails to load as requested by user
+    return null;
+  }
 
   const handleCopyMovieLink = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -30,11 +30,11 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       {/* Top Poster Image Container */}
       <div className="relative aspect-[2/3] w-full overflow-hidden bg-black cursor-pointer" onClick={() => setActiveMovie(movie)}>
         <img
-          src={imgSrc}
+          src={movie.posterUrl}
           alt={movie.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
-          onError={handleImageError}
+          onError={() => setHasImageError(true)}
         />
 
         {/* Quality & Category Badges */}
