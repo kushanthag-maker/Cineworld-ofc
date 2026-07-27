@@ -4172,7 +4172,7 @@ export const initialMovies: Movie[] = [
       "Sigourney Weaver"
     ],
     "description": "Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home.",
-    "posterUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctYzE2OC00YjU1LWI1ZjAtYzE3ZDZhOWJhZTU4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
     "backdropUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&q=80",
     "streamUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
     "category": "Hollywood",
@@ -4214,7 +4214,7 @@ export const initialMovies: Movie[] = [
       "Jessica Chastain"
     ],
     "description": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
-    "posterUrl": "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?w=600&q=80",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMTI2My00MDg1LWFjNDItMS01ZjhlY2IzMWI3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
     "backdropUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80",
     "streamUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
     "category": "Hollywood",
@@ -4256,7 +4256,7 @@ export const initialMovies: Movie[] = [
       "Rebecca Ferguson"
     ],
     "description": "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the universe.",
-    "posterUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&q=80",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BN2QyZGU3YjktZmDkMi00YzExLWE3YjItM2JhNWJhNTgyOWJmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
     "backdropUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&q=80",
     "streamUrl": "https://dl.sinhalacartoons.com/Madagascar-3/Madagascar%203%20Europes%20Most%20Wanted%20(2012).mp4",
     "category": "Hollywood",
@@ -4298,7 +4298,7 @@ export const initialMovies: Movie[] = [
       "Raveena Tandon"
     ],
     "description": "In the blood-soaked Kolar Gold Fields, Rocky's name strikes fear into his foes. While his allies look up to him, the government sees him as a threat to law and order. Blockbuster Kannada Action film.",
-    "posterUrl": "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=600&q=80",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMGZmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
     "backdropUrl": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80",
     "streamUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
     "category": "Tamil / South",
@@ -4340,7 +4340,7 @@ export const initialMovies: Movie[] = [
       "Emma Corrin"
     ],
     "description": "Wolverine is recovering from his injuries when he crosses paths with Deadpool. They team up to defeat a common enemy in the Marvel Multiverse. Full Sinhala Subtitles.",
-    "posterUrl": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&q=80",
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNzRiMjg0MzUtNTNhMi00MzM1LTlkM2ItNWQ2Y2JmZDHlY2RkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
     "backdropUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&q=80",
     "streamUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
     "category": "Hollywood",

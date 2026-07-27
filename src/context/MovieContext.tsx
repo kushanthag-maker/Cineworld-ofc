@@ -99,9 +99,21 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           if (!isHorror(initM)) mergedMap.set(initM.id, initM);
         });
 
-        // 2. Override with saved non-horror local storage updates and user edits
+        // 2. Override with saved user edits, but preserve official posters for default movies
         parsed.forEach((m) => {
-          if (!isHorror(m)) mergedMap.set(m.id, m);
+          if (!isHorror(m)) {
+            const defaultMatch = initialMovies.find(i => i.id === m.id);
+            if (defaultMatch) {
+              // Keep defaultMatch updated posterUrl and backdropUrl
+              mergedMap.set(m.id, {
+                ...m,
+                posterUrl: defaultMatch.posterUrl,
+                backdropUrl: defaultMatch.backdropUrl
+              });
+            } else {
+              mergedMap.set(m.id, m);
+            }
+          }
         });
 
         return Array.from(mergedMap.values());
