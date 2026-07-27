@@ -41,7 +41,36 @@ export interface Movie {
   episodes?: Episode[];
   trailerUrl?: string;
   imdbId?: string;
+  isPremium?: boolean;
   createdAt?: string;
+}
+
+export interface PromoCode {
+  id: string;
+  code: string;
+  days: number;
+  isUsed: boolean;
+  usedBy?: string;
+  usedAt?: string;
+  createdAt: string;
+}
+
+export interface UserPremiumInfo {
+  isPremium: boolean;
+  expiresAt: number | null;
+  daysRemaining: number;
+  codeUsed?: string;
+}
+
+export interface VipRequest {
+  id: string;
+  userName: string;
+  whatsappNumber: string;
+  dataCardNumber: string;
+  packageDays: number;
+  status: 'Pending' | 'Approved' | 'Rejected';
+  promoCodeGenerated?: string;
+  createdAt: string;
 }
 
 export interface MovieRequest {

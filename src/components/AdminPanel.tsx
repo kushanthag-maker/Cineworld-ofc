@@ -15,7 +15,11 @@ import {
   ExternalLink,
   MessageCircle,
   RefreshCw,
-  Sparkles
+  Sparkles,
+  Crown,
+  Copy,
+  Check,
+  Key
 } from 'lucide-react';
 import { Movie } from '../types';
 
@@ -34,6 +38,15 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     movies, 
     deleteMovie, 
     addMovie,
+    promoCodes,
+    generatePromoCode,
+    deletePromoCode,
+    fetchPromoCodes,
+    vipRequests,
+    fetchVipRequests,
+    approveVipRequest,
+    deleteVipRequest,
+    grantPremiumDirect,
     showToast 
   } = useMovie();
 
@@ -42,8 +55,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     return sessionStorage.getItem('cineworld_admin_authed') === 'true';
   });
 
-  const [activeTab, setActiveTab] = useState<'requests' | 'reports' | 'movies' | 'add_movie'>('requests');
+  const [activeTab, setActiveTab] = useState<'requests' | 'reports' | 'movies' | 'add_movie' | 'promo_codes' | 'vip_requests'>('requests');
   const [movieSearch, setMovieSearch] = useState('');
+
+  // Promo Code generator state
+  const [genDays, setGenDays] = useState<number>(30);
+  const [genCustomCode, setGenCustomCode] = useState<string>('');
+  const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
 
   // Form state for adding new movie
   const [newTitle, setNewTitle] = useState('');
@@ -241,6 +259,30 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
           >
             <Film className="w-4 h-4" />
             <span>Manage Collection ({movies.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('vip_requests')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
+              activeTab === 'vip_requests'
+                ? 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-zinc-950 shadow-lg shadow-amber-500/25 font-black'
+                : 'bg-amber-950/40 text-amber-300 hover:bg-amber-900/60 border border-amber-500/40'
+            }`}
+          >
+            <Crown className="w-4 h-4 fill-amber-400 text-amber-950" />
+            <span>Data Card VIP Requests ({vipRequests.filter(r => r.status === 'Pending').length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('promo_codes')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
+              activeTab === 'promo_codes'
+                ? 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-zinc-950 shadow-lg shadow-amber-500/25 font-black'
+                : 'bg-amber-950/30 text-amber-400 hover:bg-amber-900/50 border border-amber-500/30'
+            }`}
+          >
+            <Key className="w-4 h-4 text-amber-400" />
+            <span>Promo Codes ({promoCodes.length})</span>
           </button>
 
           <button
@@ -602,6 +644,349 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                 <span>Publish Movie to Site</span>
               </button>
             </form>
+          </div>
+        )}
+
+        {/* TAB 5: PROMO CODES & VIP MANAGEMENT */}
+        {activeTab === 'promo_codes' && (
+          <div className="space-y-8">
+            
+            {/* Promo Code Generator Box */}
+            <div className="bg-zinc-950 border border-amber-500/30 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-amber-500/20 border border-amber-500/40 rounded-xl flex items-center justify-center text-amber-400">
+                  <Crown className="w-7 h-7 stroke-[2.5]" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-black text-white uppercase tracking-wider font-brand">
+                    Generate VIP Promo Codes
+                  </h2>
+                  <p className="text-xs text-amber-400 font-mono">
+                    Generate single-use promo codes to grant time-limited VIP access to users
+                  </p>
+                </div>
+              </div>
+
+              {/* Presets & Custom Form */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 border-t border-zinc-800">
+                <div className="space-y-3">
+                  <label className="block text-xs font-bold uppercase text-amber-400 font-mono">
+                    Select VIP Duration (දින ගණන)
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[1, 7, 30, 60, 90, 365].map((d) => (
+                      <button
+                        key={d}
+                        type="button"
+                        onClick={() => setGenDays(d)}
+                        className={`py-2.5 px-3 rounded-xl font-mono text-xs font-bold uppercase transition-all cursor-pointer border ${
+                          genDays === d
+                            ? 'bg-amber-500 text-black border-amber-400 font-black shadow-md shadow-amber-500/20'
+                            : 'bg-zinc-900 text-zinc-300 border-zinc-800 hover:border-amber-500/50'
+                        }`}
+                      >
+                        {d === 365 ? '1 Year (365d)' : `${d} ${d === 1 ? 'Day' : 'Days'}`}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <label className="block text-xs font-bold uppercase text-amber-400 font-mono">
+                    Custom Promo Code Text (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={genCustomCode}
+                    onChange={(e) => setGenCustomCode(e.target.value.toUpperCase())}
+                    placeholder="Leave empty for auto code (e.g. CINE-30D-XXXX)"
+                    className="w-full bg-zinc-900 border border-zinc-800 text-white p-3 rounded-xl text-xs font-mono uppercase tracking-wider focus:border-amber-500 outline-none"
+                  />
+                  <p className="text-[10px] text-zinc-400 font-mono">
+                    💡 1 Promo Code = 1 User for 1 Device. Code becomes invalid immediately after redemption.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <button
+                  onClick={async () => {
+                    const success = await generatePromoCode(genDays, genCustomCode);
+                    if (success) {
+                      setGenCustomCode('');
+                    }
+                  }}
+                  className="px-6 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-zinc-950 font-black text-xs uppercase tracking-wider rounded-xl cursor-pointer transition-all shadow-lg shadow-amber-500/20 flex items-center gap-2"
+                >
+                  <Key className="w-4 h-4 stroke-[2.5]" />
+                  <span>Generate Single-Use Promo Code ({genDays} Days)</span>
+                </button>
+
+                <button
+                  onClick={() => grantPremiumDirect(30)}
+                  className="px-5 py-3.5 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/40 rounded-xl text-xs font-bold font-mono transition-colors cursor-pointer flex items-center gap-2"
+                >
+                  <Crown className="w-4 h-4 text-emerald-400" />
+                  <span>Grant VIP to Current Device Directly</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Generated Codes Table */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-black text-white uppercase tracking-wider font-brand flex items-center gap-2">
+                  <span>Generated Promo Codes Log</span>
+                  <span className="bg-amber-500 text-black text-xs px-2 py-0.5 rounded-full font-mono font-bold">
+                    {promoCodes.length}
+                  </span>
+                </h3>
+
+                <button
+                  onClick={() => fetchPromoCodes()}
+                  className="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-amber-400 text-xs font-mono font-bold rounded-lg border border-amber-500/30 flex items-center gap-1.5 cursor-pointer"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  <span>Refresh List</span>
+                </button>
+              </div>
+
+              <div className="bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs font-mono">
+                    <thead className="bg-zinc-900 text-amber-400 uppercase tracking-wider border-b border-white/10">
+                      <tr>
+                        <th className="p-4">Promo Code</th>
+                        <th className="p-4">VIP Duration</th>
+                        <th className="p-4">Usage Limit</th>
+                        <th className="p-4">Status</th>
+                        <th className="p-4">Redeemed By</th>
+                        <th className="p-4">Created Date</th>
+                        <th className="p-4 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 text-zinc-300">
+                      {promoCodes.length === 0 ? (
+                        <tr>
+                          <td colSpan={7} className="p-8 text-center text-zinc-500 italic">
+                            No promo codes generated yet. Use the generator above to create codes.
+                          </td>
+                        </tr>
+                      ) : (
+                        promoCodes.map((p) => {
+                          const isCopied = copiedCodeId === p.id;
+                          return (
+                            <tr key={p.id} className="hover:bg-white/[0.02] transition-colors">
+                              <td className="p-4 font-bold text-amber-300 text-sm">
+                                <div className="flex items-center gap-2">
+                                  <span>{p.code}</span>
+                                  <button
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(p.code);
+                                      setCopiedCodeId(p.id);
+                                      showToast(`Promo Code ${p.code} copied!`, 'success');
+                                      setTimeout(() => setCopiedCodeId(null), 2000);
+                                    }}
+                                    className="p-1 bg-zinc-900 hover:bg-amber-500/20 text-amber-400 rounded transition-colors cursor-pointer"
+                                    title="Copy Code"
+                                  >
+                                    {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                                  </button>
+                                </div>
+                              </td>
+                              <td className="p-4 font-bold text-white">
+                                {p.days} Days
+                              </td>
+                              <td className="p-4">
+                                <span className="px-2 py-0.5 bg-zinc-800 text-zinc-300 text-[10px] rounded uppercase">
+                                  1 User Max
+                                </span>
+                              </td>
+                              <td className="p-4">
+                                {p.isUsed ? (
+                                  <span className="px-2.5 py-1 bg-red-950/60 border border-red-500/40 text-red-400 font-bold rounded-md text-[10px] uppercase">
+                                    Used / Redeemed
+                                  </span>
+                                ) : (
+                                  <span className="px-2.5 py-1 bg-emerald-950/60 border border-emerald-500/40 text-emerald-400 font-bold rounded-md text-[10px] uppercase animate-pulse">
+                                    Active / Available
+                                  </span>
+                                )}
+                              </td>
+                              <td className="p-4 text-xs text-zinc-400">
+                                {p.usedBy ? (
+                                  <div>
+                                    <span className="text-amber-300 font-bold">{p.usedBy}</span>
+                                    {p.usedAt && (
+                                      <span className="block text-[10px] text-zinc-500">
+                                        {new Date(p.usedAt).toLocaleDateString()}
+                                      </span>
+                                    )}
+                                  </div>
+                                ) : (
+                                  <span className="text-zinc-600">-</span>
+                                )}
+                              </td>
+                              <td className="p-4 text-[11px] text-zinc-400">
+                                {new Date(p.createdAt).toLocaleDateString()}
+                              </td>
+                              <td className="p-4 text-right">
+                                <button
+                                  onClick={() => deletePromoCode(p.id)}
+                                  className="p-2 bg-red-950/40 hover:bg-red-900 text-red-400 rounded-lg border border-red-500/30 transition-colors cursor-pointer"
+                                  title="Delete Promo Code"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        )}
+
+        {/* TAB 6: DATA CARD VIP REQUESTS MANAGEMENT */}
+        {activeTab === 'vip_requests' && (
+          <div className="space-y-6">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <h2 className="text-xl font-black text-white uppercase tracking-wider font-brand flex items-center gap-2.5">
+                  <Crown className="w-6 h-6 text-amber-400 stroke-[2.5]" />
+                  <span>Data Card VIP Requests ({vipRequests.length})</span>
+                </h2>
+                <p className="text-xs text-amber-400/90 font-mono mt-1">
+                  Users who submitted Data Card PINs for VIP package activation
+                </p>
+              </div>
+
+              <button
+                onClick={() => fetchVipRequests()}
+                className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 text-amber-400 text-xs font-mono font-bold rounded-xl border border-amber-500/30 flex items-center gap-2 cursor-pointer transition-colors"
+              >
+                <RefreshCw className="w-4 h-4" />
+                <span>Refresh VIP Requests</span>
+              </button>
+            </div>
+
+            <div className="bg-zinc-950 border border-amber-500/30 rounded-2xl overflow-hidden shadow-2xl">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs font-mono">
+                  <thead className="bg-zinc-900 text-amber-400 uppercase tracking-wider border-b border-amber-500/30">
+                    <tr>
+                      <th className="p-4">User Name</th>
+                      <th className="p-4">WhatsApp No</th>
+                      <th className="p-4">Data Card PIN / Serial</th>
+                      <th className="p-4">Package</th>
+                      <th className="p-4">Status</th>
+                      <th className="p-4">Promo Code</th>
+                      <th className="p-4">Submitted Date</th>
+                      <th className="p-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/10 text-zinc-300">
+                    {vipRequests.length === 0 ? (
+                      <tr>
+                        <td colSpan={8} className="p-8 text-center text-zinc-500 italic">
+                          No Data Card VIP requests submitted yet.
+                        </td>
+                      </tr>
+                    ) : (
+                      vipRequests.map((req) => (
+                        <tr key={req.id} className="hover:bg-amber-500/5 transition-colors">
+                          <td className="p-4 font-bold text-white text-sm">
+                            {req.userName}
+                          </td>
+                          <td className="p-4 text-amber-300">
+                            {req.whatsappNumber ? (
+                              <a
+                                href={`https://wa.me/${req.whatsappNumber.replace(/[^0-9]/g, '')}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 hover:underline text-emerald-400 font-bold"
+                              >
+                                <MessageCircle className="w-3.5 h-3.5" />
+                                <span>{req.whatsappNumber}</span>
+                              </a>
+                            ) : (
+                              <span className="text-zinc-500">-</span>
+                            )}
+                          </td>
+                          <td className="p-4 font-bold text-amber-400 font-mono tracking-wider text-sm bg-zinc-900/60 rounded">
+                            {req.dataCardNumber}
+                          </td>
+                          <td className="p-4 font-black text-white">
+                            <span className="px-2.5 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-lg text-[11px]">
+                              {req.packageDays} Days VIP
+                            </span>
+                          </td>
+                          <td className="p-4">
+                            {req.status === 'Approved' ? (
+                              <span className="px-2.5 py-1 bg-emerald-950/80 border border-emerald-500/50 text-emerald-400 font-bold rounded-md text-[10px] uppercase">
+                                Approved ✓
+                              </span>
+                            ) : (
+                              <span className="px-2.5 py-1 bg-amber-950/80 border border-amber-500/50 text-amber-400 font-bold rounded-md text-[10px] uppercase animate-pulse">
+                                Pending Approval
+                              </span>
+                            )}
+                          </td>
+                          <td className="p-4 font-bold text-emerald-400 font-mono">
+                            {req.promoCodeGenerated ? (
+                              <div className="flex items-center gap-1.5">
+                                <span>{req.promoCodeGenerated}</span>
+                                <button
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(req.promoCodeGenerated || '');
+                                    showToast(`Copied code: ${req.promoCodeGenerated}`, 'success');
+                                  }}
+                                  className="p-1 text-zinc-400 hover:text-white"
+                                  title="Copy Promo Code"
+                                >
+                                  <Copy className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            ) : (
+                              <span className="text-zinc-600">-</span>
+                            )}
+                          </td>
+                          <td className="p-4 text-[11px] text-zinc-400">
+                            {new Date(req.createdAt).toLocaleDateString()}
+                          </td>
+                          <td className="p-4 text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              {req.status === 'Pending' && (
+                                <button
+                                  onClick={() => approveVipRequest(req.id)}
+                                  className="px-3 py-1.5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-zinc-950 font-black rounded-lg text-[11px] uppercase tracking-wider transition-all cursor-pointer shadow-md shadow-emerald-500/20 flex items-center gap-1"
+                                >
+                                  <Check className="w-3.5 h-3.5 stroke-[3]" />
+                                  <span>Approve VIP</span>
+                                </button>
+                              )}
+
+                              <button
+                                onClick={() => deleteVipRequest(req.id)}
+                                className="p-1.5 bg-red-950/40 hover:bg-red-900 text-red-400 rounded-lg border border-red-500/30 transition-colors cursor-pointer"
+                                title="Delete Request"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         )}
 

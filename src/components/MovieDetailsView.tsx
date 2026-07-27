@@ -3,7 +3,7 @@ import { useMovie } from '../context/MovieContext';
 import { VideoPlayer } from './VideoPlayer';
 import { DownloadSection } from './DownloadSection';
 import { CommentSection } from './CommentSection';
-import { ArrowLeft, Star, Clock, Eye, Download, Bookmark, Check, Share2, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Star, Clock, Eye, Download, Bookmark, Check, Share2, AlertTriangle, Crown, Key, MessageCircle, Lock } from 'lucide-react';
 
 export const MovieDetailsView: React.FC = () => {
   const {
@@ -15,6 +15,8 @@ export const MovieDetailsView: React.FC = () => {
     setWhatsappModalMovie,
     setIsReportOpen,
     setReportMovieTarget,
+    setIsPromoModalOpen,
+    userPremium,
     showToast
   } = useMovie();
 
@@ -139,11 +141,55 @@ export const MovieDetailsView: React.FC = () => {
           )}
         </div>
 
-        {/* Video Player Box */}
-        <VideoPlayer movie={activeMovie} />
+        {/* Video Player & Downloads Box or VIP Premium Lock Box */}
+        {activeMovie.isPremium && !userPremium.isPremium ? (
+          <div className="bg-gradient-to-b from-zinc-900 via-zinc-950 to-black border-2 border-amber-500/50 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-[0_0_50px_rgba(245,158,11,0.2)]">
+            <div className="w-20 h-20 bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 rounded-3xl mx-auto flex items-center justify-center text-zinc-950 font-black shadow-xl shadow-amber-500/30 border-2 border-amber-300 animate-pulse">
+              <Crown className="w-12 h-12 stroke-[2.5]" />
+            </div>
 
-        {/* Downloads Section */}
-        <DownloadSection movie={activeMovie} />
+            <div className="space-y-2 max-w-2xl mx-auto">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/20 border border-amber-500/50 text-amber-400 font-bold text-xs rounded-full font-mono uppercase tracking-widest mb-2">
+                <Lock className="w-3.5 h-3.5" />
+                <span>VIP Premium Content Locked</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-white uppercase tracking-tight font-brand">
+                CINEWORLD VIP MEMBERSHIP REQUIRED
+              </h2>
+              <p className="text-sm sm:text-base text-zinc-300 font-sans leading-relaxed">
+                මෙම Premium / VIP චිත්‍රපටය නැරඹීමට සහ Direct Download කිරීමට Promo Code එකක් සක්‍රිය කරගත යුතුය. Admin ලබාදුන් Promo Code එකක් භාවිතා කර VIP Membership එක සක්‍රිය කරගන්න.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+              <button
+                onClick={() => setIsPromoModalOpen(true)}
+                className="px-8 py-4 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-zinc-950 font-black text-sm uppercase tracking-wider rounded-2xl transition-all cursor-pointer shadow-xl shadow-amber-500/25 flex items-center gap-2.5 hover:scale-105"
+              >
+                <Key className="w-5 h-5 stroke-[2.5]" />
+                <span>Enter Promo Code to Unlock</span>
+              </button>
+
+              <a
+                href={`https://wa.me/94701234567?text=${encodeURIComponent(`Hello CINEWORLD Admin, I want to get a VIP Promo Code for movie "${activeMovie.title}"`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-4 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white font-bold text-xs uppercase tracking-wider border border-emerald-500/40 rounded-2xl transition-all cursor-pointer flex items-center gap-2 font-mono"
+              >
+                <MessageCircle className="w-4 h-4 text-emerald-400" />
+                <span>Get Promo Code on WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Video Player Box */}
+            <VideoPlayer movie={activeMovie} />
+
+            {/* Downloads Section */}
+            <DownloadSection movie={activeMovie} />
+          </>
+        )}
 
         {/* Movie Info Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-4">

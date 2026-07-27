@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Movie, MovieRequest, Notice, MovieComment, LinkReport, ToastMessage } from '../types';
+import { Movie, MovieRequest, Notice, MovieComment, LinkReport, ToastMessage, PromoCode, UserPremiumInfo, VipRequest } from '../types';
 import { initialMovies } from '../data/initialMovies';
 
 interface MovieContextType {
@@ -34,6 +34,20 @@ interface MovieContextType {
   setActiveTrailerUrl: (url: string | null) => void;
   whatsappModalMovie: Movie | null;
   setWhatsappModalMovie: (movie: Movie | null) => void;
+  userPremium: UserPremiumInfo;
+  promoCodes: PromoCode[];
+  vipRequests: VipRequest[];
+  isPromoModalOpen: boolean;
+  setIsPromoModalOpen: (open: boolean) => void;
+  redeemPromoCode: (code: string, userName?: string) => Promise<{ success: boolean; message: string; days?: number }>;
+  generatePromoCode: (days: number, customCode?: string) => Promise<boolean>;
+  deletePromoCode: (id: string) => Promise<void>;
+  fetchPromoCodes: () => Promise<void>;
+  fetchVipRequests: () => Promise<void>;
+  submitVipRequest: (userName: string, whatsappNumber: string, dataCardNumber: string, packageDays: number) => Promise<{ success: boolean; message: string }>;
+  approveVipRequest: (id: string) => Promise<{ success: boolean; promoCode?: string; message: string }>;
+  deleteVipRequest: (id: string) => Promise<void>;
+  grantPremiumDirect: (days: number) => void;
   incrementMovieViews: (id: string) => void;
   incrementMovieDownloads: (id: string) => void;
   fetchComments: (movieId?: string) => Promise<void>;
@@ -119,6 +133,196 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [reportMovieTarget, setReportMovieTarget] = useState<Movie | null>(null);
   const [activeTrailerUrl, setActiveTrailerUrl] = useState<string | null>(null);
   const [whatsappModalMovie, setWhatsappModalMovie] = useState<Movie | null>(null);
+  const [isPromoModalOpen, setIsPromoModalOpen] = useState<boolean>(false);
+  const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
+  const [vipRequests, setVipRequests] = useState<VipRequest[]>([]);
+
+  const [userPremium, setUserPremium] = useState<UserPremiumInfo>(() => {
+    try {
+      const saved = localStorage.getItem('cineworld_user_premium');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const now = Date.now();
+        if (parsed.expiresAt && parsed.expiresAt > now) {
+          const daysRemaining = Math.max(1, Math.ceil((parsed.expiresAt - now) / (1000 * 60 * 60 * 24)));
+          return { ...parsed, isPremium: true, daysRemaining };
+        }
+      }
+    } catch {}
+    return { isPremium: false, expiresAt: null, daysRemaining: 0 };
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('cineworld_user_premium', JSON.stringify(userPremium));
+    } catch (e) {
+      console.error('LocalStorage error:', e);
+    }
+  }, [userPremium]);
+
+  const fetchPromoCodes = async () => {
+    try {
+      const res = await fetch('/api/promo-codes');
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) setPromoCodes(data);
+      }
+    } catch (err) {
+      console.warn('Promo codes fetch error:', err);
+    }
+  };
+
+  const redeemPromoCode = async (code: string, userName?: string): Promise<{ success: boolean; message: string; days?: number }> => {
+    try {
+      const res = await fetch('/api/promo-codes/redeem', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, userName })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        const days = data.days || 30;
+        const now = Date.now();
+        // If user is already premium, stack duration
+        const currentExpiresAt = userPremium.isPremium && userPremium.expiresAt && userPremium.expiresAt > now 
+          ? userPremium.expiresAt 
+          : now;
+        const newExpiresAt = currentExpiresAt + (days * 24 * 60 * 60 * 1000);
+        const daysRemaining = Math.max(1, Math.ceil((newExpiresAt - now) / (1000 * 60 * 60 * 24)));
+
+        const newPremiumState: UserPremiumInfo = {
+          isPremium: true,
+          expiresAt: newExpiresAt,
+          daysRemaining,
+          codeUsed: code.toUpperCase()
+        };
+
+        setUserPremium(newPremiumState);
+        showToast(`🎉 VIP Membership Activated for ${days} Days!`, 'success');
+        fetchPromoCodes();
+        return { success: true, message: data.message, days };
+      } else {
+        return { success: false, message: data.error || 'Invalid or used Promo Code' };
+      }
+    } catch (err: any) {
+      return { success: false, message: 'Server connection error. Please try again later.' };
+    }
+  };
+
+  const generatePromoCode = async (days: number, customCode?: string): Promise<boolean> => {
+    try {
+      const res = await fetch('/api/promo-codes/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ days, customCode })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(`Promo Code (${data.promoCode.code}) generated for ${days} Days!`, 'success');
+        fetchPromoCodes();
+        return true;
+      } else {
+        showToast(data.error || 'Failed to generate promo code', 'error');
+        return false;
+      }
+    } catch (err) {
+      showToast('Error connecting to server', 'error');
+      return false;
+    }
+  };
+
+  const deletePromoCode = async (id: string) => {
+    setPromoCodes(prev => prev.filter(p => p.id !== id));
+    showToast('Promo Code deleted', 'info');
+    try {
+      await fetch(`/api/promo-codes/${encodeURIComponent(id)}`, { method: 'DELETE' });
+    } catch (err) {
+      console.warn('Delete promo code error:', err);
+    }
+  };
+
+  const grantPremiumDirect = (days: number) => {
+    const now = Date.now();
+    const currentExpiresAt = userPremium.isPremium && userPremium.expiresAt && userPremium.expiresAt > now 
+      ? userPremium.expiresAt 
+      : now;
+    const newExpiresAt = currentExpiresAt + (days * 24 * 60 * 60 * 1000);
+    const daysRemaining = Math.max(1, Math.ceil((newExpiresAt - now) / (1000 * 60 * 60 * 24)));
+
+    setUserPremium({
+      isPremium: true,
+      expiresAt: newExpiresAt,
+      daysRemaining,
+      codeUsed: 'ADMIN_DIRECT_GRANT'
+    });
+    showToast(`👑 Granted ${days} Days VIP Premium Access!`, 'success');
+  };
+
+  const fetchVipRequests = async () => {
+    try {
+      const res = await fetch('/api/vip-requests');
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) setVipRequests(data);
+      }
+    } catch (err) {
+      console.warn('VIP requests fetch error:', err);
+    }
+  };
+
+  const submitVipRequest = async (userName: string, whatsappNumber: string, dataCardNumber: string, packageDays: number) => {
+    try {
+      const res = await fetch('/api/vip-requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userName, whatsappNumber, dataCardNumber, packageDays })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(data.message || 'Data Card VIP request submitted!', 'success');
+        fetchVipRequests();
+        return { success: true, message: data.message };
+      } else {
+        return { success: false, message: data.error || 'Failed to submit VIP request' };
+      }
+    } catch (err) {
+      return { success: false, message: 'Server connection error. Please try again.' };
+    }
+  };
+
+  const approveVipRequest = async (id: string) => {
+    try {
+      const res = await fetch('/api/vip-requests/approve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(`VIP Request Approved! Promo Code: ${data.promoCode}`, 'success');
+        fetchVipRequests();
+        fetchPromoCodes();
+        return { success: true, promoCode: data.promoCode, message: data.message };
+      } else {
+        showToast(data.error || 'Failed to approve VIP request', 'error');
+        return { success: false, message: data.error };
+      }
+    } catch (err) {
+      showToast('Error approving request', 'error');
+      return { success: false, message: 'Server connection error' };
+    }
+  };
+
+  const deleteVipRequest = async (id: string) => {
+    setVipRequests(prev => prev.filter(r => r.id !== id));
+    showToast('VIP Request removed', 'info');
+    try {
+      await fetch(`/api/vip-requests/${encodeURIComponent(id)}`, { method: 'DELETE' });
+    } catch (err) {
+      console.warn('Delete VIP request error:', err);
+    }
+  };
 
   const showToast = (message: string, type: ToastMessage['type'] = 'success') => {
     const id = Date.now().toString();
@@ -337,6 +541,8 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     fetchRequests();
     fetchComments();
     fetchReports();
+    fetchPromoCodes();
+    fetchVipRequests();
   }, []);
 
   // Movie Deep Link handling: automatically open movie if ?movie=<id> or ?m=<id> is present in URL
@@ -460,6 +666,20 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setActiveTrailerUrl,
         whatsappModalMovie,
         setWhatsappModalMovie,
+        userPremium,
+        promoCodes,
+        vipRequests,
+        isPromoModalOpen,
+        setIsPromoModalOpen,
+        redeemPromoCode,
+        generatePromoCode,
+        deletePromoCode,
+        fetchPromoCodes,
+        fetchVipRequests,
+        submitVipRequest,
+        approveVipRequest,
+        deleteVipRequest,
+        grantPremiumDirect,
         incrementMovieViews,
         incrementMovieDownloads,
         fetchComments,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Movie } from '../types';
 import { useMovie } from '../context/MovieContext';
-import { Play, Download, Star, Bookmark, Check, Eye, Share2 } from 'lucide-react';
+import { Play, Download, Star, Bookmark, Check, Eye, Share2, Crown } from 'lucide-react';
 
 interface MovieCardProps {
   movie: Movie;
@@ -34,8 +34,14 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           }}
         />
 
-        {/* Quality & Category Badges */}
+        {/* Quality & Category & VIP Badges */}
         <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
+          {movie.isPremium && (
+            <span className="px-2 py-0.5 bg-gradient-to-r from-amber-400 to-amber-600 text-zinc-950 font-black text-[10px] uppercase tracking-wider flex items-center gap-1 shadow-md border border-amber-300">
+              <Crown className="w-3 h-3 fill-zinc-950" />
+              <span>VIP</span>
+            </span>
+          )}
           <span className="px-2 py-0.5 bg-amber-500 text-black text-[10px] font-black uppercase tracking-wider">
             {movie.quality || '1080p HD'}
           </span>

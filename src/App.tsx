@@ -14,9 +14,10 @@ import { ToastContainer } from './components/ToastContainer';
 import { NoticeBanner } from './components/NoticeBanner';
 import { Footer } from './components/Footer';
 import { AdminPanel } from './components/AdminPanel';
+import { PromoCodeModal } from './components/PromoCodeModal';
 
 const AppContent: React.FC = () => {
-  const { activeMovie } = useMovie();
+  const { activeMovie, isPromoModalOpen, setIsPromoModalOpen } = useMovie();
   const [activeTab, setActiveTab] = useState<'home' | 'watchlist'>('home');
   const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
 
@@ -92,6 +93,7 @@ const AppContent: React.FC = () => {
       <ReportsListModal />
       <TrailerModal />
       <WhatsappGateModal />
+      <PromoCodeModal isOpen={isPromoModalOpen} onClose={() => setIsPromoModalOpen(false)} />
       <ToastContainer />
     </div>
   );

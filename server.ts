@@ -124,6 +124,42 @@ let commentsCache: any[] = [
 
 let reportsCache: any[] = [];
 
+let promoCodesCache: any[] = [
+  {
+    id: 'p1',
+    code: 'VIP7DAYS',
+    days: 7,
+    isUsed: false,
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 'p2',
+    code: 'CINE30D',
+    days: 30,
+    isUsed: false,
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 'p3',
+    code: 'PREMIUM365',
+    days: 365,
+    isUsed: false,
+    createdAt: new Date().toISOString()
+  }
+];
+
+let vipRequestsCache: any[] = [
+  {
+    id: 'vr-1',
+    userName: 'Kushan Perera',
+    whatsappNumber: '+94771234567',
+    dataCardNumber: 'DC-9874-1256-88',
+    packageDays: 30,
+    status: 'Pending',
+    createdAt: new Date(Date.now() - 3600000 * 2).toISOString()
+  }
+];
+
 // Real Analytics Engine Cache
 const activeSessionsMap = new Map<string, number>(); // sessionId -> timestamp
 const visitorSessionsToday = new Set<string>(); // unique session IDs for today
@@ -164,6 +200,21 @@ async function initDb() {
   if (db) {
     try {
       const moviesCol = db.collection('movies');
+
+      // Cleanup removed items
+      const removedIds = [
+        "devi-kusumasana-2025-sinhala-movie",
+        "kung-fu-panda-4-2024-sinhala-dubbed",
+        "scooby-doo-and-the-cyber-chase-sinhala-dubbed",
+        "the-adventures-of-tintin-sinhala-dubbed",
+        "tom-and-jerry-cowboy-up-sinhala-dubbed",
+        "inside-out-2-2024-sinhala-dubbed",
+        "despicable-me-4-2024-sinhala-dubbed",
+        "gajaman-3d-sinhala-movie",
+        "moana-2-2024-sinhala-subbed"
+      ];
+      await moviesCol.deleteMany({ id: { $in: removedIds } });
+
       const count = await moviesCol.countDocuments();
       if (count === 0) {
         await moviesCol.insertMany(initialSeedMovies);
@@ -182,6 +233,8 @@ async function initDb() {
     } catch (e) {
       console.error('Mongo DB init error:', e);
     }
+  } else {
+    moviesCache = [...initialSeedMovies];
   }
 }
 
@@ -454,6 +507,244 @@ app.post('/api/comments/:id/like', async (req, res) => {
     }
 
     return res.json({ success: true, comment: foundComment });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// ==================== PROMO CODES & PREMIUM API ====================
+app.get('/api/promo-codes', async (req, res) => {
+  try {
+    const db = await connectToMongo();
+    if (db) {
+      const storedCodes = await db.collection('promocodes').find({}).toArray();
+      if (storedCodes && storedCodes.length > 0) {
+        promoCodesCache = storedCodes;
+      }
+    }
+    return res.json(promoCodesCache);
+  } catch (err: any) {
+    return res.json(promoCodesCache);
+  }
+});
+
+app.post('/api/promo-codes/generate', rateLimitShield(10, 60000), async (req, res) => {
+  try {
+    const { days, customCode } = req.body;
+    const durationDays = Math.max(1, parseInt(days) || 30);
+    
+    let generatedCodeStr = '';
+    if (customCode && typeof customCode === 'string' && customCode.trim().length > 0) {
+      generatedCodeStr = customCode.trim().toUpperCase().replace(/[^A-Z0-9-]/g, '');
+    } else {
+      const randomPart = Math.random().toString(36).substring(2, 7).toUpperCase();
+      generatedCodeStr = `CINE-${durationDays}D-${randomPart}`;
+    }
+
+    // Check if duplicate code exists
+    const existing = promoCodesCache.find(p => p.code.toUpperCase() === generatedCodeStr);
+    if (existing) {
+      return res.status(400).json({ success: false, error: 'Promo code already exists. Please choose a different custom code.' });
+    }
+
+    const newCode = {
+      id: 'promo-' + Date.now(),
+      code: generatedCodeStr,
+      days: durationDays,
+      isUsed: false,
+      createdAt: new Date().toISOString()
+    };
+
+    promoCodesCache = [newCode, ...promoCodesCache];
+
+    const db = await connectToMongo();
+    if (db) {
+      await db.collection('promocodes').insertOne(newCode);
+    }
+
+    return res.json({ success: true, promoCode: newCode });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.post('/api/promo-codes/redeem', rateLimitShield(8, 60000), async (req, res) => {
+  try {
+    const { code, userName } = req.body;
+    if (!code || typeof code !== 'string') {
+      return res.status(400).json({ success: false, error: 'Please enter a valid Promo Code.' });
+    }
+
+    const cleanCode = code.trim().toUpperCase();
+    const foundIndex = promoCodesCache.findIndex(p => p.code.toUpperCase() === cleanCode);
+
+    if (foundIndex === -1) {
+      return res.status(404).json({ success: false, error: 'Invalid Promo Code! Please verify your code and try again.' });
+    }
+
+    const promoItem = promoCodesCache[foundIndex];
+    if (promoItem.isUsed) {
+      return res.status(400).json({ 
+        success: false, 
+        error: `This Promo Code (${cleanCode}) has already been redeemed! Promo codes are single-use only.` 
+      });
+    }
+
+    // Mark as used
+    const updatedPromo = {
+      ...promoItem,
+      isUsed: true,
+      usedBy: sanitizeText(userName) || 'CINEWORLD Fan',
+      usedAt: new Date().toISOString()
+    };
+
+    promoCodesCache[foundIndex] = updatedPromo;
+
+    const db = await connectToMongo();
+    if (db) {
+      await db.collection('promocodes').updateOne({ id: promoItem.id }, { $set: updatedPromo });
+    }
+
+    const expiresAt = Date.now() + (promoItem.days * 24 * 60 * 60 * 1000);
+
+    return res.json({
+      success: true,
+      days: promoItem.days,
+      expiresAt,
+      code: promoItem.code,
+      message: `🎉 Promo code redeemed! You have received ${promoItem.days} Days of CINEWORLD VIP Premium Membership.`
+    });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.delete('/api/promo-codes/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    promoCodesCache = promoCodesCache.filter(p => p.id !== id);
+    const db = await connectToMongo();
+    if (db) {
+      await db.collection('promocodes').deleteOne({ id });
+    }
+    return res.json({ success: true });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// ==================== DATA CARD VIP REQUESTS API ====================
+app.get('/api/vip-requests', async (req, res) => {
+  try {
+    const db = await connectToMongo();
+    if (db) {
+      const stored = await db.collection('vip_requests').find({}).toArray();
+      if (stored && stored.length > 0) {
+        vipRequestsCache = stored;
+      }
+    }
+    return res.json(vipRequestsCache);
+  } catch (err: any) {
+    return res.json(vipRequestsCache);
+  }
+});
+
+app.post('/api/vip-requests', rateLimitShield(5, 60000), async (req, res) => {
+  try {
+    const { userName, whatsappNumber, dataCardNumber, packageDays } = req.body;
+    if (!dataCardNumber || typeof dataCardNumber !== 'string' || dataCardNumber.trim().length < 3) {
+      return res.status(400).json({ success: false, error: 'කරුණාකර වලංගු Data Card අංකය (PIN / Serial) ඇතුළත් කරන්න.' });
+    }
+
+    const cleanName = sanitizeText(userName) || 'CINEWORLD User';
+    const cleanPhone = sanitizeText(whatsappNumber) || 'Not provided';
+    const cleanCard = sanitizeText(dataCardNumber);
+    const durationDays = [1, 7, 30, 60, 90, 365].includes(Number(packageDays)) ? Number(packageDays) : 30;
+
+    const newReq = {
+      id: 'vr-' + Date.now(),
+      userName: cleanName,
+      whatsappNumber: cleanPhone,
+      dataCardNumber: cleanCard,
+      packageDays: durationDays,
+      status: 'Pending',
+      createdAt: new Date().toISOString()
+    };
+
+    vipRequestsCache = [newReq, ...vipRequestsCache];
+
+    const db = await connectToMongo();
+    if (db) {
+      await db.collection('vip_requests').insertOne(newReq);
+    }
+
+    return res.json({
+      success: true,
+      vipRequest: newReq,
+      message: '🎉 Data Card VIP Request submitted successfully! Admin will verify and activate your access shortly.'
+    });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.post('/api/vip-requests/approve', async (req, res) => {
+  try {
+    const { id } = req.body;
+    const reqIndex = vipRequestsCache.findIndex(r => r.id === id);
+    if (reqIndex === -1) {
+      return res.status(404).json({ success: false, error: 'VIP Request not found' });
+    }
+
+    const targetReq = vipRequestsCache[reqIndex];
+    // Generate a promo code for this user
+    const randomPart = Math.random().toString(36).substring(2, 7).toUpperCase();
+    const generatedCodeStr = `VIP-${targetReq.packageDays}D-${randomPart}`;
+
+    const newCode = {
+      id: 'promo-' + Date.now(),
+      code: generatedCodeStr,
+      days: targetReq.packageDays,
+      isUsed: false,
+      createdAt: new Date().toISOString()
+    };
+
+    promoCodesCache = [newCode, ...promoCodesCache];
+
+    const updatedReq = {
+      ...targetReq,
+      status: 'Approved',
+      promoCodeGenerated: generatedCodeStr
+    };
+
+    vipRequestsCache[reqIndex] = updatedReq;
+
+    const db = await connectToMongo();
+    if (db) {
+      await db.collection('promocodes').insertOne(newCode);
+      await db.collection('vip_requests').updateOne({ id }, { $set: updatedReq });
+    }
+
+    return res.json({
+      success: true,
+      promoCode: generatedCodeStr,
+      vipRequest: updatedReq,
+      message: `VIP Request Approved! Promo code generated: ${generatedCodeStr}`
+    });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.delete('/api/vip-requests/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    vipRequestsCache = vipRequestsCache.filter(r => r.id !== id);
+    const db = await connectToMongo();
+    if (db) {
+      await db.collection('vip_requests').deleteOne({ id });
+    }
+    return res.json({ success: true });
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message });
   }
