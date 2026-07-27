@@ -4153,40 +4153,40 @@ export const initialMovies: Movie[] = [
     "createdAt": "2026-07-26T11:45:00.000Z"
   },
   {
-    "id": "the-conjuring-2013-sinhala-sub",
-    "title": "The Conjuring (2013) Sinhala Subtitled - ඩි කන්ජුරින් සිංහල උපසිරැසි සමඟ",
-    "originalTitle": "The Conjuring (2013)",
-    "releaseYear": 2013,
-    "duration": "1h 52m",
-    "rating": 8.8,
+    "id": "avatar-the-way-of-water-2022-sinhala-sub",
+    "title": "Avatar: The Way of Water (2022) Sinhala Subtitled - ඇවටාර් 2 සිංහල උපසිරැසි",
+    "originalTitle": "Avatar: The Way of Water (2022)",
+    "releaseYear": 2022,
+    "duration": "3h 12m",
+    "rating": 9.3,
     "genres": [
-      "Horror",
-      "Mystery",
-      "Thriller",
-      "Supernatural"
+      "Action",
+      "Adventure",
+      "Sci-Fi",
+      "Fantasy"
     ],
-    "director": "James Wan",
+    "director": "James Cameron",
     "cast": [
-      "Vera Farmiga",
-      "Patrick Wilson",
-      "Lili Taylor"
+      "Sam Worthington",
+      "Zoe Saldana",
+      "Sigourney Weaver"
     ],
-    "description": "Paranormal investigators Ed and Lorraine Warren work to help a family terrorized by a dark presence in their farmhouse. One of the most terrifying horror movies with complete Sinhala Subtitles.",
-    "posterUrl": "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=600&q=80",
-    "backdropUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&q=80",
+    "description": "Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home.",
+    "posterUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&q=80",
     "streamUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
-    "category": "Sinhala Subbed",
+    "category": "Hollywood",
     "language": "English with Sinhala Subtitles (සිංහල උපසිරැසි)",
     "hasSinhalaSub": true,
-    "quality": "1080p Full HD",
-    "viewsCount": 18920,
-    "downloadsCount": 14200,
+    "quality": "4K Ultra HD",
+    "viewsCount": 42100,
+    "downloadsCount": 35800,
     "downloadOptions": [
       {
-        "id": "dl-conjuring-1080p",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "1.6 GB",
+        "id": "dl-avatar2-4k",
+        "quality": "4K Ultra HD Direct",
+        "resolution": "3840x2160",
+        "size": "2.8 GB",
         "format": "MP4 Direct",
         "downloadUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
         "server1Name": "Fast CDN Server 1",
@@ -4196,39 +4196,39 @@ export const initialMovies: Movie[] = [
     "createdAt": "2026-07-27T00:01:00.000Z"
   },
   {
-    "id": "insidious-2010-sinhala-sub",
-    "title": "Insidious (2010) Sinhala Subtitled - ඉන්සිඩියස් සිංහල උපසිරැසි සමඟ",
-    "originalTitle": "Insidious (2010)",
-    "releaseYear": 2010,
-    "duration": "1h 43m",
-    "rating": 8.5,
+    "id": "interstellar-2014-sinhala-sub",
+    "title": "Interstellar (2014) Sinhala Subtitled - ඉන්ටර්ස්ටෙලාර් සිංහල උපසිරැසි සමඟ",
+    "originalTitle": "Interstellar (2014)",
+    "releaseYear": 2014,
+    "duration": "2h 49m",
+    "rating": 9.5,
     "genres": [
-      "Horror",
-      "Mystery",
-      "Thriller"
+      "Sci-Fi",
+      "Adventure",
+      "Drama"
     ],
-    "director": "James Wan",
+    "director": "Christopher Nolan",
     "cast": [
-      "Patrick Wilson",
-      "Rose Byrne",
-      "Lin Shaye"
+      "Matthew McConaughey",
+      "Anne Hathaway",
+      "Jessica Chastain"
     ],
-    "description": "A family looks to prevent evil spirits from trapping their comatose child in a realm called The Further. Classic terrifying horror masterpiece with Sinhala Subtitles.",
-    "posterUrl": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&q=80",
-    "backdropUrl": "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=1200&q=80",
+    "description": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
+    "posterUrl": "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80",
     "streamUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
-    "category": "Sinhala Subbed",
+    "category": "Hollywood",
     "language": "English with Sinhala Subtitles (සිංහල උපසිරැසි)",
     "hasSinhalaSub": true,
     "quality": "1080p Full HD",
-    "viewsCount": 16400,
-    "downloadsCount": 11800,
+    "viewsCount": 38400,
+    "downloadsCount": 31200,
     "downloadOptions": [
       {
-        "id": "dl-insidious-1080p",
+        "id": "dl-interstellar-1080p",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
-        "size": "1.4 GB",
+        "size": "2.1 GB",
         "format": "MP4 Direct",
         "downloadUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
         "server1Name": "Fast CDN Server 1",
@@ -4238,39 +4238,39 @@ export const initialMovies: Movie[] = [
     "createdAt": "2026-07-27T00:02:00.000Z"
   },
   {
-    "id": "evil-dead-rise-2023-sinhala-sub",
-    "title": "Evil Dead Rise (2023) Sinhala Subtitled - ඊවිල් ඩෙඩ් රයිස් සිංහල උපසිරැසි",
-    "originalTitle": "Evil Dead Rise (2023)",
-    "releaseYear": 2023,
-    "duration": "1h 36m",
-    "rating": 8.7,
+    "id": "dune-part-two-2024-sinhala-sub",
+    "title": "Dune: Part Two (2024) Sinhala Subtitled - ඩියුන් 2 සිංහල උපසිරැසි සමඟ",
+    "originalTitle": "Dune: Part Two (2024)",
+    "releaseYear": 2024,
+    "duration": "2h 46m",
+    "rating": 9.4,
     "genres": [
-      "Horror",
-      "Supernatural",
-      "Thriller"
+      "Action",
+      "Adventure",
+      "Sci-Fi"
     ],
-    "director": "Lee Cronin",
+    "director": "Denis Villeneuve",
     "cast": [
-      "Mirabai Pease",
-      "Richard Crouchley",
-      "Anna-Maree Thomas"
+      "Timothée Chalamet",
+      "Zendaya",
+      "Rebecca Ferguson"
     ],
-    "description": "A twisted tale of two estranged sisters whose reunion is cut short by the rise of flesh-possessing demons, thrusting them into a primal battle for survival. Sinhala Subtitles included.",
-    "posterUrl": "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=600&q=80",
-    "backdropUrl": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=1200&q=80",
+    "description": "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the universe.",
+    "posterUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&q=80",
     "streamUrl": "https://dl.sinhalacartoons.com/Madagascar-3/Madagascar%203%20Europes%20Most%20Wanted%20(2012).mp4",
-    "category": "Sinhala Subbed",
+    "category": "Hollywood",
     "language": "English with Sinhala Subtitles (සිංහල උපසිරැසි)",
     "hasSinhalaSub": true,
     "quality": "4K Ultra HD",
-    "viewsCount": 21500,
-    "downloadsCount": 17300,
+    "viewsCount": 45200,
+    "downloadsCount": 39100,
     "downloadOptions": [
       {
-        "id": "dl-evildead-4k",
+        "id": "dl-dune2-4k",
         "quality": "4K Ultra HD Direct",
         "resolution": "3840x2160",
-        "size": "2.2 GB",
+        "size": "2.6 GB",
         "format": "MP4 Direct",
         "downloadUrl": "https://dl.sinhalacartoons.com/Madagascar-3/Madagascar%203%20Europes%20Most%20Wanted%20(2012).mp4",
         "server1Name": "Fast CDN Server 1",
@@ -4280,39 +4280,39 @@ export const initialMovies: Movie[] = [
     "createdAt": "2026-07-27T00:03:00.000Z"
   },
   {
-    "id": "a-quiet-place-2018-sinhala-sub",
-    "title": "A Quiet Place (2018) Sinhala Subtitled - ඒ ක්වයිට් ප්ලේස්",
-    "originalTitle": "A Quiet Place (2018)",
-    "releaseYear": 2018,
-    "duration": "1h 30m",
-    "rating": 8.6,
+    "id": "kgf-chapter-2-2022-sinhala-sub",
+    "title": "K.G.F: Chapter 2 (2022) Sinhala Subtitled - KGF 2 සිංහල උපසිරැසි සමඟ",
+    "originalTitle": "K.G.F: Chapter 2 (2022)",
+    "releaseYear": 2022,
+    "duration": "2h 48m",
+    "rating": 9.2,
     "genres": [
-      "Horror",
-      "Sci-Fi",
-      "Thriller"
+      "Action",
+      "Crime",
+      "Drama"
     ],
-    "director": "John Krasinski",
+    "director": "Prashanth Neel",
     "cast": [
-      "Emily Blunt",
-      "John Krasinski",
-      "Millicent Simmonds"
+      "Yash",
+      "Sanjay Dutt",
+      "Raveena Tandon"
     ],
-    "description": "A family must live in silence while hiding from creatures with ultra-sensitive hearing in a post-apocalyptic world. Thrilling horror movie with Sinhala Subtitles.",
-    "posterUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80",
-    "backdropUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1200&q=80",
+    "description": "In the blood-soaked Kolar Gold Fields, Rocky's name strikes fear into his foes. While his allies look up to him, the government sees him as a threat to law and order. Blockbuster Kannada Action film.",
+    "posterUrl": "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80",
     "streamUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
-    "category": "Sinhala Subbed",
-    "language": "English with Sinhala Subtitles (සිංහල උපසිරැසි)",
+    "category": "Tamil / South",
+    "language": "Kannada / Tamil with Sinhala Subtitles (සිංහල උපසිරැසි)",
     "hasSinhalaSub": true,
     "quality": "1080p Full HD",
-    "viewsCount": 19400,
-    "downloadsCount": 15100,
+    "viewsCount": 51200,
+    "downloadsCount": 44300,
     "downloadOptions": [
       {
-        "id": "dl-quietplace-1080p",
+        "id": "dl-kgf2-1080p",
         "quality": "1080p Full HD Direct",
         "resolution": "1920x1080",
-        "size": "1.3 GB",
+        "size": "2.2 GB",
         "format": "MP4 Direct",
         "downloadUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
         "server1Name": "Fast CDN Server 1",
@@ -4320,218 +4320,6 @@ export const initialMovies: Movie[] = [
       }
     ],
     "createdAt": "2026-07-27T00:04:00.000Z"
-  },
-  {
-    "id": "demonte-colony-2-2024-sinhala-sub",
-    "title": "Demonte Colony 2 (2024) Sinhala Subtitled - ඩිමොන්ටේ කොලනි 2",
-    "originalTitle": "Demonte Colony 2 (2024)",
-    "releaseYear": 2024,
-    "duration": "2h 24m",
-    "rating": 8.9,
-    "genres": [
-      "Horror",
-      "Thriller",
-      "Mystery"
-    ],
-    "director": "R. Ajay Gnanamuthu",
-    "cast": [
-      "Arulnithi",
-      "Priya Bhavani Shankar",
-      "Archana Chandhoke"
-    ],
-    "description": "Superhit Tamil Horror Thriller Demonte Colony 2 with full Sinhala Subtitles. Unraveling terrifying supernatural mysteries and cursed diamond hauntings.",
-    "posterUrl": "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=600&q=80",
-    "backdropUrl": "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=1200&q=80",
-    "streamUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
-    "category": "Sinhala Subbed",
-    "language": "Tamil with Sinhala Subtitles (සිංහල උපසිරැසි)",
-    "hasSinhalaSub": true,
-    "quality": "1080p Full HD",
-    "viewsCount": 24100,
-    "downloadsCount": 19800,
-    "downloadOptions": [
-      {
-        "id": "dl-demonte2-1080p",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "1.8 GB",
-        "format": "MP4 Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
-        "server1Name": "Fast CDN Server 1",
-        "server2Name": "High Speed Mirror 2"
-      }
-    ],
-    "createdAt": "2026-07-27T00:05:00.000Z"
-  },
-  {
-    "id": "the-nun-2-2023-sinhala-sub",
-    "title": "The Nun II (2023) Sinhala Subtitled - ඩි නන් 2 සිංහල උපසිරැසි සමඟ",
-    "originalTitle": "The Nun II (2023)",
-    "releaseYear": 2023,
-    "duration": "1h 50m",
-    "rating": 8.7,
-    "genres": [
-      "Horror",
-      "Mystery",
-      "Thriller",
-      "Supernatural"
-    ],
-    "director": "Michael Chaves",
-    "cast": [
-      "Taissa Farmiga",
-      "Jonas Bloquet",
-      "Storm Reid"
-    ],
-    "description": "1956 - France. A priest is murdered. An evil is spreading. Sister Irene once again comes face-to-face with Valak, the demon nun. Complete Sinhala Subtitled horror movie.",
-    "posterUrl": "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=600&q=80",
-    "backdropUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&q=80",
-    "streamUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
-    "category": "Sinhala Subbed",
-    "language": "English with Sinhala Subtitles (සිංහල උපසිරැසි)",
-    "hasSinhalaSub": true,
-    "quality": "1080p Full HD",
-    "viewsCount": 22400,
-    "downloadsCount": 18100,
-    "downloadOptions": [
-      {
-        "id": "dl-nun2-1080p",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "1.5 GB",
-        "format": "MP4 Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
-        "server1Name": "Fast CDN Server 1",
-        "server2Name": "High Speed Mirror 2"
-      }
-    ],
-    "createdAt": "2026-07-27T00:06:00.000Z"
-  },
-  {
-    "id": "stree-2-2024-sinhala-sub",
-    "title": "Stree 2 (2024) Sinhala Subtitled - ස්ත්‍රී 2 සිංහල උපසිරැසි",
-    "originalTitle": "Stree 2: Sarkate Ka Aatank (2024)",
-    "releaseYear": 2024,
-    "duration": "2h 29m",
-    "rating": 9.1,
-    "genres": [
-      "Horror",
-      "Comedy",
-      "Supernatural"
-    ],
-    "director": "Amar Kaushik",
-    "cast": [
-      "Rajkummar Rao",
-      "Shraddha Kapoor",
-      "Pankaj Tripathi"
-    ],
-    "description": "Blockbuster Hindi Horror Comedy Stree 2 with Sinhala Subtitles! The town of Chanderi is haunted again, this time by a headless demon Sarkata, and the gang unites with Stree to save everyone.",
-    "posterUrl": "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=600&q=80",
-    "backdropUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1200&q=80",
-    "streamUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
-    "category": "Sinhala Subbed",
-    "language": "Hindi with Sinhala Subtitles (සිංහල උපසිරැසි)",
-    "hasSinhalaSub": true,
-    "quality": "1080p Full HD",
-    "viewsCount": 31200,
-    "downloadsCount": 26500,
-    "downloadOptions": [
-      {
-        "id": "dl-stree2-1080p",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "1.9 GB",
-        "format": "MP4 Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
-        "server1Name": "Fast CDN Server 1",
-        "server2Name": "High Speed Mirror 2"
-      }
-    ],
-    "createdAt": "2026-07-27T00:07:00.000Z"
-  },
-  {
-    "id": "train-to-busan-2016-sinhala-sub",
-    "title": "Train to Busan (2016) Sinhala Subtitled - ට්‍රේන් ටු බුසාන් සිංහල උපසිරැසි",
-    "originalTitle": "Train to Busan (2016)",
-    "releaseYear": 2016,
-    "duration": "1h 58m",
-    "rating": 9.2,
-    "genres": [
-      "Horror",
-      "Action",
-      "Thriller",
-      "Zombie"
-    ],
-    "director": "Yeon Sang-ho",
-    "cast": [
-      "Gong Yoo",
-      "Jung Yu-mi",
-      "Ma Dong-seok"
-    ],
-    "description": "While a zombie virus breaks out in South Korea, passengers struggle to survive on the train from Seoul to Busan. Masterpiece Korean Zombie Thriller with complete Sinhala Subtitles.",
-    "posterUrl": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&q=80",
-    "backdropUrl": "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=1200&q=80",
-    "streamUrl": "https://dl.sinhalacartoons.com/Madagascar-3/Madagascar%203%20Europes%20Most%20Wanted%20(2012).mp4",
-    "category": "Sinhala Subbed",
-    "language": "Korean with Sinhala Subtitles (සිංහල උපසිරැසි)",
-    "hasSinhalaSub": true,
-    "quality": "1080p Full HD",
-    "viewsCount": 28900,
-    "downloadsCount": 24100,
-    "downloadOptions": [
-      {
-        "id": "dl-busan-1080p",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "1.7 GB",
-        "format": "MP4 Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/Madagascar-3/Madagascar%203%20Europes%20Most%20Wanted%20(2012).mp4",
-        "server1Name": "Fast CDN Server 1",
-        "server2Name": "High Speed Mirror 2"
-      }
-    ],
-    "createdAt": "2026-07-27T00:08:00.000Z"
-  },
-  {
-    "id": "shaitaan-2024-sinhala-sub",
-    "title": "Shaitaan (2024) Sinhala Subtitled - ෂෙයිතාන් සිංහල උපසිරැසි",
-    "originalTitle": "Shaitaan (2024)",
-    "releaseYear": 2024,
-    "duration": "2h 12m",
-    "rating": 8.8,
-    "genres": [
-      "Horror",
-      "Thriller",
-      "Supernatural"
-    ],
-    "director": "Vikas Bahl",
-    "cast": [
-      "Ajay Devgn",
-      "R. Madhavan",
-      "Jyotika"
-    ],
-    "description": "A family's farmhouse holiday turns nightmare when a mysterious stranger hypnotizes their daughter using black magic. Gripping Indian horror movie with Sinhala Subtitles.",
-    "posterUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80",
-    "backdropUrl": "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=1200&q=80",
-    "streamUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
-    "category": "Sinhala Subbed",
-    "language": "Hindi with Sinhala Subtitles (සිංහල උපසිරැසි)",
-    "hasSinhalaSub": true,
-    "quality": "1080p Full HD",
-    "viewsCount": 26500,
-    "downloadsCount": 21800,
-    "downloadOptions": [
-      {
-        "id": "dl-shaitaan-1080p",
-        "quality": "1080p Full HD Direct",
-        "resolution": "1920x1080",
-        "size": "1.6 GB",
-        "format": "MP4 Direct",
-        "downloadUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
-        "server1Name": "Fast CDN Server 1",
-        "server2Name": "High Speed Mirror 2"
-      }
-    ],
-    "createdAt": "2026-07-27T00:09:00.000Z"
   },
   {
     "id": "deadpool-wolverine-2024-sinhala-sub",

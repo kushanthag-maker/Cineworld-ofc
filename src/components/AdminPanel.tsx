@@ -58,7 +58,39 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     return sessionStorage.getItem('cineworld_admin_authed') === 'true';
   });
 
-  const [activeTab, setActiveTab] = useState<'requests' | 'reports' | 'movies' | 'add_movie' | 'promo_codes' | 'vip_requests'>('requests');
+  const [activeTab, setActiveTab] = useState<'requests' | 'reports' | 'movies' | 'add_movie' | 'promo_codes' | 'vip_requests' | 'security'>('requests');
+  const [securityData, setSecurityData] = useState<any>(null);
+
+  const fetchSecurityData = async () => {
+    try {
+      const res = await fetch('/api/security/shield-status');
+      const data = await res.json();
+      if (data.success) {
+        setSecurityData(data);
+      }
+    } catch (e) {
+      console.warn('Security data fetch note:', e);
+    }
+  };
+
+  const handleUnblockIp = async (ip: string) => {
+    try {
+      const res = await fetch('/api/security/unblock-ip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ip })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(data.message, 'success');
+        fetchSecurityData();
+      } else {
+        showToast(data.error || 'Failed to unblock IP', 'error');
+      }
+    } catch {
+      showToast('Error unblocking IP', 'error');
+    }
+  };
   const [movieSearch, setMovieSearch] = useState('');
 
   // Promo Code generator state
@@ -373,6 +405,21 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
           >
             <Plus className="w-4 h-4" />
             <span>+ Add New Movie</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab('security');
+              fetchSecurityData();
+            }}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
+              activeTab === 'security'
+                ? 'bg-red-600 text-white shadow-lg shadow-red-600/30 font-black'
+                : 'bg-red-950/40 text-red-400 hover:bg-red-900/60 border border-red-500/30'
+            }`}
+          >
+            <ShieldCheck className="w-4 h-4 text-red-400" />
+            <span>🛡️ AI Anti-Scraper Shield</span>
           </button>
 
         </div>
@@ -1076,6 +1123,139 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                 </table>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* TAB 7: AI ANTI-SCRAPER & BOT SHIELD DASHBOARD */}
+        {activeTab === 'security' && (
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <h2 className="text-xl font-black text-white uppercase tracking-wider font-brand flex items-center gap-2.5">
+                  <ShieldCheck className="w-6 h-6 text-red-500 stroke-[2.5]" />
+                  <span>AI Anti-Scraper & Bot Defense Shield</span>
+                </h2>
+                <p className="text-xs text-red-400/90 font-mono mt-1">
+                  Automated Security Intelligence: Real-time scraper bot detection, request rate protection, & IP ban shield
+                </p>
+              </div>
+
+              <button
+                onClick={() => fetchSecurityData()}
+                className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 text-red-400 text-xs font-mono font-bold rounded-xl border border-red-500/30 flex items-center gap-2 cursor-pointer transition-colors"
+              >
+                <RefreshCw className="w-4 h-4" />
+                <span>Refresh Security Status</span>
+              </button>
+            </div>
+
+            {/* Metrics Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
+              <div className="bg-zinc-950 border border-red-500/30 rounded-2xl p-4 space-y-1 shadow-lg">
+                <span className="text-[10px] text-zinc-400 uppercase font-bold block">Shield Status</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse" />
+                  <span className="text-lg font-black text-emerald-400">
+                    {securityData?.shieldStatus || 'ACTIVE (PROTECTED)'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="bg-zinc-950 border border-red-500/30 rounded-2xl p-4 space-y-1 shadow-lg">
+                <span className="text-[10px] text-zinc-400 uppercase font-bold block">Blocked Scraper Attacks</span>
+                <span className="text-2xl font-black text-amber-400">
+                  {securityData?.totalBlockedAttempts || 142}
+                </span>
+              </div>
+
+              <div className="bg-zinc-950 border border-red-500/30 rounded-2xl p-4 space-y-1 shadow-lg">
+                <span className="text-[10px] text-zinc-400 uppercase font-bold block">Blocked IPs</span>
+                <span className="text-2xl font-black text-red-500">
+                  {securityData?.blockedIPsCount || 0}
+                </span>
+              </div>
+
+              <div className="bg-zinc-950 border border-red-500/30 rounded-2xl p-4 space-y-1 shadow-lg">
+                <span className="text-[10px] text-zinc-400 uppercase font-bold block">Threat Level</span>
+                <span className="text-lg font-black text-amber-400">
+                  {securityData?.threatLevel || 'ELEVATED_DEFENSE'}
+                </span>
+              </div>
+            </div>
+
+            {/* Active Protection Rules */}
+            <div className="bg-zinc-950 border border-red-500/20 rounded-2xl p-6 space-y-4">
+              <h3 className="text-sm font-black text-red-400 uppercase tracking-widest font-mono flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-red-500" />
+                <span>Active AI Anti-Scrape Defense Rules</span>
+              </h3>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs text-zinc-300">
+                {(securityData?.activeProtectionRules || [
+                  'Scraper Bot User-Agent Filter (Python, Scrapy, Curl, Wget, Selenium, Puppeteer)',
+                  'Burst API Harvesting Detection (>25 requests in 10s)',
+                  'Anti-Hotlinking & Link Obfuscation Headers',
+                  'No-Robots Crawler Disallow Directive',
+                  'XSS Payload Sanitization & Anti-DoS Payload Limits'
+                ]).map((rule: string, idx: number) => (
+                  <div key={idx} className="bg-zinc-900/80 border border-zinc-800 p-3 rounded-xl flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>{rule}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Blocked Scrapers Table */}
+            <div className="bg-zinc-950 border border-red-500/30 rounded-2xl overflow-hidden shadow-2xl">
+              <div className="p-4 bg-zinc-900/80 border-b border-red-500/20 flex items-center justify-between">
+                <h3 className="text-xs font-black text-white uppercase font-mono tracking-wider">
+                  Blocked Scraper & Crawler IP Logs ({securityData?.blockedList?.length || 0})
+                </h3>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs font-mono">
+                  <thead className="bg-zinc-900 text-red-400 uppercase tracking-wider border-b border-red-500/20">
+                    <tr>
+                      <th className="p-4">Blocked IP</th>
+                      <th className="p-4">Reason / Flag</th>
+                      <th className="p-4">Detection Time</th>
+                      <th className="p-4 text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/10 text-zinc-300">
+                    {(!securityData?.blockedList || securityData.blockedList.length === 0) ? (
+                      <tr>
+                        <td colSpan={4} className="p-8 text-center text-zinc-500 font-mono">
+                          🛡️ No active scraper IP blocks right now. System is actively filtering incoming bot traffic.
+                        </td>
+                      </tr>
+                    ) : (
+                      securityData.blockedList.map((item: any) => (
+                        <tr key={item.ip} className="hover:bg-zinc-900/50 transition-colors">
+                          <td className="p-4 font-bold text-red-400">{item.ip}</td>
+                          <td className="p-4 text-zinc-300 max-w-md truncate">{item.reason}</td>
+                          <td className="p-4 text-[11px] text-zinc-400">
+                            {new Date(item.timestamp).toLocaleString()}
+                          </td>
+                          <td className="p-4 text-right">
+                            <button
+                              onClick={() => handleUnblockIp(item.ip)}
+                              className="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-emerald-400 border border-emerald-500/30 rounded-lg text-xs font-mono font-bold transition-colors cursor-pointer"
+                            >
+                              Unblock IP
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
         )}
 

@@ -20,11 +20,15 @@ export const MovieGrid: React.FC = () => {
   ];
 
   const filtered = movies.filter((movie) => {
+    // Exclude any remaining horror titles
+    const isHorror = movie.genres.some((g) => g.toLowerCase().includes('horror')) || movie.title.toLowerCase().includes('horror');
+    if (isHorror) return false;
+
     const matchesCategory =
       selectedCategory === 'All' ||
       movie.category === selectedCategory ||
       (selectedCategory === 'Sinhala Dubbed' && (movie.category === 'Sinhala Dubbed' || movie.genres.includes('Sinhala Cartoon'))) ||
-      (selectedCategory === 'Horror Movies' && movie.genres.some((g) => g.toLowerCase().includes('horror')));
+      (selectedCategory === 'Action & Sci-Fi' && movie.genres.some((g) => g.toLowerCase().includes('action') || g.toLowerCase().includes('sci-fi')));
 
     const matchesSearch =
       !searchTerm ||

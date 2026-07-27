@@ -65,28 +65,50 @@ const MovieContext = createContext<MovieContextType | undefined>(undefined);
 export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // LocalStorage state initialization
   const [movies, setMovies] = useState<Movie[]>(() => {
-    const removedIds = ['the-croods-a-new-age-2020', 'avatar-tla-s1'];
+    const removedIds = [
+      'the-croods-a-new-age-2020',
+      'avatar-tla-s1',
+      'the-conjuring-2013-sinhala-sub',
+      'insidious-2010-sinhala-sub',
+      'evil-dead-rise-2023-sinhala-sub',
+      'a-quiet-place-2018-sinhala-sub',
+      'demonte-colony-2-2024-sinhala-sub',
+      'the-nun-2-2023-sinhala-sub',
+      'stree-2-2024-sinhala-sub',
+      'train-to-busan-2016-sinhala-sub',
+      'shaitaan-2024-sinhala-sub'
+    ];
+
+    const isHorror = (m: Movie) =>
+      m.genres.some((g) => g.toLowerCase().includes('horror')) ||
+      m.title.toLowerCase().includes('horror') ||
+      removedIds.includes(m.id);
+
     try {
-      const saved = localStorage.getItem('cineworld_movies_v3') || localStorage.getItem('cineworld_movies');
+      const saved =
+        localStorage.getItem('cineworld_movies_v4') ||
+        localStorage.getItem('cineworld_movies_v3') ||
+        localStorage.getItem('cineworld_movies');
+
       if (saved) {
         const parsed: Movie[] = JSON.parse(saved);
         const mergedMap = new Map<string, Movie>();
-        
-        // 1. Load initial default movies
+
+        // 1. Load initial default non-horror movies
         initialMovies.forEach((initM) => {
-          if (!removedIds.includes(initM.id)) mergedMap.set(initM.id, initM);
+          if (!isHorror(initM)) mergedMap.set(initM.id, initM);
         });
 
-        // 2. Override with saved local storage updates and user edits
+        // 2. Override with saved non-horror local storage updates and user edits
         parsed.forEach((m) => {
-          if (!removedIds.includes(m.id)) mergedMap.set(m.id, m);
+          if (!isHorror(m)) mergedMap.set(m.id, m);
         });
 
         return Array.from(mergedMap.values());
       }
-      return initialMovies.filter((m) => !removedIds.includes(m.id));
+      return initialMovies.filter((m) => !isHorror(m));
     } catch {
-      return initialMovies.filter((m) => !removedIds.includes(m.id));
+      return initialMovies.filter((m) => !isHorror(m));
     }
   });
 
@@ -402,6 +424,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   // Sync to localStorage
   useEffect(() => {
     try {
+      localStorage.setItem('cineworld_movies_v4', JSON.stringify(movies));
       localStorage.setItem('cineworld_movies_v3', JSON.stringify(movies));
       localStorage.setItem('cineworld_movies', JSON.stringify(movies));
     } catch (e) { console.error('LocalStorage error:', e); }
