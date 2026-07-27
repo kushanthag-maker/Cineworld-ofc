@@ -4362,5 +4362,217 @@ export const initialMovies: Movie[] = [
       }
     ],
     "createdAt": "2026-07-27T00:05:00.000Z"
+  },
+  {
+    "id": "the-nun-2-2023-sinhala-sub",
+    "title": "The Nun II (2023) Sinhala Subtitled - ඩි නන් 2 සිංහල උපසිරැසි සමඟ",
+    "originalTitle": "The Nun II (2023)",
+    "releaseYear": 2023,
+    "duration": "1h 50m",
+    "rating": 8.7,
+    "genres": [
+      "Horror",
+      "Mystery",
+      "Thriller",
+      "Supernatural"
+    ],
+    "director": "Michael Chaves",
+    "cast": [
+      "Taissa Farmiga",
+      "Jonas Bloquet",
+      "Storm Reid"
+    ],
+    "description": "1956 - France. A priest is murdered. An evil is spreading. Sister Irene once again comes face-to-face with Valak, the demon nun. Complete Sinhala Subtitled horror movie.",
+    "posterUrl": "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
+    "category": "Sinhala Subbed",
+    "language": "English with Sinhala Subtitles (සිංහල උපසිරැසි)",
+    "hasSinhalaSub": true,
+    "quality": "1080p Full HD",
+    "viewsCount": 22400,
+    "downloadsCount": 18100,
+    "downloadOptions": [
+      {
+        "id": "dl-nun2-1080p",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "1.5 GB",
+        "format": "MP4 Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
+        "server1Name": "Fast CDN Server 1",
+        "server2Name": "High Speed Mirror 2"
+      }
+    ],
+    "createdAt": "2026-07-27T00:06:00.000Z"
+  },
+  {
+    "id": "stree-2-2024-sinhala-sub",
+    "title": "Stree 2 (2024) Sinhala Subtitled - ස්ත්‍රී 2 සිංහල උපසිරැසි",
+    "originalTitle": "Stree 2: Sarkate Ka Aatank (2024)",
+    "releaseYear": 2024,
+    "duration": "2h 29m",
+    "rating": 9.1,
+    "genres": [
+      "Horror",
+      "Comedy",
+      "Supernatural"
+    ],
+    "director": "Amar Kaushik",
+    "cast": [
+      "Rajkummar Rao",
+      "Shraddha Kapoor",
+      "Pankaj Tripathi"
+    ],
+    "description": "Blockbuster Hindi Horror Comedy Stree 2 with Sinhala Subtitles! The town of Chanderi is haunted again, this time by a headless demon Sarkata, and the gang unites with Stree to save everyone.",
+    "posterUrl": "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
+    "category": "Sinhala Subbed",
+    "language": "Hindi with Sinhala Subtitles (සිංහල උපසිරැසි)",
+    "hasSinhalaSub": true,
+    "quality": "1080p Full HD",
+    "viewsCount": 31200,
+    "downloadsCount": 26500,
+    "downloadOptions": [
+      {
+        "id": "dl-stree2-1080p",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "1.9 GB",
+        "format": "MP4 Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
+        "server1Name": "Fast CDN Server 1",
+        "server2Name": "High Speed Mirror 2"
+      }
+    ],
+    "createdAt": "2026-07-27T00:07:00.000Z"
+  },
+  {
+    "id": "train-to-busan-2016-sinhala-sub",
+    "title": "Train to Busan (2016) Sinhala Subtitled - ට්‍රේන් ටු බුසාන් සිංහල උපසිරැසි",
+    "originalTitle": "Train to Busan (2016)",
+    "releaseYear": 2016,
+    "duration": "1h 58m",
+    "rating": 9.2,
+    "genres": [
+      "Horror",
+      "Action",
+      "Thriller",
+      "Zombie"
+    ],
+    "director": "Yeon Sang-ho",
+    "cast": [
+      "Gong Yoo",
+      "Jung Yu-mi",
+      "Ma Dong-seok"
+    ],
+    "description": "While a zombie virus breaks out in South Korea, passengers struggle to survive on the train from Seoul to Busan. Masterpiece Korean Zombie Thriller with complete Sinhala Subtitles.",
+    "posterUrl": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/Madagascar-3/Madagascar%203%20Europes%20Most%20Wanted%20(2012).mp4",
+    "category": "Sinhala Subbed",
+    "language": "Korean with Sinhala Subtitles (සිංහල උපසිරැසි)",
+    "hasSinhalaSub": true,
+    "quality": "1080p Full HD",
+    "viewsCount": 28900,
+    "downloadsCount": 24100,
+    "downloadOptions": [
+      {
+        "id": "dl-busan-1080p",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "1.7 GB",
+        "format": "MP4 Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/Madagascar-3/Madagascar%203%20Europes%20Most%20Wanted%20(2012).mp4",
+        "server1Name": "Fast CDN Server 1",
+        "server2Name": "High Speed Mirror 2"
+      }
+    ],
+    "createdAt": "2026-07-27T00:08:00.000Z"
+  },
+  {
+    "id": "shaitaan-2024-sinhala-sub",
+    "title": "Shaitaan (2024) Sinhala Subtitled - ෂෙයිතාන් සිංහල උපසිරැසි",
+    "originalTitle": "Shaitaan (2024)",
+    "releaseYear": 2024,
+    "duration": "2h 12m",
+    "rating": 8.8,
+    "genres": [
+      "Horror",
+      "Thriller",
+      "Supernatural"
+    ],
+    "director": "Vikas Bahl",
+    "cast": [
+      "Ajay Devgn",
+      "R. Madhavan",
+      "Jyotika"
+    ],
+    "description": "A family's farmhouse holiday turns nightmare when a mysterious stranger hypnotizes their daughter using black magic. Gripping Indian horror movie with Sinhala Subtitles.",
+    "posterUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
+    "category": "Sinhala Subbed",
+    "language": "Hindi with Sinhala Subtitles (සිංහල උපසිරැසි)",
+    "hasSinhalaSub": true,
+    "quality": "1080p Full HD",
+    "viewsCount": 26500,
+    "downloadsCount": 21800,
+    "downloadOptions": [
+      {
+        "id": "dl-shaitaan-1080p",
+        "quality": "1080p Full HD Direct",
+        "resolution": "1920x1080",
+        "size": "1.6 GB",
+        "format": "MP4 Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/The-Adventures-of-Tintin-2011/The%20Adventures%20of%20Tintin%202011%20720p.mkv.mp4",
+        "server1Name": "Fast CDN Server 1",
+        "server2Name": "High Speed Mirror 2"
+      }
+    ],
+    "createdAt": "2026-07-27T00:09:00.000Z"
+  },
+  {
+    "id": "deadpool-wolverine-2024-sinhala-sub",
+    "title": "Deadpool & Wolverine (2024) Sinhala Subtitled - ඩෙඩ්පූල් සහ වුල්වරින්",
+    "originalTitle": "Deadpool & Wolverine (2024)",
+    "releaseYear": 2024,
+    "duration": "2h 08m",
+    "rating": 9.0,
+    "genres": [
+      "Action",
+      "Comedy",
+      "Sci-Fi"
+    ],
+    "director": "Shawn Levy",
+    "cast": [
+      "Ryan Reynolds",
+      "Hugh Jackman",
+      "Emma Corrin"
+    ],
+    "description": "Wolverine is recovering from his injuries when he crosses paths with Deadpool. They team up to defeat a common enemy in the Marvel Multiverse. Full Sinhala Subtitles.",
+    "posterUrl": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&q=80",
+    "streamUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
+    "category": "Hollywood",
+    "language": "English with Sinhala Subtitles (සිංහල උපසිරැසි)",
+    "hasSinhalaSub": true,
+    "quality": "4K Ultra HD",
+    "viewsCount": 38900,
+    "downloadsCount": 32100,
+    "downloadOptions": [
+      {
+        "id": "dl-dpw-4k",
+        "quality": "4K Ultra HD Direct",
+        "resolution": "3840x2160",
+        "size": "2.4 GB",
+        "format": "MP4 Direct",
+        "downloadUrl": "https://dl.sinhalacartoons.com/frozen-1/Frozen.2013.Sinhala.720p.WEBRip.x264.AAC.2CH.AVC.mp4.mp4",
+        "server1Name": "Fast CDN Server 1",
+        "server2Name": "High Speed Mirror 2"
+      }
+    ],
+    "createdAt": "2026-07-27T00:10:00.000Z"
   }
 ];

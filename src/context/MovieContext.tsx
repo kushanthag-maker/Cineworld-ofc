@@ -67,16 +67,21 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [movies, setMovies] = useState<Movie[]>(() => {
     const removedIds = ['the-croods-a-new-age-2020', 'avatar-tla-s1'];
     try {
-      const saved = localStorage.getItem('cineworld_movies');
+      const saved = localStorage.getItem('cineworld_movies_v3') || localStorage.getItem('cineworld_movies');
       if (saved) {
         const parsed: Movie[] = JSON.parse(saved);
         const mergedMap = new Map<string, Movie>();
-        parsed.forEach((m) => {
-          if (!removedIds.includes(m.id)) mergedMap.set(m.id, m);
-        });
+        
+        // 1. Load initial default movies
         initialMovies.forEach((initM) => {
           if (!removedIds.includes(initM.id)) mergedMap.set(initM.id, initM);
         });
+
+        // 2. Override with saved local storage updates and user edits
+        parsed.forEach((m) => {
+          if (!removedIds.includes(m.id)) mergedMap.set(m.id, m);
+        });
+
         return Array.from(mergedMap.values());
       }
       return initialMovies.filter((m) => !removedIds.includes(m.id));
@@ -397,6 +402,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   // Sync to localStorage
   useEffect(() => {
     try {
+      localStorage.setItem('cineworld_movies_v3', JSON.stringify(movies));
       localStorage.setItem('cineworld_movies', JSON.stringify(movies));
     } catch (e) { console.error('LocalStorage error:', e); }
   }, [movies]);
