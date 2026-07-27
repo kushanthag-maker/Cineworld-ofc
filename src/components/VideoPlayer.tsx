@@ -49,6 +49,14 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
 
   const streamInfo = formatStreamUrl(activeStreamUrl);
 
+  const [dataSaverMode, setDataSaverMode] = useState(false);
+
+  React.useEffect(() => {
+    if (movie.id) {
+      fetch(`/api/movies/${encodeURIComponent(movie.id)}/stream-play`, { method: 'POST' }).catch(() => {});
+    }
+  }, [movie.id, activeStreamUrl]);
+
   const handleRetry = () => {
     setHasError(false);
   };
@@ -77,8 +85,20 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
           )}
         </div>
 
-        {/* Server Selection Buttons */}
+        {/* Server Selection & Data Saver Buttons */}
         <div className="flex flex-wrap items-center gap-1 sm:gap-1.5">
+          <button
+            onClick={() => setDataSaverMode(!dataSaverMode)}
+            className={`text-[10px] font-bold px-2 py-1 border transition-all cursor-pointer flex items-center gap-1 ${
+              dataSaverMode
+                ? 'bg-emerald-500 text-black border-emerald-500 font-black'
+                : 'bg-white/5 hover:bg-white/10 text-emerald-400 border-emerald-500/30'
+            }`}
+            title="Data Saver mode restricts background video pre-buffering to save mobile data"
+          >
+            <span>⚡ {dataSaverMode ? 'Data Saver ON' : 'Data Saver'}</span>
+          </button>
+
           {streamSources.map((source, idx) => (
             <button
               key={idx}
@@ -165,10 +185,16 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
             key={activeStreamUrl}
             src={streamInfo.directUrl || streamInfo.embedUrl}
             controls
-            autoPlay
+            preload={dataSaverMode ? 'none' : 'metadata'}
             playsInline
             poster={movie.backdropUrl || movie.posterUrl}
-            onError={() => setHasError(true)}
+            onError={() => {
+              if (streamSources.length > activeSourceIndex + 1) {
+                setActiveSourceIndex((prev) => prev + 1);
+              } else {
+                setHasError(true);
+              }
+            }}
             className="w-full h-full object-contain"
           />
         )}

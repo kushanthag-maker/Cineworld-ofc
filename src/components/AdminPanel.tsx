@@ -21,7 +21,11 @@ import {
   Check,
   Key,
   Edit3,
-  Edit
+  Edit,
+  Activity,
+  TrendingUp,
+  Users,
+  BarChart3
 } from 'lucide-react';
 import { Movie, DownloadOption } from '../types';
 
@@ -58,8 +62,23 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     return sessionStorage.getItem('cineworld_admin_authed') === 'true';
   });
 
-  const [activeTab, setActiveTab] = useState<'requests' | 'reports' | 'movies' | 'add_movie' | 'promo_codes' | 'vip_requests' | 'security'>('requests');
+  const [activeTab, setActiveTab] = useState<'requests' | 'reports' | 'movies' | 'add_movie' | 'promo_codes' | 'vip_requests' | 'security' | 'analytics'>('requests');
   const [securityData, setSecurityData] = useState<any>(null);
+  const [analyticsData, setAnalyticsData] = useState<any>(null);
+
+  const fetchAnalyticsData = async () => {
+    try {
+      const res = await fetch('/api/admin/analytics');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) {
+          setAnalyticsData(data);
+        }
+      }
+    } catch (e) {
+      console.warn('Analytics fetch note:', e);
+    }
+  };
 
   const fetchSecurityData = async () => {
     try {
@@ -405,6 +424,21 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
           >
             <Plus className="w-4 h-4" />
             <span>+ Add New Movie</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab('analytics');
+              fetchAnalyticsData();
+            }}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
+              activeTab === 'analytics'
+                ? 'bg-sky-500 text-black shadow-lg shadow-sky-500/20 font-black'
+                : 'bg-sky-950/40 text-sky-400 hover:bg-sky-900/60 border border-sky-500/30'
+            }`}
+          >
+            <Activity className="w-4 h-4 text-sky-400" />
+            <span>📊 Site Reach & Traffic</span>
           </button>
 
           <button
@@ -1256,6 +1290,155 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
               </div>
             </div>
 
+          </div>
+        )}
+
+        {/* TAB 8: SITE REACH & TRAFFIC ANALYTICS */}
+        {activeTab === 'analytics' && (
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <h2 className="text-xl font-black text-white uppercase tracking-wider font-brand flex items-center gap-2.5">
+                  <Activity className="w-6 h-6 text-sky-400 stroke-[2.5]" />
+                  <span>Site Reach & Traffic Analytics</span>
+                </h2>
+                <p className="text-xs text-sky-300/90 font-mono mt-1">
+                  Real User Traffic Intelligence: Live active visitors, stream requests, and 24-hour reach distribution
+                </p>
+              </div>
+
+              <button
+                onClick={() => fetchAnalyticsData()}
+                className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 text-sky-400 text-xs font-mono font-bold rounded-xl border border-sky-500/30 flex items-center gap-2 cursor-pointer transition-colors"
+              >
+                <RefreshCw className="w-4 h-4" />
+                <span>Refresh Analytics</span>
+              </button>
+            </div>
+
+            {/* Metric Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
+              <div className="bg-zinc-950 border border-sky-500/30 rounded-2xl p-4 space-y-1 shadow-lg relative overflow-hidden">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-zinc-400 uppercase font-bold">Online Now</span>
+                  <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping" />
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-black text-emerald-400">
+                    {analyticsData?.activeOnline || 1}
+                  </span>
+                  <span className="text-[10px] text-emerald-500 font-bold uppercase">Active Session</span>
+                </div>
+              </div>
+
+              <div className="bg-zinc-950 border border-sky-500/30 rounded-2xl p-4 space-y-1 shadow-lg">
+                <span className="text-[10px] text-zinc-400 uppercase font-bold block">Today Visitors (Real IPs)</span>
+                <span className="text-3xl font-black text-sky-400">
+                  {analyticsData?.todayVisitors || 1}
+                </span>
+              </div>
+
+              <div className="bg-zinc-950 border border-sky-500/30 rounded-2xl p-4 space-y-1 shadow-lg">
+                <span className="text-[10px] text-zinc-400 uppercase font-bold block">Stream Plays</span>
+                <span className="text-3xl font-black text-amber-400">
+                  {analyticsData?.streamPlays || 0}
+                </span>
+              </div>
+
+              <div className="bg-zinc-950 border border-sky-500/30 rounded-2xl p-4 space-y-1 shadow-lg">
+                <span className="text-[10px] text-zinc-400 uppercase font-bold block">Movie Downloads</span>
+                <span className="text-3xl font-black text-purple-400">
+                  {analyticsData?.todayDownloads || 0}
+                </span>
+              </div>
+            </div>
+
+            {/* Visual 24-Hour Reach Chart */}
+            <div className="bg-zinc-950 border border-white/10 rounded-2xl p-6 space-y-4 shadow-xl">
+              <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+                <div className="flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5 text-sky-400" />
+                  <h3 className="text-sm font-black text-white uppercase tracking-wider font-mono">
+                    24-Hour Visitor Reach Distribution
+                  </h3>
+                </div>
+                <span className="text-xs text-sky-400 font-mono font-bold bg-sky-500/10 px-2.5 py-1 rounded-full border border-sky-500/20">
+                  Total Hits: {analyticsData?.totalViews || 0}
+                </span>
+              </div>
+
+              {/* Bar Chart Container */}
+              <div className="pt-4 pb-2">
+                <div className="h-44 flex items-end justify-between gap-1 sm:gap-2 px-2 border-b border-zinc-800">
+                  {(analyticsData?.hourlyReach || new Array(24).fill({ hour: '00:00', views: 0 })).map((h: any, idx: number) => {
+                    const maxViews = Math.max(...(analyticsData?.hourlyReach?.map((item: any) => item.views) || [1]), 1);
+                    const heightPercent = Math.max((h.views / maxViews) * 100, 8);
+
+                    return (
+                      <div key={idx} className="flex-1 flex flex-col items-center gap-1 group relative">
+                        {/* Tooltip on hover */}
+                        <div className="absolute -top-8 bg-zinc-800 text-sky-400 text-[9px] font-mono font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 whitespace-nowrap border border-sky-500/30">
+                          {h.hour}: {h.views} hits
+                        </div>
+
+                        {/* Bar */}
+                        <div
+                          style={{ height: `${heightPercent}%` }}
+                          className={`w-full max-w-[18px] rounded-t-sm transition-all duration-500 ${
+                            h.views > 0
+                              ? 'bg-gradient-to-t from-sky-600 to-sky-400 group-hover:from-sky-400 group-hover:to-sky-300 shadow-md shadow-sky-500/20'
+                              : 'bg-zinc-800/60'
+                          }`}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* X-Axis Hour Labels */}
+                <div className="flex items-center justify-between text-[9px] font-mono text-zinc-500 pt-2 px-1">
+                  <span>00:00</span>
+                  <span>04:00</span>
+                  <span>08:00</span>
+                  <span>12:00</span>
+                  <span>16:00</span>
+                  <span>20:00</span>
+                  <span>23:00</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Top Streamed Movies List */}
+            <div className="bg-zinc-950 border border-white/10 rounded-2xl p-6 space-y-4 shadow-xl">
+              <h3 className="text-sm font-black text-white uppercase tracking-wider font-mono flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-amber-400" />
+                <span>Most Streamed Content Today</span>
+              </h3>
+
+              <div className="space-y-2">
+                {analyticsData?.topStreamed && analyticsData.topStreamed.length > 0 ? (
+                  analyticsData.topStreamed.map((movie: any, idx: number) => (
+                    <div key={idx} className="flex items-center justify-between p-3 bg-zinc-900/60 border border-white/5 rounded-xl text-xs font-mono">
+                      <div className="flex items-center gap-3">
+                        <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center text-[11px]">
+                          #{idx + 1}
+                        </span>
+                        <span className="font-bold text-white uppercase">{movie.title}</span>
+                        <span className="text-[10px] text-zinc-500 bg-zinc-800 px-2 py-0.5 rounded">
+                          {movie.category}
+                        </span>
+                      </div>
+                      <span className="text-amber-400 font-bold">
+                        {movie.views} Views
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-xs text-zinc-500 font-mono italic">No stream play logs recorded yet for today.</p>
+                )}
+              </div>
+            </div>
           </div>
         )}
 

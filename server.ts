@@ -38,7 +38,13 @@ app.use('/api', (req, res, next) => {
 // AI Anti-Scraper & Bot Shield Engine
 const blockedScraperIPs = new Map<string, { reason: string; timestamp: string; count: number }>();
 const scraperActivityLogs = new Map<string, number[]>();
-let totalBlockedScraperAttempts = 142; // Seeded initial blocked attacks count for display
+let totalBlockedScraperAttempts = 0; // Real live blocked attempts counter
+const deletedMovieIdsCache = new Set<string>(); // Persistent deleted movies cache
+
+// Real Site Reach & Traffic Analytics Engine
+const hourlyReachMap = new Array(24).fill(0);
+const realUserIPsToday = new Set<string>();
+let streamPlaysCounter = 0;
 
 const SUSPICIOUS_USER_AGENTS = [
   'python', 'scrapy', 'curl', 'wget', 'selenium', 'puppeteer', 'phantomjs', 'headless',
@@ -101,6 +107,11 @@ app.use((req, res, next) => {
       });
     }
   }
+
+  // Record real user site reach & traffic analytics
+  const hour = new Date().getHours();
+  hourlyReachMap[hour] = (hourlyReachMap[hour] || 0) + 1;
+  realUserIPsToday.add(ip);
 
   next();
 });
@@ -364,6 +375,41 @@ app.get('/api/stats', (req, res) => {
   });
 });
 
+app.post('/api/movies/:id/stream-play', (req, res) => {
+  streamPlaysCounter++;
+  return res.json({ success: true, totalStreamPlays: streamPlaysCounter });
+});
+
+app.get('/api/admin/analytics', (req, res) => {
+  const activeOnline = Math.max(1, activeSessionsMap.size);
+  const todayVisitors = Math.max(1, realUserIPsToday.size);
+  const totalViews = hourlyReachMap.reduce((a, b) => a + b, 0);
+
+  const formattedHourly = hourlyReachMap.map((views, h) => ({
+    hour: `${h < 10 ? '0' + h : h}:00`,
+    views
+  }));
+
+  const removedIds = ['the-croods-a-new-age-2020', 'avatar-tla-s1'];
+  const validMovies = moviesCache.filter((m: any) => !removedIds.includes(m.id) && !deletedMovieIdsCache.has(m.id));
+  const topStreamed = [...validMovies]
+    .sort((a: any, b: any) => (b.viewsCount || 0) - (a.viewsCount || 0))
+    .slice(0, 5)
+    .map(m => ({ id: m.id, title: m.title, category: m.category, views: m.viewsCount || 0 }));
+
+  return res.json({
+    success: true,
+    activeOnline,
+    todayVisitors,
+    totalViews,
+    todayDownloads: totalDownloadsToday,
+    streamPlays: streamPlaysCounter,
+    totalMovies: validMovies.length,
+    hourlyReach: formattedHourly,
+    topStreamed
+  });
+});
+
 app.post('/api/movies/:id/view', async (req, res) => {
   const { id } = req.params;
   let updatedMovie: any = null;
@@ -410,13 +456,13 @@ app.get('/api/movies', async (req, res) => {
     if (db) {
       const dbMovies = await db.collection('movies').find({}).toArray();
       if (dbMovies && dbMovies.length > 0) {
-        moviesCache = dbMovies.filter((m: any) => !removedIds.includes(m.id));
+        moviesCache = dbMovies.filter((m: any) => !removedIds.includes(m.id) && !deletedMovieIdsCache.has(m.id));
       }
     }
-    const cleanMovies = moviesCache.filter((m: any) => !removedIds.includes(m.id));
+    const cleanMovies = moviesCache.filter((m: any) => !removedIds.includes(m.id) && !deletedMovieIdsCache.has(m.id));
     return res.json(cleanMovies);
   } catch (err: any) {
-    const cleanMovies = moviesCache.filter((m: any) => !removedIds.includes(m.id));
+    const cleanMovies = moviesCache.filter((m: any) => !removedIds.includes(m.id) && !deletedMovieIdsCache.has(m.id));
     return res.json(cleanMovies);
   }
 });
@@ -494,6 +540,7 @@ app.put('/api/movies/:id', async (req, res) => {
 app.delete('/api/movies/:id', async (req, res) => {
   try {
     const { id } = req.params;
+    deletedMovieIdsCache.add(id);
     moviesCache = moviesCache.filter((m: any) => m.id !== id);
 
     const db = await connectToMongo();
@@ -501,7 +548,7 @@ app.delete('/api/movies/:id', async (req, res) => {
       await db.collection('movies').deleteOne({ id });
     }
 
-    return res.json({ success: true });
+    return res.json({ success: true, message: `Movie ${id} permanently deleted.` });
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message });
   }

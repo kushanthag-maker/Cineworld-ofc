@@ -63,6 +63,16 @@ interface MovieContextType {
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
 
 export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Track permanently deleted movie IDs across sessions
+  const [deletedMovieIds, setDeletedMovieIds] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('cineworld_deleted_movie_ids');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
   // LocalStorage state initialization
   const [movies, setMovies] = useState<Movie[]>(() => {
     const removedIds = [
@@ -79,10 +89,17 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       'shaitaan-2024-sinhala-sub'
     ];
 
-    const isHorror = (m: Movie) =>
+    let savedDeleted: string[] = [];
+    try {
+      const delSaved = localStorage.getItem('cineworld_deleted_movie_ids');
+      if (delSaved) savedDeleted = JSON.parse(delSaved);
+    } catch { savedDeleted = []; }
+
+    const isExcluded = (m: Movie) =>
       m.genres.some((g) => g.toLowerCase().includes('horror')) ||
       m.title.toLowerCase().includes('horror') ||
-      removedIds.includes(m.id);
+      removedIds.includes(m.id) ||
+      savedDeleted.includes(m.id);
 
     try {
       const saved =
@@ -94,17 +111,16 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         const parsed: Movie[] = JSON.parse(saved);
         const mergedMap = new Map<string, Movie>();
 
-        // 1. Load initial default non-horror movies
+        // 1. Load initial default movies (excluding deleted and horror)
         initialMovies.forEach((initM) => {
-          if (!isHorror(initM)) mergedMap.set(initM.id, initM);
+          if (!isExcluded(initM)) mergedMap.set(initM.id, initM);
         });
 
-        // 2. Override with saved user edits, but preserve official posters for default movies
+        // 2. Override with saved user edits (excluding deleted and horror)
         parsed.forEach((m) => {
-          if (!isHorror(m)) {
+          if (!isExcluded(m)) {
             const defaultMatch = initialMovies.find(i => i.id === m.id);
             if (defaultMatch) {
-              // Keep defaultMatch updated posterUrl and backdropUrl
               mergedMap.set(m.id, {
                 ...m,
                 posterUrl: defaultMatch.posterUrl,
@@ -118,9 +134,9 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
         return Array.from(mergedMap.values());
       }
-      return initialMovies.filter((m) => !isHorror(m));
+      return initialMovies.filter((m) => !isExcluded(m));
     } catch {
-      return initialMovies.filter((m) => !isHorror(m));
+      return initialMovies.filter((m) => !isExcluded(m));
     }
   });
 
@@ -394,7 +410,16 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const deleteMovie = async (id: string) => {
     setMovies((prev) => prev.filter((m) => m.id !== id));
-    showToast('Movie deleted from collection', 'info');
+    setDeletedMovieIds((prev) => {
+      const updated = Array.from(new Set([...prev, id]));
+      try {
+        localStorage.setItem('cineworld_deleted_movie_ids', JSON.stringify(updated));
+      } catch (e) {
+        console.error('Save deleted ids error:', e);
+      }
+      return updated;
+    });
+    showToast('Movie permanently deleted from collection', 'info');
     try {
       await fetch(`/api/movies/${encodeURIComponent(id)}`, { method: 'DELETE' });
     } catch (e) {
