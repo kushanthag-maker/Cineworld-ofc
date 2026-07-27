@@ -262,30 +262,6 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
           </button>
 
           <button
-            onClick={() => setActiveTab('vip_requests')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
-              activeTab === 'vip_requests'
-                ? 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-zinc-950 shadow-lg shadow-amber-500/25 font-black'
-                : 'bg-amber-950/40 text-amber-300 hover:bg-amber-900/60 border border-amber-500/40'
-            }`}
-          >
-            <Crown className="w-4 h-4 fill-amber-400 text-amber-950" />
-            <span>Data Card VIP Requests ({vipRequests.filter(r => r.status === 'Pending').length})</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('promo_codes')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
-              activeTab === 'promo_codes'
-                ? 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-zinc-950 shadow-lg shadow-amber-500/25 font-black'
-                : 'bg-amber-950/30 text-amber-400 hover:bg-amber-900/50 border border-amber-500/30'
-            }`}
-          >
-            <Key className="w-4 h-4 text-amber-400" />
-            <span>Promo Codes ({promoCodes.length})</span>
-          </button>
-
-          <button
             onClick={() => setActiveTab('add_movie')}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
               activeTab === 'add_movie'

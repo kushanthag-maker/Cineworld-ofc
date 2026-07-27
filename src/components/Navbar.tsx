@@ -93,19 +93,6 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
           {/* Nav Actions */}
           <div className="hidden md:flex items-center gap-3">
             <button
-              onClick={() => setIsPromoModalOpen(true)}
-              className={`px-3.5 py-2.5 font-bold text-xs uppercase tracking-wider flex items-center gap-2 border rounded-xl transition-all cursor-pointer relative shadow-lg ${
-                userPremium.isPremium
-                  ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-black border-amber-300 shadow-amber-500/30 font-black animate-pulse'
-                  : 'bg-zinc-900 hover:bg-amber-500/20 text-amber-400 border-amber-500/40 hover:border-amber-400'
-              }`}
-              title="Redeem Promo Code or Check VIP Status"
-            >
-              <Crown className="w-4 h-4 text-amber-950 fill-amber-400 stroke-[2]" />
-              <span>{userPremium.isPremium ? `VIP Active (${userPremium.daysRemaining}d)` : 'VIP Promo Code'}</span>
-            </button>
-
-            <button
               onClick={() => setIsReportsListOpen(true)}
               className="px-3.5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-amber-400 font-bold text-xs uppercase tracking-wider flex items-center gap-2 border border-amber-500/30 rounded-xl transition-all cursor-pointer relative"
               title="View User Link & Stream Reports"
@@ -183,17 +170,6 @@ export const Navbar: React.FC<{ activeTab: 'home' | 'watchlist'; setActiveTab: (
           </div>
 
           <div className="grid grid-cols-2 gap-2 pt-2">
-            <button
-              onClick={() => {
-                setIsPromoModalOpen(true);
-                setIsMobileMenuOpen(false);
-              }}
-              className="col-span-2 px-3 py-2.5 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-black font-black text-xs uppercase tracking-wider border border-amber-300 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-amber-500/20"
-            >
-              <Crown className="w-4 h-4 text-black fill-black" />
-              <span>{userPremium.isPremium ? `👑 VIP Active (${userPremium.daysRemaining} Days Left)` : '👑 Redeem VIP Promo Code'}</span>
-            </button>
-
             <button
               onClick={() => {
                 setIsReportsListOpen(true);

@@ -93,7 +93,6 @@ const AppContent: React.FC = () => {
       <ReportsListModal />
       <TrailerModal />
       <WhatsappGateModal />
-      <PromoCodeModal isOpen={isPromoModalOpen} onClose={() => setIsPromoModalOpen(false)} />
       <ToastContainer />
     </div>
   );
