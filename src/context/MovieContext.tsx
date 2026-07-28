@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Movie, MovieRequest, Notice, MovieComment, LinkReport, ToastMessage, PromoCode, UserPremiumInfo, VipRequest } from '../types';
 import { initialMovies } from '../data/initialMovies';
+import { decryptMovieData } from '../utils/crypto';
 
 interface MovieContextType {
   movies: Movie[];
@@ -512,10 +513,11 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         if (Array.isArray(data) && data.length > 0) {
           setMovies((prevMovies) => {
             const mergedMap = new Map<string, Movie>();
-            // Add server movies
+            // Add server movies with decrypted stream & download URLs
             data.forEach((m: Movie) => {
-              if (!deletedMovieIds.includes(m.id)) {
-                mergedMap.set(m.id, m);
+              const decrypted = decryptMovieData(m) as Movie;
+              if (!deletedMovieIds.includes(decrypted.id)) {
+                mergedMap.set(decrypted.id, decrypted);
               }
             });
             // Preserve local additions/edits

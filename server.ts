@@ -49,6 +49,66 @@ app.use('/api', (req, res, next) => {
 
 // AI Anti-Scraper & Bot Shield Engine
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'CW2026#Admin!Secure';
+const SECRET_SALT = 'CINEWORLD_2026_STREAM_SECURE_ENCRYPTION_KEY_v2';
+
+function serverEncryptUrl(url: string): string {
+  if (!url || typeof url !== 'string') return '';
+  if (url.startsWith('enc:')) return url;
+  try {
+    let result = '';
+    for (let i = 0; i < url.length; i++) {
+      const charCode = url.charCodeAt(i) ^ SECRET_SALT.charCodeAt(i % SECRET_SALT.length);
+      result += String.fromCharCode(charCode);
+    }
+    const base64 = Buffer.from(result, 'binary').toString('base64');
+    const urlSafe = base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    return `enc:${urlSafe}`;
+  } catch {
+    return url;
+  }
+}
+
+function serverDecryptUrl(encryptedStr: string): string {
+  if (!encryptedStr || typeof encryptedStr !== 'string') return '';
+  if (!encryptedStr.startsWith('enc:')) return encryptedStr;
+  try {
+    const rawEnc = encryptedStr.slice(4);
+    let base64 = rawEnc.replace(/-/g, '+').replace(/_/g, '/');
+    while (base64.length % 4) {
+      base64 += '=';
+    }
+    const decoded = Buffer.from(base64, 'base64').toString('binary');
+    let originalUrl = '';
+    for (let i = 0; i < decoded.length; i++) {
+      const charCode = decoded.charCodeAt(i) ^ SECRET_SALT.charCodeAt(i % SECRET_SALT.length);
+      originalUrl += String.fromCharCode(charCode);
+    }
+    return originalUrl;
+  } catch {
+    return encryptedStr;
+  }
+}
+
+function processEncryptedMovie(movie: any) {
+  if (!movie) return movie;
+  const clone = JSON.parse(JSON.stringify(movie));
+  if (clone.streamUrl) clone.streamUrl = serverEncryptUrl(clone.streamUrl);
+  if (Array.isArray(clone.downloadOptions)) {
+    clone.downloadOptions = clone.downloadOptions.map((opt: any) => ({
+      ...opt,
+      downloadUrl: opt.downloadUrl ? serverEncryptUrl(opt.downloadUrl) : '',
+      server2Url: opt.server2Url ? serverEncryptUrl(opt.server2Url) : ''
+    }));
+  }
+  if (Array.isArray(clone.episodes)) {
+    clone.episodes = clone.episodes.map((ep: any) => ({
+      ...ep,
+      stream_url: ep.stream_url ? serverEncryptUrl(ep.stream_url) : ''
+    }));
+  }
+  return clone;
+}
+
 const blockedScraperIPs = new Map<string, { reason: string; timestamp: string; count: number }>();
 const adminBannedIPs = new Map<string, { reason: string; timestamp: string }>();
 const scraperActivityLogs = new Map<string, number[]>();
@@ -64,7 +124,8 @@ const SUSPICIOUS_USER_AGENTS = [
   'python', 'scrapy', 'curl', 'wget', 'selenium', 'puppeteer', 'phantomjs', 'headless',
   'axios', 'go-http-client', 'postman', 'requests', 'aiohttp', 'beautifulsoup', 'urllib',
   'mechanize', 'httrack', 'nikto', 'sqlmap', 'burp', 'zgrab', 'nmap', 'semrush', 'ahrefs',
-  'dotbot', 'rogue-bot', 'site-grabber', 'teleport', 'webcopier', 'webripper'
+  'dotbot', 'rogue-bot', 'site-grabber', 'teleport', 'webcopier', 'webripper', 'cheerio',
+  'got', 'superagent', 'undici', 'insomnia', 'paw', 'httpie', 'playwright', 'cypress', 'lighthouse'
 ];
 
 // Anti-Scraping Shield Middleware
@@ -82,11 +143,12 @@ app.use((req, res, next) => {
     });
   }
 
-  // Detect suspicious Bot User-Agents
+  // Detect suspicious Bot User-Agents or headless automated clients
   const isBotUserAgent = SUSPICIOUS_USER_AGENTS.some(agent => userAgent.includes(agent));
-  if (isBotUserAgent && !userAgent.includes('mozilla') && !userAgent.includes('chrome') && !userAgent.includes('safari')) {
+  const isHeadless = userAgent.includes('headless') || !userAgent;
+  if ((isBotUserAgent || isHeadless) && !userAgent.includes('mozilla') && !userAgent.includes('chrome') && !userAgent.includes('safari')) {
     blockedScraperIPs.set(ip, {
-      reason: `Suspicious Automated Scraper User-Agent: ${req.headers['user-agent']}`,
+      reason: `Automated Scraper Package / Bot User-Agent Detected: ${req.headers['user-agent'] || 'Empty UA'}`,
       timestamp: new Date().toISOString(),
       count: 1
     });
@@ -106,9 +168,9 @@ app.use((req, res, next) => {
     timestamps.push(now);
     scraperActivityLogs.set(ip, timestamps);
 
-    if (timestamps.length > 25) { // Exceeded 25 API hits in 10s -> Auto Block
+    if (timestamps.length > 20) { // Exceeded 20 API hits in 10s -> Auto Block
       blockedScraperIPs.set(ip, {
-        reason: 'Automated Rapid API Harvesting Burst (>25 requests in 10s)',
+        reason: 'Automated Rapid API Harvesting Burst (>20 requests in 10s)',
         timestamp: new Date().toISOString(),
         count: timestamps.length
       });
@@ -453,7 +515,18 @@ app.post('/api/movies/:id/download', async (req, res) => {
   return res.json({ success: true, downloadsCount: updatedMovie?.downloadsCount || 1, todayDownloads: totalDownloadsToday });
 });
 
-// GET /api/movies
+// Stream Resolution API Endpoint
+app.post('/api/stream/resolve', (req, res) => {
+  const { encryptedUrl } = req.body;
+  if (!encryptedUrl || typeof encryptedUrl !== 'string') {
+    return res.status(400).json({ success: false, error: 'Invalid or missing encrypted token' });
+  }
+
+  const decryptedUrl = serverDecryptUrl(encryptedUrl);
+  return res.json({ success: true, url: decryptedUrl });
+});
+
+// GET /api/movies - Encrypted Stream & Link Payloads
 app.get('/api/movies', async (req, res) => {
   const removedIds = ['the-croods-a-new-age-2020', 'avatar-tla-s1'];
   try {
@@ -465,10 +538,12 @@ app.get('/api/movies', async (req, res) => {
       }
     }
     const cleanMovies = moviesCache.filter((m: any) => !removedIds.includes(m.id) && !deletedMovieIdsCache.has(m.id));
-    return res.json(cleanMovies);
-  } catch (err: any) {
+    const encryptedMovies = cleanMovies.map(m => processEncryptedMovie(m));
+    return res.json(encryptedMovies);
+  } catch {
     const cleanMovies = moviesCache.filter((m: any) => !removedIds.includes(m.id) && !deletedMovieIdsCache.has(m.id));
-    return res.json(cleanMovies);
+    const encryptedMovies = cleanMovies.map(m => processEncryptedMovie(m));
+    return res.json(encryptedMovies);
   }
 });
 

@@ -1,3 +1,5 @@
+import { decryptUrl } from './crypto';
+
 export interface FormattedStream {
   embedUrl: string;
   directUrl?: string;
@@ -7,7 +9,8 @@ export interface FormattedStream {
 
 export function getDirectDownloadUrl(url: string | undefined | null): string {
   if (!url) return '';
-  const trimmed = url.trim();
+  const decrypted = decryptUrl(url);
+  const trimmed = decrypted.trim();
 
   // Convert Google Drive view link to direct download link
   if (trimmed.includes('drive.google.com/file/d/')) {
@@ -39,7 +42,8 @@ export function formatStreamUrl(url: string | undefined | null): FormattedStream
     return { embedUrl: '', isIframe: false, isDirectVideo: false };
   }
 
-  const trimmed = url.trim();
+  const decrypted = decryptUrl(url);
+  const trimmed = decrypted.trim();
 
   // Pixeldrain links (e.g., https://pixeldrain.com/api/file/oNhYjVmP or https://pixeldrain.com/u/oNhYjVmP)
   if (trimmed.includes('pixeldrain.com')) {
