@@ -182,6 +182,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isReportOpen, setIsReportOpen] = useState<boolean>(false);
   const [reportMovieTarget, setReportMovieTarget] = useState<Movie | null>(null);
   const [activeTrailerUrl, setActiveTrailerUrl] = useState<string | null>(null);
+  const [whatsappModalMovie, setWhatsappModalMovie] = useState<Movie | null>(null);
   const [featuredMovieId, setFeaturedMovieIdState] = useState<string | null>(() => {
     try {
       return localStorage.getItem('cineworld_featured_movie_id') || null;
