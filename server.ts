@@ -1114,48 +1114,77 @@ app.post('/api/security/unblock-ip', (req, res) => {
   return res.status(400).json({ success: false, error: 'IP not found in blocked list.' });
 });
 
-// Admin Panel Security & Single-Attempt Auto-Ban System
+const adminFailedAttempts = new Map<string, number>();
+
+// Admin Panel Security & 3-Attempt Auto-Ban System
 app.get('/api/admin/check-status', (req, res) => {
   const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || '127.0.0.1';
-  const isBanned = blockedScraperIPs.has(ip) || adminBannedIPs.has(ip);
-  return res.json({ success: true, isBanned, ip });
+  const isBanned = adminBannedIPs.has(ip);
+  const attempts = adminFailedAttempts.get(ip) || 0;
+  return res.json({ success: true, isBanned, ip, attempts, remainingAttempts: Math.max(0, 3 - attempts) });
+});
+
+// Endpoint to unblock admin IP if user got locked out
+app.post('/api/admin/unblock-me', (req, res) => {
+  const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || '127.0.0.1';
+  blockedScraperIPs.delete(ip);
+  adminBannedIPs.delete(ip);
+  adminFailedAttempts.delete(ip);
+  return res.json({ success: true, message: 'Your IP has been unblocked. You can log in now!' });
 });
 
 app.post('/api/admin/login', (req, res) => {
   const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || '127.0.0.1';
   const { password } = req.body;
 
-  // Check if IP is already banned
-  if (blockedScraperIPs.has(ip) || adminBannedIPs.has(ip)) {
+  // Check if IP is currently banned
+  if (adminBannedIPs.has(ip)) {
     return res.status(403).json({
       success: false,
       isBanned: true,
-      error: 'SECURITY SHIELD ACTIVATED: Access Denied. Your IP is permanently banned from Admin Access due to previous invalid password attempt.'
+      error: 'SECURITY SHIELD: Your IP is banned due to 3 consecutive wrong password attempts. Click Unblock to try again.'
     });
   }
 
   // Validate Password
   if (!password || typeof password !== 'string' || password.trim() !== ADMIN_PASSWORD) {
-    // 1ST WRONG ATTEMPT -> INSTANT PERMANENT IP AUTO-BAN!
-    const banDetails = {
-      reason: 'Failed Admin Authentication Password Attempt (1st Attempt Instant Auto-Ban)',
-      timestamp: new Date().toISOString(),
-      count: 1
-    };
-    blockedScraperIPs.set(ip, banDetails);
-    adminBannedIPs.set(ip, banDetails);
-    totalBlockedScraperAttempts++;
+    const currentAttempts = (adminFailedAttempts.get(ip) || 0) + 1;
+    adminFailedAttempts.set(ip, currentAttempts);
 
-    console.warn(`[ADMIN SECURITY SHIELD] INSTANTLY BANNED IP ${ip} after 1 failed admin password attempt.`);
+    if (currentAttempts >= 3) {
+      const banDetails = {
+        reason: 'Failed Admin Password 3 Times Consecutively',
+        timestamp: new Date().toISOString(),
+        count: currentAttempts
+      };
+      adminBannedIPs.set(ip, banDetails);
+      totalBlockedScraperAttempts++;
 
-    return res.status(403).json({
+      console.warn(`[ADMIN SECURITY SHIELD] BANNED IP ${ip} after 3 failed admin password attempts.`);
+
+      return res.status(403).json({
+        success: false,
+        isBanned: true,
+        attempts: currentAttempts,
+        remainingAttempts: 0,
+        error: 'SECURITY SHIELD: Incorrect password 3 times! Your IP has been locked.'
+      });
+    }
+
+    const remaining = 3 - currentAttempts;
+    return res.status(401).json({
       success: false,
-      isBanned: true,
-      error: 'SECURITY SHIELD ACTIVATED: Incorrect admin password! Your IP has been INSTANTLY BANNED from accessing the Admin Panel.'
+      isBanned: false,
+      attempts: currentAttempts,
+      remainingAttempts: remaining,
+      error: `Incorrect admin password! Attempt ${currentAttempts} of 3. (${remaining} attempt${remaining === 1 ? '' : 's'} remaining before IP lock)`
     });
   }
 
-  // Success
+  // Success -> Clear failed attempts
+  adminFailedAttempts.delete(ip);
+  adminBannedIPs.delete(ip);
+
   const adminToken = 'cw_admin_session_' + Date.now() + '_' + Math.random().toString(36).substring(2);
   return res.json({
     success: true,

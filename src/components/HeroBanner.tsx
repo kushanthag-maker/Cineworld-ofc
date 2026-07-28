@@ -2,21 +2,29 @@ import React from 'react';
 import { useMovie } from '../context/MovieContext';
 import { Play, Download, Star } from 'lucide-react';
 
+const FALLBACK_POSTER = 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&q=80';
+const FALLBACK_BACKDROP = 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80';
+
 export const HeroBanner: React.FC = () => {
   const { movies, setActiveMovie, setWhatsappModalMovie, featuredMovieId } = useMovie();
+  const [hasPosterErr, setHasPosterErr] = React.useState(false);
+  const [hasBackdropErr, setHasBackdropErr] = React.useState(false);
 
   const featured = (featuredMovieId && movies.find((m) => m.id === featuredMovieId)) || movies[0];
   if (!featured) return null;
 
+  const posterImg = hasPosterErr || !featured.posterUrl ? FALLBACK_POSTER : featured.posterUrl;
+  const backdropImg = hasBackdropErr || !featured.backdropUrl ? FALLBACK_BACKDROP : featured.backdropUrl;
 
   return (
     <div className="relative w-full min-h-[420px] lg:min-h-[480px] bg-black flex items-center overflow-hidden border-b border-amber-500/20">
       {/* Backdrop Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src={featured.backdropUrl || featured.posterUrl}
+          src={backdropImg}
           alt={featured.title}
           className="w-full h-full object-cover object-center opacity-25 filter blur-[2px]"
+          onError={() => setHasBackdropErr(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent" />
@@ -29,9 +37,10 @@ export const HeroBanner: React.FC = () => {
           className="w-44 sm:w-52 lg:w-60 shrink-0 rounded-xl overflow-hidden border-2 border-amber-500/60 shadow-[0_0_35px_rgba(245,158,11,0.35)] relative group cursor-pointer"
         >
           <img
-            src={featured.posterUrl}
+            src={posterImg}
             alt={featured.title}
             className="w-full aspect-[2/3] object-cover group-hover:scale-105 transition-transform duration-500"
+            onError={() => setHasPosterErr(true)}
           />
           <div className="absolute top-2 left-2 bg-amber-500 text-black text-[10px] font-black px-2 py-0.5 uppercase tracking-wider rounded">
             FEATURED CARTOON

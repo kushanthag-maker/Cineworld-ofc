@@ -7,14 +7,12 @@ interface MovieCardProps {
   movie: Movie;
 }
 
+const FALLBACK_POSTER = 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&q=80';
+
 export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const { setActiveMovie, setWhatsappModalMovie, watchlist, toggleWatchlist, showToast } = useMovie();
   const [hasImageError, setHasImageError] = useState(false);
   const isBookmarked = watchlist.includes(movie.id);
-
-  if (hasImageError) {
-    return null;
-  }
 
   const handleCopyMovieLink = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -23,13 +21,15 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     showToast(`Link for "${movie.title}" copied!`, 'success');
   };
 
+  const currentPoster = hasImageError || !movie.posterUrl ? FALLBACK_POSTER : movie.posterUrl;
+
   return (
     <div className="group relative bg-zinc-950/80 border border-zinc-800/80 hover:border-amber-500/80 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-amber-500/10 hover:-translate-y-1">
       
       {/* Top Poster Image Container */}
       <div className="relative aspect-[2/3] w-full overflow-hidden bg-zinc-900 cursor-pointer" onClick={() => setActiveMovie(movie)}>
         <img
-          src={movie.posterUrl}
+          src={currentPoster}
           alt={movie.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
           loading="lazy"

@@ -340,6 +340,21 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     setEditDownloads((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const handleSelfUnblock = async () => {
+    try {
+      const res = await fetch('/api/admin/unblock-me', { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        setIsBanned(false);
+        showToast('Your IP has been unblocked! You can log in now.', 'success');
+      } else {
+        showToast('Failed to unblock IP', 'error');
+      }
+    } catch {
+      showToast('Error unblocking IP', 'error');
+    }
+  };
+
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!passwordInput.trim()) {
@@ -357,7 +372,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
 
       if (data.isBanned || res.status === 403) {
         setIsBanned(true);
-        showToast(data.error || 'INVALID PASSWORD: Your IP has been INSTANTLY BANNED!', 'error');
+        showToast(data.error || 'Your IP has been locked due to 3 failed attempts.', 'error');
         return;
       }
 
@@ -367,8 +382,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
         if (data.token) sessionStorage.setItem('cineworld_admin_token', data.token);
         showToast('Admin access granted! Welcome back.', 'success');
       } else {
-        setIsBanned(true);
-        showToast(data.error || 'Incorrect password! Your IP has been banned.', 'error');
+        showToast(data.error || 'Incorrect password!', 'error');
       }
     } catch {
       showToast('Authentication network error', 'error');
@@ -448,29 +462,39 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
 
           <div className="space-y-2">
             <h1 className="text-2xl font-black text-red-500 uppercase tracking-widest font-brand">
-              ACCESS PERMANENTLY BANNED
+              ADMIN GATE LOCKED
             </h1>
             <p className="text-xs text-red-300 font-mono font-bold uppercase tracking-wider">
-              CINEWORLD AI SECURITY SHIELD ACTIVATED
+              CINEWORLD SECURITY SHIELD (3 FAILED ATTEMPTS)
             </p>
           </div>
 
           <div className="bg-red-950/30 border border-red-900/50 p-4 rounded-2xl text-left space-y-2 text-xs font-mono text-zinc-300">
             <p className="text-red-400 font-black flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-red-500 animate-ping inline-block" />
-              STATUS: IP Banned (Failed Authentication)
+              STATUS: IP Lock Activated (3 Wrong Passwords)
             </p>
             <p className="text-zinc-300 leading-relaxed">
-              Invalid admin password entered. As requested by site policy, your IP address has been immediately banned from accessing the Administrator Control Gate.
+              Your IP address was temporarily locked after 3 wrong password attempts. As site administrator, click the Unblock button below to clear the lock and try again.
             </p>
           </div>
 
-          <button
-            onClick={onClose}
-            className="w-full py-3.5 bg-red-600 hover:bg-red-500 text-white font-black uppercase text-xs tracking-wider rounded-xl cursor-pointer transition-all shadow-lg shadow-red-600/30"
-          >
-            Return to Public Site
-          </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button
+              onClick={handleSelfUnblock}
+              className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black uppercase text-xs tracking-wider rounded-xl cursor-pointer transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>Unblock My IP Now</span>
+            </button>
+
+            <button
+              onClick={onClose}
+              className="w-full py-3.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-bold uppercase text-xs tracking-wider rounded-xl cursor-pointer transition-all border border-zinc-800"
+            >
+              Return to Main Site
+            </button>
+          </div>
         </div>
       </div>
     );
