@@ -6,6 +6,7 @@ export interface DownloadOption {
   format: string;
   downloadUrl: string; // Server 1 Direct Link
   server2Url?: string; // Server 2 Backup Mirror Link
+  subtitleUrl?: string; // Subtitle Direct File (.vtt / .srt) Link
   directServerName?: string;
   server1Name?: string;
   server2Name?: string;
@@ -15,6 +16,7 @@ export interface Episode {
   episode: string;
   title: string;
   stream_url: string;
+  subtitle_url?: string;
 }
 
 export interface Movie {
@@ -31,6 +33,7 @@ export interface Movie {
   posterUrl: string;
   backdropUrl?: string;
   streamUrl: string;
+  subtitleUrl?: string; // Direct Sinhala Subtitle (.vtt / .srt) Link
   category: 'Sinhala Subbed' | 'Sinhala Dubbed' | 'Sinhala Movie' | 'Hollywood' | 'Bollywood' | 'Tamil / South' | 'Animation';
   language: string;
   hasSinhalaSub: boolean;

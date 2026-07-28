@@ -164,6 +164,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
   const [newPoster, setNewPoster] = useState('');
   const [newBackdrop, setNewBackdrop] = useState('');
   const [newStreamUrl, setNewStreamUrl] = useState('');
+  const [newSubtitleUrl, setNewSubtitleUrl] = useState('');
   const [newTrailerUrl, setNewTrailerUrl] = useState('');
   const [newDescription, setNewDescription] = useState('');
   const [newDownloads, setNewDownloads] = useState<DownloadOption[]>([]);
@@ -253,6 +254,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
   const [editPoster, setEditPoster] = useState('');
   const [editBackdrop, setEditBackdrop] = useState('');
   const [editStreamUrl, setEditStreamUrl] = useState('');
+  const [editSubtitleUrl, setEditSubtitleUrl] = useState('');
   const [editDescription, setEditDescription] = useState('');
   const [editDownloads, setEditDownloads] = useState<DownloadOption[]>([]);
 
@@ -272,6 +274,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     setEditPoster(m.posterUrl || '');
     setEditBackdrop(m.backdropUrl || '');
     setEditStreamUrl(m.streamUrl || '');
+    setEditSubtitleUrl(m.subtitleUrl || '');
     setEditDescription(m.description || '');
     setEditDownloads(m.downloadOptions ? JSON.parse(JSON.stringify(m.downloadOptions)) : []);
   };
@@ -300,6 +303,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
       posterUrl: editPoster.trim(),
       backdropUrl: editBackdrop.trim() || editPoster.trim(),
       streamUrl: editStreamUrl.trim(),
+      subtitleUrl: editSubtitleUrl.trim() || undefined,
       description: editDescription.trim(),
       downloadOptions: editDownloads.filter((d) => d.downloadUrl && d.downloadUrl.trim().length > 0)
     };
@@ -392,6 +396,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
       posterUrl: newPoster.trim() || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&q=80',
       backdropUrl: newBackdrop.trim() || newPoster.trim() || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80',
       streamUrl: newStreamUrl.trim(),
+      subtitleUrl: newSubtitleUrl.trim() || undefined,
       category: newCategory as any,
       language: newLanguage.trim() || 'Sinhala Dubbed (සිංහල)',
       hasSinhalaSub: newHasSinhalaSub,
@@ -1067,7 +1072,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                   2. Video Player & Image Assets
                 </h3>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-zinc-300 mb-1 uppercase font-bold">
                       Direct Stream MP4 URL <span className="text-amber-500">*</span>
@@ -1079,6 +1084,19 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                       required
                       placeholder="https://... (Direct .mp4 or stream video URL)"
                       className="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">
+                      Sinhala Subtitle File Link (.vtt / .srt)
+                    </label>
+                    <input
+                      type="url"
+                      value={newSubtitleUrl}
+                      onChange={(e) => setNewSubtitleUrl(e.target.value)}
+                      placeholder="https://... (Direct .vtt or .srt subtitle link)"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-amber-300 p-3 rounded-xl outline-none focus:border-amber-500 font-sans"
                     />
                   </div>
 
@@ -1241,7 +1259,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                       <div>
                         <label className="block text-[10px] text-zinc-400">Download Video Link</label>
                         <input
@@ -1250,6 +1268,16 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                           onChange={(e) => handleUpdateNewDownloadOption(idx, 'downloadUrl', e.target.value)}
                           placeholder="https://..."
                           className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-zinc-400">Subtitle Link (.vtt/.srt)</label>
+                        <input
+                          type="url"
+                          value={dl.subtitleUrl || ''}
+                          onChange={(e) => handleUpdateNewDownloadOption(idx, 'subtitleUrl', e.target.value)}
+                          placeholder="https://... (Sinhala sub file)"
+                          className="w-full bg-zinc-900 border border-zinc-800 text-amber-300 p-2 rounded text-xs"
                         />
                       </div>
                       <div>
@@ -2155,22 +2183,37 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                   <span>2. Streaming Link & Poster Images</span>
                 </h3>
 
-                <div>
-                  <label className="block text-zinc-300 mb-1 uppercase font-bold">
-                    Direct Stream Video URL <span className="text-amber-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={editStreamUrl}
-                    onChange={(e) => setEditStreamUrl(e.target.value)}
-                    required
-                    placeholder="https://... (Direct .mp4 link or stream video player link)"
-                    className="w-full bg-zinc-950 border border-amber-500/40 text-amber-300 p-3 rounded-xl outline-none focus:border-amber-400 font-sans text-sm font-bold"
-                  />
-                  <p className="text-[10px] text-zinc-400 mt-1">
-                    💡 Users will watch this video directly in the CINEWORLD built-in video player.
-                  </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">
+                      Direct Stream Video URL <span className="text-amber-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={editStreamUrl}
+                      onChange={(e) => setEditStreamUrl(e.target.value)}
+                      required
+                      placeholder="https://... (Direct .mp4 link or stream video link)"
+                      className="w-full bg-zinc-950 border border-amber-500/40 text-amber-300 p-3 rounded-xl outline-none focus:border-amber-400 font-sans text-sm font-bold"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-300 mb-1 uppercase font-bold">
+                      Sinhala Subtitle File Link (.vtt / .srt)
+                    </label>
+                    <input
+                      type="text"
+                      value={editSubtitleUrl}
+                      onChange={(e) => setEditSubtitleUrl(e.target.value)}
+                      placeholder="https://... (Direct .vtt / .srt subtitle URL)"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-amber-300 p-3 rounded-xl outline-none focus:border-amber-500 font-sans text-sm"
+                    />
+                  </div>
                 </div>
+                <p className="text-[10px] text-zinc-400 mt-1">
+                  💡 When users watch English dubbed or original movies with a Sinhala subtitle file URL provided, CINEWORLD automatically attaches the Sinhala sub track directly to the video player!
+                </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -2317,26 +2360,39 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                           </div>
                         </div>
 
-                        <div>
-                          <label className="block text-[10px] text-zinc-400 uppercase font-bold">Download URL (Server 1)</label>
-                          <input
-                            type="text"
-                            value={dl.downloadUrl}
-                            onChange={(e) => handleUpdateDownloadOption(idx, 'downloadUrl', e.target.value)}
-                            placeholder="https://..."
-                            className="w-full bg-zinc-900 border border-zinc-800 text-amber-400 p-2 rounded-lg text-xs font-mono"
-                          />
-                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                          <div>
+                            <label className="block text-[10px] text-zinc-400 uppercase font-bold">Download URL (Server 1)</label>
+                            <input
+                              type="text"
+                              value={dl.downloadUrl}
+                              onChange={(e) => handleUpdateDownloadOption(idx, 'downloadUrl', e.target.value)}
+                              placeholder="https://..."
+                              className="w-full bg-zinc-900 border border-zinc-800 text-amber-400 p-2 rounded-lg text-xs font-mono"
+                            />
+                          </div>
 
-                        <div>
-                          <label className="block text-[10px] text-zinc-400 uppercase font-bold">Backup Mirror URL (Server 2 Optional)</label>
-                          <input
-                            type="text"
-                            value={dl.server2Url || ''}
-                            onChange={(e) => handleUpdateDownloadOption(idx, 'server2Url', e.target.value)}
-                            placeholder="https://... (Optional Backup Link)"
-                            className="w-full bg-zinc-900 border border-zinc-800 text-zinc-300 p-2 rounded-lg text-xs font-mono"
-                          />
+                          <div>
+                            <label className="block text-[10px] text-zinc-400 uppercase font-bold">Subtitle File Link (.vtt/.srt)</label>
+                            <input
+                              type="text"
+                              value={dl.subtitleUrl || ''}
+                              onChange={(e) => handleUpdateDownloadOption(idx, 'subtitleUrl', e.target.value)}
+                              placeholder="https://... (Sinhala Subtitle Link)"
+                              className="w-full bg-zinc-900 border border-zinc-800 text-amber-300 p-2 rounded-lg text-xs font-mono"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[10px] text-zinc-400 uppercase font-bold">Backup Mirror URL (Server 2)</label>
+                            <input
+                              type="text"
+                              value={dl.server2Url || ''}
+                              onChange={(e) => handleUpdateDownloadOption(idx, 'server2Url', e.target.value)}
+                              placeholder="https://... (Optional Backup Link)"
+                              className="w-full bg-zinc-900 border border-zinc-800 text-white p-2 rounded-lg text-xs font-mono"
+                            />
+                          </div>
                         </div>
                       </div>
                     ))}

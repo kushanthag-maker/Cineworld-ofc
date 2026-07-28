@@ -64,18 +64,24 @@ export function encryptMovieData(movie: any): any {
     clone.streamUrl = encryptUrl(clone.streamUrl);
   }
 
+  if (clone.subtitleUrl) {
+    clone.subtitleUrl = encryptUrl(clone.subtitleUrl);
+  }
+
   if (Array.isArray(clone.downloadOptions)) {
     clone.downloadOptions = clone.downloadOptions.map((opt: any) => ({
       ...opt,
       downloadUrl: opt.downloadUrl ? encryptUrl(opt.downloadUrl) : '',
-      server2Url: opt.server2Url ? encryptUrl(opt.server2Url) : ''
+      server2Url: opt.server2Url ? encryptUrl(opt.server2Url) : '',
+      subtitleUrl: opt.subtitleUrl ? encryptUrl(opt.subtitleUrl) : ''
     }));
   }
 
   if (Array.isArray(clone.episodes)) {
     clone.episodes = clone.episodes.map((ep: any) => ({
       ...ep,
-      stream_url: ep.stream_url ? encryptUrl(ep.stream_url) : ''
+      stream_url: ep.stream_url ? encryptUrl(ep.stream_url) : '',
+      subtitle_url: ep.subtitle_url ? encryptUrl(ep.subtitle_url) : ''
     }));
   }
 
@@ -91,18 +97,24 @@ export function decryptMovieData(movie: any): any {
     clone.streamUrl = decryptUrl(clone.streamUrl);
   }
 
+  if (clone.subtitleUrl) {
+    clone.subtitleUrl = decryptUrl(clone.subtitleUrl);
+  }
+
   if (Array.isArray(clone.downloadOptions)) {
     clone.downloadOptions = clone.downloadOptions.map((opt: any) => ({
       ...opt,
       downloadUrl: opt.downloadUrl ? decryptUrl(opt.downloadUrl) : '',
-      server2Url: opt.server2Url ? decryptUrl(opt.server2Url) : ''
+      server2Url: opt.server2Url ? decryptUrl(opt.server2Url) : '',
+      subtitleUrl: opt.subtitleUrl ? decryptUrl(opt.subtitleUrl) : ''
     }));
   }
 
   if (Array.isArray(clone.episodes)) {
     clone.episodes = clone.episodes.map((ep: any) => ({
       ...ep,
-      stream_url: ep.stream_url ? decryptUrl(ep.stream_url) : ''
+      stream_url: ep.stream_url ? decryptUrl(ep.stream_url) : '',
+      subtitle_url: ep.subtitle_url ? decryptUrl(ep.subtitle_url) : ''
     }));
   }
 

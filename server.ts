@@ -93,17 +93,20 @@ function processEncryptedMovie(movie: any) {
   if (!movie) return movie;
   const clone = JSON.parse(JSON.stringify(movie));
   if (clone.streamUrl) clone.streamUrl = serverEncryptUrl(clone.streamUrl);
+  if (clone.subtitleUrl) clone.subtitleUrl = serverEncryptUrl(clone.subtitleUrl);
   if (Array.isArray(clone.downloadOptions)) {
     clone.downloadOptions = clone.downloadOptions.map((opt: any) => ({
       ...opt,
       downloadUrl: opt.downloadUrl ? serverEncryptUrl(opt.downloadUrl) : '',
-      server2Url: opt.server2Url ? serverEncryptUrl(opt.server2Url) : ''
+      server2Url: opt.server2Url ? serverEncryptUrl(opt.server2Url) : '',
+      subtitleUrl: opt.subtitleUrl ? serverEncryptUrl(opt.subtitleUrl) : ''
     }));
   }
   if (Array.isArray(clone.episodes)) {
     clone.episodes = clone.episodes.map((ep: any) => ({
       ...ep,
-      stream_url: ep.stream_url ? serverEncryptUrl(ep.stream_url) : ''
+      stream_url: ep.stream_url ? serverEncryptUrl(ep.stream_url) : '',
+      subtitle_url: ep.subtitle_url ? serverEncryptUrl(ep.subtitle_url) : ''
     }));
   }
   return clone;
@@ -146,7 +149,7 @@ app.use((req, res, next) => {
   // Detect suspicious Bot User-Agents or headless automated clients
   const isBotUserAgent = SUSPICIOUS_USER_AGENTS.some(agent => userAgent.includes(agent));
   const isHeadless = userAgent.includes('headless') || !userAgent;
-  if ((isBotUserAgent || isHeadless) && !userAgent.includes('mozilla') && !userAgent.includes('chrome') && !userAgent.includes('safari')) {
+  if (isBotUserAgent || (isHeadless && !userAgent.includes('mozilla'))) {
     blockedScraperIPs.set(ip, {
       reason: `Automated Scraper Package / Bot User-Agent Detected: ${req.headers['user-agent'] || 'Empty UA'}`,
       timestamp: new Date().toISOString(),
