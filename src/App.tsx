@@ -25,8 +25,8 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     const checkAdminRoute = () => {
       const searchParams = new URLSearchParams(window.location.search);
-      const isParamAdmin = searchParams.has('admin') || searchParams.get('p') === '7060';
-      const isHashAdmin = window.location.hash.includes('admin') || window.location.hash.includes('7060');
+      const isParamAdmin = searchParams.has('admin');
+      const isHashAdmin = window.location.hash.includes('admin');
       const isPathAdmin = window.location.pathname === '/admin';
       if (isParamAdmin || isHashAdmin || isPathAdmin) {
         setIsAdminOpen(true);

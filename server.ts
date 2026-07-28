@@ -36,7 +36,9 @@ app.use('/api', (req, res, next) => {
 });
 
 // AI Anti-Scraper & Bot Shield Engine
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'CW2026#Admin!Secure';
 const blockedScraperIPs = new Map<string, { reason: string; timestamp: string; count: number }>();
+const adminBannedIPs = new Map<string, { reason: string; timestamp: string }>();
 const scraperActivityLogs = new Map<string, number[]>();
 let totalBlockedScraperAttempts = 0; // Real live blocked attempts counter
 const deletedMovieIdsCache = new Set<string>(); // Persistent deleted movies cache
@@ -151,16 +153,7 @@ const initialSeedMovies = initialMovies;
 
 let moviesCache: any[] = [...initialSeedMovies];
 let requestsCache: any[] = [];
-let noticesCache: any[] = [
-  {
-    id: 'n1',
-    title: 'WELCOME TO CINEWORLD LK - SINHALA MOVIES & CARTOONS CINEMA',
-    content: 'Enjoy high-speed direct downloads & streaming for Ben 10, Cartoons, and Sinhala Dubbed Movies in 1080p HD!',
-    type: 'success',
-    isActive: true,
-    createdAt: new Date().toISOString()
-  }
-];
+let noticesCache: any[] = [];
 
 let commentsCache: any[] = [
   {
@@ -1023,11 +1016,62 @@ app.get('/api/security/shield-status', (req, res) => {
 
 app.post('/api/security/unblock-ip', (req, res) => {
   const { ip } = req.body;
-  if (ip && blockedScraperIPs.has(ip)) {
+  if (ip) {
     blockedScraperIPs.delete(ip);
+    adminBannedIPs.delete(ip);
     return res.json({ success: true, message: `IP ${ip} has been unblocked from AI Security Shield.` });
   }
   return res.status(400).json({ success: false, error: 'IP not found in blocked list.' });
+});
+
+// Admin Panel Security & Single-Attempt Auto-Ban System
+app.get('/api/admin/check-status', (req, res) => {
+  const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || '127.0.0.1';
+  const isBanned = blockedScraperIPs.has(ip) || adminBannedIPs.has(ip);
+  return res.json({ success: true, isBanned, ip });
+});
+
+app.post('/api/admin/login', (req, res) => {
+  const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || '127.0.0.1';
+  const { password } = req.body;
+
+  // Check if IP is already banned
+  if (blockedScraperIPs.has(ip) || adminBannedIPs.has(ip)) {
+    return res.status(403).json({
+      success: false,
+      isBanned: true,
+      error: 'SECURITY SHIELD ACTIVATED: Access Denied. Your IP is permanently banned from Admin Access due to previous invalid password attempt.'
+    });
+  }
+
+  // Validate Password
+  if (!password || typeof password !== 'string' || password.trim() !== ADMIN_PASSWORD) {
+    // 1ST WRONG ATTEMPT -> INSTANT PERMANENT IP AUTO-BAN!
+    const banDetails = {
+      reason: 'Failed Admin Authentication Password Attempt (1st Attempt Instant Auto-Ban)',
+      timestamp: new Date().toISOString(),
+      count: 1
+    };
+    blockedScraperIPs.set(ip, banDetails);
+    adminBannedIPs.set(ip, banDetails);
+    totalBlockedScraperAttempts++;
+
+    console.warn(`[ADMIN SECURITY SHIELD] INSTANTLY BANNED IP ${ip} after 1 failed admin password attempt.`);
+
+    return res.status(403).json({
+      success: false,
+      isBanned: true,
+      error: 'SECURITY SHIELD ACTIVATED: Incorrect admin password! Your IP has been INSTANTLY BANNED from accessing the Admin Panel.'
+    });
+  }
+
+  // Success
+  const adminToken = 'cw_admin_session_' + Date.now() + '_' + Math.random().toString(36).substring(2);
+  return res.json({
+    success: true,
+    token: adminToken,
+    message: 'Admin authentication verified successfully.'
+  });
 });
 
 // Catch-all route to serve SPA or fallback

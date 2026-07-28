@@ -42,18 +42,7 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 font-mono gap-4 uppercase">
-          <p 
-            onClick={() => {
-              const count = Number(sessionStorage.getItem('cineworld_secret_click') || '0') + 1;
-              sessionStorage.setItem('cineworld_secret_click', count.toString());
-              if (count >= 3) {
-                sessionStorage.removeItem('cineworld_secret_click');
-                window.location.search = '?admin=7060';
-              }
-            }}
-            className="cursor-default select-none hover:text-zinc-400 transition-colors"
-            title="CINEWORLD LK"
-          >
+          <p className="cursor-default select-none text-zinc-500">
             © {new Date().getFullYear()} CINEWORLD LK. All Rights Reserved.
           </p>
           

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMovie } from '../context/MovieContext';
 import { 
   ShieldCheck, 
+  ShieldAlert,
   Lock, 
   Film, 
   MessageSquare, 
@@ -62,9 +63,25 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
   } = useMovie();
 
   const [passwordInput, setPasswordInput] = useState('');
+  const [isBanned, setIsBanned] = useState<boolean>(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     return sessionStorage.getItem('cineworld_admin_authed') === 'true';
   });
+
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      try {
+        const res = await fetch('/api/admin/check-status');
+        const data = await res.json();
+        if (data.isBanned) {
+          setIsBanned(true);
+        }
+      } catch (e) {
+        console.warn('Admin status check warning:', e);
+      }
+    };
+    checkAdminStatus();
+  }, []);
 
   const [activeTab, setActiveTab] = useState<'requests' | 'reports' | 'movies' | 'add_movie' | 'notices' | 'promo_codes' | 'vip_requests' | 'security' | 'analytics'>('requests');
   const [securityData, setSecurityData] = useState<any>(null);
@@ -319,14 +336,38 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     setEditDownloads((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput.trim() === '7060') {
-      setIsAuthenticated(true);
-      sessionStorage.setItem('cineworld_admin_authed', 'true');
-      showToast('Admin access granted! Welcome back.', 'success');
-    } else {
-      showToast('Incorrect password! Try again.', 'error');
+    if (!passwordInput.trim()) {
+      showToast('Please enter admin password.', 'error');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: passwordInput.trim() })
+      });
+      const data = await res.json();
+
+      if (data.isBanned || res.status === 403) {
+        setIsBanned(true);
+        showToast(data.error || 'INVALID PASSWORD: Your IP has been INSTANTLY BANNED!', 'error');
+        return;
+      }
+
+      if (data.success) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem('cineworld_admin_authed', 'true');
+        if (data.token) sessionStorage.setItem('cineworld_admin_token', data.token);
+        showToast('Admin access granted! Welcome back.', 'success');
+      } else {
+        setIsBanned(true);
+        showToast(data.error || 'Incorrect password! Your IP has been banned.', 'error');
+      }
+    } catch {
+      showToast('Authentication network error', 'error');
     }
   };
 
@@ -384,6 +425,52 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
     setActiveTab('movies');
   };
 
+  // Banned IP Gate
+  if (isBanned) {
+    return (
+      <div className="min-h-screen bg-[#050505] flex items-center justify-center p-4">
+        <div className="bg-zinc-950 border-2 border-red-600/80 rounded-3xl w-full max-w-lg p-8 shadow-[0_0_60px_rgba(220,38,38,0.3)] space-y-6 text-center relative">
+          <button 
+            onClick={onClose}
+            className="absolute top-4 right-4 text-zinc-400 hover:text-white p-2 rounded-xl bg-zinc-900 border border-white/10 cursor-pointer"
+          >
+            <X className="w-5 h-5" />
+          </button>
+
+          <div className="w-20 h-20 bg-red-600/10 border-2 border-red-500/50 rounded-2xl mx-auto flex items-center justify-center text-red-500 shadow-lg shadow-red-500/20">
+            <ShieldAlert className="w-10 h-10 animate-pulse" />
+          </div>
+
+          <div className="space-y-2">
+            <h1 className="text-2xl font-black text-red-500 uppercase tracking-widest font-brand">
+              ACCESS PERMANENTLY BANNED
+            </h1>
+            <p className="text-xs text-red-300 font-mono font-bold uppercase tracking-wider">
+              CINEWORLD AI SECURITY SHIELD ACTIVATED
+            </p>
+          </div>
+
+          <div className="bg-red-950/30 border border-red-900/50 p-4 rounded-2xl text-left space-y-2 text-xs font-mono text-zinc-300">
+            <p className="text-red-400 font-black flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-ping inline-block" />
+              STATUS: IP Banned (Failed Authentication)
+            </p>
+            <p className="text-zinc-300 leading-relaxed">
+              Invalid admin password entered. As requested by site policy, your IP address has been immediately banned from accessing the Administrator Control Gate.
+            </p>
+          </div>
+
+          <button
+            onClick={onClose}
+            className="w-full py-3.5 bg-red-600 hover:bg-red-500 text-white font-black uppercase text-xs tracking-wider rounded-xl cursor-pointer transition-all shadow-lg shadow-red-600/30"
+          >
+            Return to Public Site
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Password Lock Gate
   if (!isAuthenticated) {
     return (
@@ -391,7 +478,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
         <div className="bg-zinc-950 border border-amber-500/30 rounded-2xl w-full max-w-md p-8 shadow-2xl space-y-6 relative">
           <button 
             onClick={onClose}
-            className="absolute top-4 right-4 text-zinc-400 hover:text-white p-1 rounded-lg bg-zinc-900 border border-white/10"
+            className="absolute top-4 right-4 text-zinc-400 hover:text-white p-1 rounded-lg bg-zinc-900 border border-white/10 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -417,7 +504,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onClose }) => {
                 type="password"
                 value={passwordInput}
                 onChange={(e) => setPasswordInput(e.target.value)}
-                placeholder="Password (e.g. 7060)"
+                placeholder="Enter Admin Password"
                 autoFocus
                 className="w-full bg-zinc-900 border border-zinc-800 text-white p-3.5 rounded-xl text-center font-mono text-lg tracking-widest outline-none focus:border-amber-500"
               />

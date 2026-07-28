@@ -8,14 +8,10 @@ export const NoticeBanner: React.FC = () => {
 
   const activeNotices = notices.filter((n) => n.isActive !== false);
 
-  if (isDismissed) return null;
+  // If dismissed or no active notice exists -> return null (do not display anything)
+  if (isDismissed || activeNotices.length === 0) return null;
 
-  const displayNotice = activeNotices[0] || {
-    id: 'default-announcement',
-    title: 'CINEWORLD ANNOUNCEMENT',
-    content: 'Welcome to CINEWORLD! Watch Sinhala Dubbed Cartoons, Subtitled Movies & Series in 1080p HD. All Download Servers are Online!',
-    type: 'info'
-  };
+  const displayNotice = activeNotices[0];
 
   return (
     <div className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-black px-4 py-2 text-xs font-bold uppercase tracking-wider flex items-center justify-between gap-3 font-mono shadow-lg border-b border-amber-600/30">
